@@ -2,44 +2,46 @@ import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.MouseEvent;
 
-class TitleScene extends GameScene 
+class TitleScene extends Scene 
 {
+	// ---------------------------------------------------------------------------
+	// CONSTRUCTOR
+	// ---------------------------------------------------------------------------
+
 	public function new () 
 	{
 		super ();
 	}
 
 	// ---------------------------------------------------------------------------
-	// SCENE SWITCHING
+	// SCENE CALLBACKS
 	// ---------------------------------------------------------------------------
 
-	public override function isRequestingSceneChange() : Bool
-	{
-		// override me !
-		return false;
-	}
-
-	public override function getNextSceneName() : String
-	{
-		// override me !
-		return "";
-	}
-
-	// ---------------------------------------------------------------------------
-	// HAXE EVENTS
-	// ---------------------------------------------------------------------------
-
-	public override function onResize(event : Event) : Void
+	private override function onEnter(previous : Scene) : Void 
 	{
 		// override me !
 	}
 
-	public override function onUpdate(dt : Float) : Void
+	private override function onExit(next : Scene) : Void 
+	{
+		// override me !
+	}
+
+	// ---------------------------------------------------------------------------
+	// OPENFL CALLBACKS
+	// ---------------------------------------------------------------------------
+
+	private override function onResize(event : Event) : Void
+	{
+		// override me !
+	}
+
+	private override function onFrameEnter(event : Event) : Void
 	{
 		// override me !
 	}
 	
-	public override function onMouseClick(event : MouseEvent) : Void
+	private override function onMouseClick(event : MouseEvent) : Void
 	{
 		// override me !
 	}
