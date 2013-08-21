@@ -11,6 +11,9 @@ class TitleScene extends Scene
 	public function new () 
 	{
 		super ();
+
+		graphics.beginFill(0xFF0000);
+		graphics.drawRect(100, 50, 200, 200);
 	}
 
 	// ---------------------------------------------------------------------------

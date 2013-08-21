@@ -3,8 +3,7 @@ import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.MouseEvent;
 
-
-class Main extends Sprite 
+class Main extends Sprite
 {
 
 	// ---------------------------------------------------------------------------
@@ -13,7 +12,7 @@ class Main extends Sprite
 
 	public function new () 
 	{
-		super ();
+		super();
 
 		SceneManager.add("Title", new TitleScene());
 	}

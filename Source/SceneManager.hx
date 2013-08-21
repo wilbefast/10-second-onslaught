@@ -1,10 +1,11 @@
 import flash.Lib;
+import flash.display.Sprite;
 import flash.events.Event;
 import flash.events.MouseEvent;
 import haxe.ds.GenericStack;
 import haxe.ds.StringMap;
 
-class SceneManager
+class SceneManager extends Sprite 
 {
 	// ---------------------------------------------------------------------------
 	// SINGLETON
@@ -13,8 +14,12 @@ class SceneManager
 	// protected constructor
 
 	private function new()
-	{ 
+	{
+		super();
+
 		byName = new StringMap<Scene>();
+		// add to draw list
+		Lib.current.stage.addChild(this);
 		// events
 		Lib.current.stage.addEventListener(Event.RESIZE, function(event) { current.onResize(event); } );
 		Lib.current.stage.addEventListener(Event.ENTER_FRAME, function(event) { current.onFrameEnter(event); } );
@@ -63,7 +68,11 @@ class SceneManager
 	private function __setSceneObject(newScene : Scene) : Void
 	{
 		current.onExit(newScene);
+		removeChild(current);
+
 		newScene.onEnter(current);
+		addChild(newScene);
+
 		current = newScene;
 	}
 
@@ -85,7 +94,11 @@ class SceneManager
 	{
 		byName.set(newSceneName, newScene);
 		if(current == null)
+		{
+			newScene.onEnter(current);
+			addChild(newScene);
 			current = newScene;
+		}
 	}
 
 	// ---------------------------------------------------------------------------
