@@ -17,12 +17,12 @@ class TitleScene extends Scene
 	// SCENE CALLBACKS
 	// ---------------------------------------------------------------------------
 
-	private override function onEnter(previous : Scene) : Void 
+	public override function onEnter(previous : Scene) : Void 
 	{
 		// override me !
 	}
 
-	private override function onExit(next : Scene) : Void 
+	public override function onExit(next : Scene) : Void 
 	{
 		// override me !
 	}
@@ -31,17 +31,17 @@ class TitleScene extends Scene
 	// OPENFL CALLBACKS
 	// ---------------------------------------------------------------------------
 
-	private override function onResize(event : Event) : Void
+	public override function onResize(event : Event) : Void
 	{
 		// override me !
 	}
 
-	private override function onFrameEnter(event : Event) : Void
+	public override function onFrameEnter(event : Event) : Void
 	{
 		// override me !
 	}
 	
-	private override function onMouseClick(event : MouseEvent) : Void
+	public override function onMouseClick(event : MouseEvent) : Void
 	{
 		// override me !
 	}

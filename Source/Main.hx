@@ -15,11 +15,6 @@ class Main extends Sprite
 	{
 		super ();
 
-		// initialise modules
-		Scene.add("Title", new TitleScene());
-
-		// start modules
-		Time.start();
-		Scene.start();
+		SceneManager.add("Title", new TitleScene());
 	}
 }
