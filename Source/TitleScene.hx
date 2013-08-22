@@ -1,6 +1,10 @@
 import flash.display.Sprite;
+import flash.text.Font;
+import flash.text.TextField;
+import flash.text.TextFormat;
 import flash.events.Event;
 import flash.events.MouseEvent;
+
 
 class TitleScene extends Scene 
 {
@@ -12,8 +16,12 @@ class TitleScene extends Scene
 	{
 		super ();
 
+		// draw a shape
 		graphics.beginFill(0xFF0000);
 		graphics.drawRect(100, 50, 200, 200);
+
+
+		addChild (new Text.DefaultTextField());
 	}
 
 	// ---------------------------------------------------------------------------
