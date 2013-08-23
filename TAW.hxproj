@@ -6,8 +6,8 @@
     <movie input="" />
     <movie path="project.xml" />
     <movie fps="30" />
-    <movie width="800" />
-    <movie height="600" />
+    <movie width="1032" />
+    <movie height="840" />
     <movie version="3" />
     <movie minorVersion="0" />
     <movie platform="NME" />
@@ -17,14 +17,16 @@
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
     <class path="Source" />
+    <class path="Assets" />
+    <class path="Export/windows/neko/haxe" />
   </classpaths>
   <!-- Build options -->
   <build>
-    <option directives="" />
+    <option directives="nme4=1&#xA;tools=1&#xA;nme_ver=4.0.2&#xA;nme&#xA;nme_install_tool=1&#xA;display&#xA;windows&#xA;desktop" />
     <option flashStrict="False" />
-    <option mainClass="com.example.taw" />
+    <option mainClass="ApplicationMain" />
     <option enabledebug="False" />
-    <option additional="" />
+    <option additional="--no-output&#xA;--macro allowPackage(&quot;flash&quot;)" />
   </build>
   <!-- haxelib libraries -->
   <haxelib>
