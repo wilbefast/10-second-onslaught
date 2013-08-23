@@ -81,11 +81,7 @@ class Zergling extends Unit
 
 			// attack target
 			else
-			{
 				weapon.fireAt(target);
-			}
-
-
 		}
 	}
 

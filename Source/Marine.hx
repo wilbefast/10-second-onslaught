@@ -2,6 +2,14 @@ import openfl.Assets;
 import flash.display.Bitmap;
 import flash.display.BitmapData;
 
+class PlasmaGun extends UnitWeapon
+{
+	public function new()
+	{
+		super(128, 0.2, function(u) u.hitpoints -= 1);
+	}
+}
+
 class Marine extends Unit 
 {
 	// ---------------------------------------------------------------------------
@@ -33,6 +41,7 @@ class Marine extends Unit
 
 		hitpoints = 100;
 		team = Unit.TEAM_MARINES;
+		weapon = new PlasmaGun();
 
 		bitmap = new Bitmap(bitmapData);
 		bitmap.x = -radius;
@@ -48,8 +57,19 @@ class Marine extends Unit
 	{
 		super.update(dt);
 
+		// get new target
 		if(target == null || target.purge)
 			refreshTarget();
+
+		// has target
+		if(target != null)
+		{
+			var toTarget = new V2(target.x - x, target.y - y);
+
+			// attack target
+			if(toTarget.getNorm() <= weapon.range)
+				weapon.fireAt(target);
+		}
 	}
 
 	// ---------------------------------------------------------------------------
