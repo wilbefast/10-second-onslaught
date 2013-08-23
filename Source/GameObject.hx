@@ -18,8 +18,8 @@ class GameObject extends Sprite
 		GameObjectManager.add(this);
 
 		// DEBUG draw collider
-		graphics.beginFill(0x000000);
-		graphics.drawCircle(0, 0, radius);
+		// graphics.beginFill(0x000000);
+		// graphics.drawCircle(0, 0, radius);
 	}
 
 	// ---------------------------------------------------------------------------
