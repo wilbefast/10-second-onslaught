@@ -6,7 +6,7 @@ class PlasmaGun extends UnitWeapon
 {
 	public function new()
 	{
-		super(128, 0.2, function(u) u.hitpoints -= 1);
+		super(128, 0.1, function(u) u.hitpoints -= 1);
 	}
 }
 
@@ -32,14 +32,16 @@ class Marine extends Unit
 
 	private var bitmap : Bitmap;
 
+	private static inline var HITPOINTS : Int = 100;
+	private static inline var RADIUS : Int = 16;
+
 	public function new(_x : Float, _y : Float) : Void
 	{
-		super(_x, _y, 16);
+		super(_x, _y, HITPOINTS, RADIUS);
 
 		if(!initialised)
 			init();
 
-		hitpoints = 100;
 		team = Unit.TEAM_MARINES;
 		weapon = new PlasmaGun();
 

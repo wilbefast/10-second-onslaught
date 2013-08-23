@@ -18,8 +18,8 @@ class GameObject extends Sprite
 		GameObjectManager.add(this);
 
 		// DEBUG draw collider
-		// graphics.beginFill(0x000000);
-		// graphics.drawCircle(0, 0, radius);
+		//graphics.beginFill(0x000000);
+		//graphics.drawCircle(0, 0, radius);
 	}
 
 	// ---------------------------------------------------------------------------
@@ -27,6 +27,15 @@ class GameObject extends Sprite
 	// ---------------------------------------------------------------------------
 
 	public function update(dt : Float) : Void
+	{
+		// override me !
+	}
+
+	// ---------------------------------------------------------------------------
+	// RENDER
+	// ---------------------------------------------------------------------------
+
+	public function render() : Void
 	{
 		// override me !
 	}
@@ -43,7 +52,6 @@ class GameObject extends Sprite
 
 	public function onCollisionWith(other : GameObject) : Void
 	{
-		trace("GameObject::onCollisionWith");
 		// override me !
 	}
 

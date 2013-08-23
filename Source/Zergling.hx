@@ -34,17 +34,18 @@ class Zergling extends Unit
 	// ---------------------------------------------------------------------------
 
 	private static inline var SPEED : Float = 128;
+	private static inline var HITPOINTS : Int = 30;
+	private static inline var RADIUS : Int = 16;
 
 	private var bitmap : Bitmap;
 
 	public function new(_x : Float, _y : Float) : Void
 	{
-		super(_x, _y, 16);
+		super(_x, _y, HITPOINTS, RADIUS);
 
 		if(!initialised)
 			init();
 
-		hitpoints = 30;
 		team = Unit.TEAM_ALIENS;
 		weapon = new ZerglingClaws();
 

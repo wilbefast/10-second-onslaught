@@ -164,6 +164,9 @@ class GameObjectManager extends Sprite
 			if(a.y < previous_y)
 				setChildIndex(a, i-1);
 			previous_y = a.y;
+
+			// apply pre-render logic
+			a.render();
 		}
 	}
 }
