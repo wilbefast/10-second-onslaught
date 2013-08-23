@@ -14,6 +14,8 @@ class Main extends Sprite
 	{
 		super();
 
+		DefaultFont.load();
+
 		SceneManager.add("Title", new TitleScene());
 	}
 }
