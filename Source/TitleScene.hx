@@ -49,6 +49,6 @@ class TitleScene extends Scene
 	
 	public override function onMouseClick(event : MouseEvent) : Void
 	{
-		SceneManager.setScene("Deploy");
+		SceneManager.setScene("Game");
 	}
 }
