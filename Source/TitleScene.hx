@@ -21,6 +21,9 @@ class TitleScene extends Scene
 		graphics.drawRect(100, 50, 200, 200);
 
 		addChild (new DefaultTextField("Hello title", 200, 200));
+
+
+		var bink = new GameObject(300, 20, 3);
 	}
 
 	// ---------------------------------------------------------------------------
