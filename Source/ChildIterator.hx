@@ -7,7 +7,7 @@ class ChildIterator
 	private var condition : DisplayObject->Bool;
 	private var nextIndex : Int = 0;
 
-	public function new(_container : DisplayObjectContainer, _condition : DisplayObject->Bool)
+	public function new(_container : DisplayObjectContainer, ?_condition : DisplayObject->Bool)
 	{
 		container = _container;
 		condition = _condition;

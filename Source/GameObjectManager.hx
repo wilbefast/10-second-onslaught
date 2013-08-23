@@ -52,9 +52,14 @@ class GameObjectManager extends Sprite
 		get().__load(loader);
 	}
 
-	public static function getMatching(condition : DisplayObject->Bool) : ChildIterator
+	public static function getMatching(condition : GameObject->Bool) : GameObjectIterator
 	{
 		return get().__getMatching(condition);
+	}
+
+	public static function getMaximum(evaluation : GameObject->Float) : GameObject
+	{
+		return get().__getMaximum(evaluation);
 	}
 
 	// ---------------------------------------------------------------------------
@@ -87,9 +92,36 @@ class GameObjectManager extends Sprite
 	// QUERY
 	// ---------------------------------------------------------------------------
 
-	private function __getMatching(condition : DisplayObject->Bool) : ChildIterator
+	private static inline function onlyGameObjects(condition : GameObject->Bool) : Dynamic->Bool
 	{
-		return (new ChildIterator(this, condition));
+		// Functionception
+		return (function(o) return (Std.is(o, GameObject))
+																? condition(cast(o, GameObject)) 
+																:	false); 
+	}
+
+	private function __getMatching(condition : GameObject->Bool) : GameObjectIterator
+	{
+		return new GameObjectIterator(new ChildIterator(this, onlyGameObjects(condition)));
+	}
+
+	private function __getMaximum(evaluation : GameObject->Float) : GameObject
+	{
+		var max_evaluation : Float = Math.NEGATIVE_INFINITY;
+		var max_object : GameObject = null;
+		for(object in new GameObjectIterator(new ChildIterator(this)))
+		{
+			if(Std.is(object, GameObject))
+			{
+				var object_evaluation = evaluation(object);
+				if(object_evaluation > max_evaluation)
+				{
+					max_object = object;
+					max_evaluation = object_evaluation;
+				}
+			}
+		}
+		return max_object;
 	}
 
 
