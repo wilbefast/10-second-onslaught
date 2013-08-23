@@ -21,7 +21,6 @@ class ChildIterator
 			nextIndex++;
 	}
 
-
 	public function hasNext() : Bool
 	{
     return (nextIndex < container.numChildren);

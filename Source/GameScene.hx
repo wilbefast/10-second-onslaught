@@ -134,6 +134,6 @@ class GameScene extends Scene
 	public function blah(go : DisplayObject) : Bool
 	{
 		//trace(Type.getClassName(Type.getClass(go))); 
-		return (Type.getClassName(Type.getClass(go)) == "Marine");
+		return (Type.getClass(go) == Marine);
 	}
 }
