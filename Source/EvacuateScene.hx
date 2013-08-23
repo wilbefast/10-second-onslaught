@@ -32,12 +32,13 @@ class EvacuateScene extends Scene
 	{
 		GameObjectManager.purgeAll();
 
-		var spawn_radius = 300;
-		for(i in 0 ... 10)
+		var spawn_width = 400; // TODO - get from stage.stageWidth
+		var spawn_height = 300; // TODO - get from stage.stageWidth
+		for(i in 0 ... 30)
 		{
 			var spawn_angle = Math.random()*Math.PI*2;
-			new Zergling(spawn_radius + Math.cos(spawn_angle)*spawn_radius, 
-									spawn_radius + Math.sin(spawn_angle)*spawn_radius);
+			new Zergling(spawn_width + Math.cos(spawn_angle)*spawn_width, 
+									spawn_height + Math.sin(spawn_angle)*spawn_height);
 		}
 	}
 
