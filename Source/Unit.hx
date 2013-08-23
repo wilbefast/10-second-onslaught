@@ -37,8 +37,8 @@ class Unit extends GameObject
 		graphics.clear();
 
 		// collider debug
-		graphics.beginFill(0x000000);
-		graphics.drawCircle(0, 0, radius);
+		// graphics.beginFill(0x000000);
+		// graphics.drawCircle(0, 0, radius);
 
 		// healthbar background
 		graphics.beginFill(0x000000);
@@ -72,8 +72,8 @@ class Unit extends GameObject
 		{
 			// repulsion vector
 			var repulse = new V2(x - other.x, y - other.y);
-			x += (radius + other.radius)/repulse.x * Time.getDelta();
-			y += (radius + other.radius)/repulse.y * Time.getDelta();
+			x += Useful.sqr(radius + other.radius)/repulse.x * 0.1 * Time.getDelta();
+			y += Useful.sqr(radius + other.radius)/repulse.y * 0.1 * Time.getDelta();
 		}
 	}
 
