@@ -17,9 +17,9 @@ class GameObject extends Sprite
 		// register object
 		GameObjectManager.add(this);
 
-		// draw a shape
+		// DEBUG draw collider
 		graphics.beginFill(0x000000);
-		graphics.drawRect(0, 0, 20, 20);
+		graphics.drawCircle(0, 0, radius);
 	}
 
 	// ---------------------------------------------------------------------------

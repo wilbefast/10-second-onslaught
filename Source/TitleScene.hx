@@ -12,6 +12,8 @@ class TitleScene extends Scene
 	// CONSTRUCTOR
 	// ---------------------------------------------------------------------------
 
+	public var bink : GameObject;
+
 	public function new () 
 	{
 		super ();
@@ -23,7 +25,7 @@ class TitleScene extends Scene
 		addChild (new DefaultTextField("Hello title", 200, 200));
 
 
-		var bink = new GameObject(300, 20, 3);
+		bink = new GameObject(300, 20, 3);
 	}
 
 	// ---------------------------------------------------------------------------
@@ -52,6 +54,7 @@ class TitleScene extends Scene
 	public override function onFrameEnter(event : Event) : Void
 	{
 		// override me !
+		bink.purge = true;
 	}
 	
 	public override function onMouseClick(event : MouseEvent) : Void
