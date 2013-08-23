@@ -26,10 +26,13 @@ class Marine extends Unit
 
 	public function new(_x : Float, _y : Float) : Void
 	{
-		super(_x, _y, 16, 50); // radius, hitpoints
+		super(_x, _y, 16);
 
 		if(!initialised)
 			init();
+
+		hitpoints = 100;
+		team = Unit.TEAM_MARINES;
 
 		bitmap = new Bitmap(bitmapData);
 		bitmap.x = -radius;

@@ -14,9 +14,6 @@ class GameObjectManager extends Sprite
 	{
 		super();
 
-		// create object list
-		objects = new List<GameObject>();
-
 		// add to draw list
 		Lib.current.stage.addChild(this);
 		// events
@@ -54,11 +51,14 @@ class GameObjectManager extends Sprite
 		get().__load(loader);
 	}
 
+	public static function getMatching(condition : GameObject->Bool) : SpriteChildIterator<GameObject>
+	{
+		return get().__getMatching(condition);
+	}
+
 	// ---------------------------------------------------------------------------
 	// OBJECT LIST
 	// ---------------------------------------------------------------------------
-
-	private var objects : List<GameObject>;
 
 	private function __add(newObject : GameObject) : Void
 	{
@@ -86,9 +86,9 @@ class GameObjectManager extends Sprite
 	// QUERY
 	// ---------------------------------------------------------------------------
 
-	private function __getMatching(condition : GameObject->Bool) : GameObjectIterator
+	private function __getMatching(condition : GameObject->Bool) : SpriteChildIterator<GameObject>
 	{
-		return (new GameObjectIterator(objects, condition));
+		return (new SpriteChildIterator<GameObject>(this, condition));
 	}
 
 

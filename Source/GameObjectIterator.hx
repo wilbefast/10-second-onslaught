@@ -4,9 +4,10 @@ class GameObjectIterator
 	private var condition : GameObject->Bool;
 	private var nextMatching : GameObject = null;
 
-	public function new(iterable : Iterable<GameObject>, _condition : GameObject->Bool)
+	public function new(_iterator : Iterator<GameObject>, _condition : GameObject->Bool)
 	{
-		iterator = iterable.iterator();
+		trace("Created GameObjectIterator");
+		iterator = _iterator;
 		condition = _condition;
 		
 		flushNextMatching();
@@ -14,6 +15,8 @@ class GameObjectIterator
 
 	private function flushNextMatching() : Void
 	{
+		trace(iterator.hasNext());
+
 		do 
 		{
 			nextMatching = (iterator.hasNext() ? iterator.next() : null);

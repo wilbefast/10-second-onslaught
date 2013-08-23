@@ -82,5 +82,17 @@ class GameScene extends Scene
 										(3 + Math.sin(spawn_angle))*spawn_height/3);
 		}
 
+
+
+
+		trace("ALL MARINES");
+		for(object in GameObjectManager.getMatching(blah))
+			trace(object);
+	}
+
+	public function blah(go : GameObject) : Bool
+	{
+		trace(Type.getClassName(Type.getClass(go))); 
+		return (Type.getClassName(Type.getClass(go)) == "Marine");
 	}
 }
