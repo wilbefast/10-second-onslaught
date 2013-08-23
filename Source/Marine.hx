@@ -46,6 +46,8 @@ class Marine extends Unit
 
 	public override function update(dt : Float) : Void
 	{
+		super.update(dt);
+
 		if(target == null || target.purge)
 			refreshTarget();
 	}

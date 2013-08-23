@@ -20,7 +20,6 @@ class Unit extends GameObject
 
 	public override function update(dt : Float) : Void
 	{
-
 		// check for death
 		if(hitpoints <= 0)
 			purge = true;
