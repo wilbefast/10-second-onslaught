@@ -39,6 +39,21 @@ class GameObjectManager extends Sprite
 		get().__add(newObject);
 	}
 
+	public static function purge(object : GameObject) : Void
+	{
+		get().__purge(object);
+	}
+
+	public static function purgeAll() : Void
+	{
+		get().__purgeAll();
+	}
+
+	public static function load(loader : Iterator<GameObject>) : Void
+	{
+		get().__load(loader);
+	}
+
 	// ---------------------------------------------------------------------------
 	// OBJECT LIST
 	// ---------------------------------------------------------------------------
@@ -51,10 +66,23 @@ class GameObjectManager extends Sprite
 		addChild(newObject);
 	}
 
-	private function __remove(object : GameObject) : Void
+	private function __purge(object : GameObject) : Void
 	{
 		objects.remove(object);
 		removeChild(object);
+	}
+
+	private function __purgeAll() : Void
+	{
+		for(a in objects)
+			removeChild(a);
+		objects.clear();
+	}
+
+	private function __load(loader : Iterator<GameObject>) : Void
+	{
+		for(loaded in loader)
+			__add(loaded);
 	}
 
 	// ---------------------------------------------------------------------------
@@ -68,6 +96,7 @@ class GameObjectManager extends Sprite
 			// purge objects
 			if(a.purge)
 			{
+				a.onPurge();
 				__remove(a);
 				break;
 			}
