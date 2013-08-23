@@ -42,8 +42,8 @@ class Time
 	private function onFrameEnter(event : Event)
 	{
 			var current = Lib.getTimer();
-	    delta = (current - previus);
-	    previus = current;
+	    delta = (current - previous);
+	    previous = current;
   }
 
 	public function __getDelta() : Int

@@ -1,9 +1,6 @@
 import flash.Lib;
 import flash.display.Sprite;
 import flash.events.Event;
-import flash.events.MouseEvent;
-import haxe.ds.GenericStack;
-import haxe.ds.StringMap;
 
 class GameObjectManager extends Sprite 
 {
@@ -16,6 +13,9 @@ class GameObjectManager extends Sprite
 	private function new()
 	{
 		super();
+
+		// create object list
+		objects = new List<GameObject>();
 
 		// add to draw list
 		Lib.current.stage.addChild(this);
@@ -34,18 +34,44 @@ class GameObjectManager extends Sprite
 
 	// shortcut static functions
 
+	public static function add(newObject : GameObject) : Void
+	{
+		get().__add(newObject);
+	}
+
 	// ---------------------------------------------------------------------------
 	// OBJECT LIST
 	// ---------------------------------------------------------------------------
+
+	private var objects : List<GameObject>;
+
+	private function __add(newObject : GameObject) : Void
+	{
+		objects.push(newObject);
+		addChild(newObject);
+	}
+
+	private function __remove(object : GameObject) : Void
+	{
+		objects.remove(object);
+		removeChild(object);
+	}
 
 	// ---------------------------------------------------------------------------
 	// UPDATE
 	// ---------------------------------------------------------------------------
 
-	private function onFrameEnter() : Void
+	private function onFrameEnter(event : Event) : Void
 	{
 		for(a in objects)
 		{
+			// purge objects
+			if(a.purge)
+			{
+				__remove(a);
+				break;
+			}
+
 			// update objects
 			a.update(Time.getDelta());
 

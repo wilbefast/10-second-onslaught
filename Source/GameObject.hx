@@ -9,9 +9,13 @@ class GameObject extends Sprite
 	{
 		super();
 
+		// initialise variables
 		this.x = _x;
 		this.y = _y;
 		this.radius = _radius;
+
+		// register object
+		GameObjectManager.add(this);
 
 		// draw a shape
 		graphics.beginFill(0x000000);
