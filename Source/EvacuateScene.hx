@@ -30,6 +30,8 @@ class EvacuateScene extends Scene
 
 	public override function onEnter(previous : Scene) : Void 
 	{
+		new Zergling(100, 100);
+		new Zergling(101, 100);
 	}
 
 	public override function onExit(next : Scene) : Void 
@@ -50,6 +52,6 @@ class EvacuateScene extends Scene
 	
 	public override function onMouseClick(event : MouseEvent) : Void
 	{
-		SceneManager.setScene("Deploy");
+		// SceneManager.setScene("Deploy");
 	}
 }
