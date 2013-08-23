@@ -13,6 +13,7 @@ class Time
 	{
 		// events
 		Lib.current.stage.addEventListener(Event.ENTER_FRAME, onFrameEnter);
+		previous = Lib.getTimer();
 	}
 
 	private static var instance : Time;
