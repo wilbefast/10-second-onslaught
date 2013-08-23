@@ -13,6 +13,7 @@ class DefaultTextField extends TextField
 
 		embedFonts = true;
 		selectable = false;
+		wordWrap = true;
 
 		x = _x;
 		y = _y;

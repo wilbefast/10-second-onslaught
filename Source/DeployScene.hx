@@ -6,7 +6,7 @@ import flash.events.Event;
 import flash.events.MouseEvent;
 
 
-class TitleScene extends Scene 
+class DeployScene extends Scene 
 {
 	// ---------------------------------------------------------------------------
 	// CONSTRUCTOR
@@ -17,10 +17,10 @@ class TitleScene extends Scene
 		super ();
 
 		// draw a shape
-		graphics.beginFill(0xFF0000);
+		graphics.beginFill(0x0000FF);
 		graphics.drawRect(100, 50, 200, 200);
 
-		addChild (new DefaultTextField("I am a title: Click to start game", 200, 200));
+		addChild (new DefaultTextField("Deploy your dudes!", 200, 200));
 	}
 
 	// ---------------------------------------------------------------------------
@@ -49,6 +49,6 @@ class TitleScene extends Scene
 	
 	public override function onMouseClick(event : MouseEvent) : Void
 	{
-		SceneManager.setScene("Deploy");
+		SceneManager.setScene("Evacuate");
 	}
 }

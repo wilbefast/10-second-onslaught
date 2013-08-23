@@ -6,7 +6,7 @@ import flash.events.Event;
 import flash.events.MouseEvent;
 
 
-class TitleScene extends Scene 
+class EvacuateScene extends Scene 
 {
 	// ---------------------------------------------------------------------------
 	// CONSTRUCTOR
@@ -17,10 +17,10 @@ class TitleScene extends Scene
 		super ();
 
 		// draw a shape
-		graphics.beginFill(0xFF0000);
+		graphics.beginFill(0x00FF00);
 		graphics.drawRect(100, 50, 200, 200);
 
-		addChild (new DefaultTextField("I am a title: Click to start game", 200, 200));
+		addChild (new DefaultTextField("Save the colonies!", 200, 200));
 	}
 
 	// ---------------------------------------------------------------------------

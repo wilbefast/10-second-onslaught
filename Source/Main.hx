@@ -17,5 +17,7 @@ class Main extends Sprite
 		DefaultFont.load();
 
 		SceneManager.add("Title", new TitleScene());
+		SceneManager.add("Deploy", new DeployScene());
+		SceneManager.add("Evacuate", new EvacuateScene());
 	}
 }
