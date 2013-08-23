@@ -157,5 +157,13 @@ class GameScene extends Scene
 			new Marine((3 + Math.cos(spawn_angle))*spawn_width/3, 
 										(3 + Math.sin(spawn_angle))*spawn_height/3);
 		}
+
+		// create colonies
+		for(i in 0 ... 5)
+		{
+			var spawn_angle = Math.random()*Math.PI*2;
+			new Colony(spawn_width + Math.cos(spawn_angle)*spawn_width/5, 
+									spawn_height + Math.sin(spawn_angle)*spawn_height/5);
+		}
 	}
 }

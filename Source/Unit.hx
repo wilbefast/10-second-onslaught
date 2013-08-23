@@ -36,16 +36,24 @@ class Unit extends GameObject
 		// clear
 		graphics.clear();
 
+		// collider debug
+		graphics.beginFill(0x000000);
+		graphics.drawCircle(0, 0, radius);
+
 		// healthbar background
 		graphics.beginFill(0x000000);
-		graphics.drawRect(-HEALTHBAR_WIDTH/2, HEALTHBAR_YOFFSET, HEALTHBAR_WIDTH, HEALTHBAR_HEIGHT);
+		graphics.drawRect(
+			-HEALTHBAR_WIDTH/2, 
+			radius*0.7, 
+			HEALTHBAR_WIDTH, 
+			HEALTHBAR_HEIGHT);
 
 		// healthbar
-		var percent_hitpoints = cast(hitpoints, Float)/max_hitpoints;
+		var percent_hitpoints : Float = cast(hitpoints, Float)/max_hitpoints;
 		graphics.beginFill(0x00FF00);
 		graphics.drawRect(
 			2 - HEALTHBAR_WIDTH/2, 
-		 	2 + HEALTHBAR_YOFFSET, 
+		 	2 + radius*0.7, 
 			Math.max(5, HEALTHBAR_WIDTH*percent_hitpoints) - 4, 
 			HEALTHBAR_HEIGHT - 4);
 	}
@@ -55,10 +63,12 @@ class Unit extends GameObject
 	// COLLISIONS
 	// ---------------------------------------------------------------------------
 
+	public var immobile : Bool = false;
+
 	public override function onCollisionWith(other : GameObject) : Void
 	{
 		// repulse
-		if(Std.is(other, Unit))
+		if(!immobile && Std.is(other, Unit))
 		{
 			// repulsion vector
 			var repulse = new V2(x - other.x, y - other.y);

@@ -6,7 +6,7 @@ class ZerglingClaws extends UnitWeapon
 {
 	public function new()
 	{
-		super(48, 1, function(u) u.hitpoints -= 10);
+		super(16, 1, function(u) u.hitpoints -= 10);
 	}
 }
 
@@ -33,7 +33,7 @@ class Zergling extends Unit
 	// CONSTRUCTOR
 	// ---------------------------------------------------------------------------
 
-	private static inline var SPEED : Float = 128;
+	private static inline var SPEED : Float = 96;
 	private static inline var HITPOINTS : Int = 30;
 	private static inline var RADIUS : Int = 16;
 
@@ -50,8 +50,8 @@ class Zergling extends Unit
 		weapon = new ZerglingClaws();
 
 		bitmap = new Bitmap(bitmapData);
-		bitmap.x = -radius;
-		bitmap.y = -radius;
+		bitmap.x = -bitmap.width/2;
+		bitmap.y = -bitmap.height*0.75;
 		addChild(bitmap);
 	}
 
@@ -73,7 +73,7 @@ class Zergling extends Unit
 			var toTarget = new V2(target.x - x, target.y - y);
 
 			// move towards target
-			if(toTarget.getNorm() > weapon.range)
+			if(toTarget.getNorm() - radius - target.radius > weapon.range)
 			{
 				var toTargetNormalised = toTarget.normalised();
 				x += toTargetNormalised.x * Time.getDelta() * SPEED;

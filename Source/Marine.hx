@@ -46,8 +46,8 @@ class Marine extends Unit
 		weapon = new PlasmaGun();
 
 		bitmap = new Bitmap(bitmapData);
-		bitmap.x = -radius;
-		bitmap.y = -radius;
+		bitmap.x = -bitmap.width/2;
+		bitmap.y = -bitmap.height*0.75;
 		addChild(bitmap);
 	}
 
@@ -69,7 +69,7 @@ class Marine extends Unit
 			var toTarget = new V2(target.x - x, target.y - y);
 
 			// attack target
-			if(toTarget.getNorm() <= weapon.range)
+			if(toTarget.getNorm() - radius - target.radius <= weapon.range)
 				weapon.fireAt(target);
 		}
 	}
