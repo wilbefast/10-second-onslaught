@@ -41,29 +41,13 @@ class Zergling extends Unit
 	}
 
 	// ---------------------------------------------------------------------------
-	// TEAMS
-	// ---------------------------------------------------------------------------
-
-	public override function isEnemy(other : Unit) : Bool
-	{
-		return (other.team == Unit.TEAM_MARINES || other.team == Unit.TEAM_CIVILLIANS);
-	}
-
-	// ---------------------------------------------------------------------------
 	// UPDATE
 	// ---------------------------------------------------------------------------
 
 	public override function update(dt : Float) : Void
 	{
-		// find new target
 		if(target == null || target.purge)
-		{
-			var nearest = GameObjectManager.getMaximum(
-				function(other) return -Useful.distance2(x, y, other.x, other.y),
-				function(other) return Std.is(other, Unit) && isEnemy(cast(other, Unit)));
-			if(nearest != null)
-				target = cast(nearest, Unit);
-		}
+			refreshTarget();
 	}
 
 	// ---------------------------------------------------------------------------
@@ -73,6 +57,15 @@ class Zergling extends Unit
 	public override function onCollisionWith(other : GameObject) : Void
 	{
 		super.onCollisionWith(other);
+	}
+
+	// ---------------------------------------------------------------------------
+	// COMBAT
+	// ---------------------------------------------------------------------------
+
+	public override function isEnemy(other : Unit) : Bool
+	{
+		return (other.team == Unit.TEAM_MARINES || other.team == Unit.TEAM_CIVILLIANS);
 	}
 
 	// ---------------------------------------------------------------------------

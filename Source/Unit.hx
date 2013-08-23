@@ -15,16 +15,6 @@ class Unit extends GameObject
 	}
 
 	// ---------------------------------------------------------------------------
-	// TEAMS
-	// ---------------------------------------------------------------------------
-
-	public function isEnemy(other : Unit) : Bool
-	{
-		// override me ! 
-		return true;
-	}
-
-	// ---------------------------------------------------------------------------
 	// UPDATE
 	// ---------------------------------------------------------------------------
 
@@ -50,5 +40,25 @@ class Unit extends GameObject
 			x += repulse.x * Time.getDelta();
 			y += repulse.y * Time.getDelta();
 		}
+	}
+
+	// ---------------------------------------------------------------------------
+	// COMBAT
+	// ---------------------------------------------------------------------------
+
+	public function isEnemy(other : Unit) : Bool
+	{
+		// override me ! 
+		return true;
+	}
+
+	public function refreshTarget() : Void
+	{
+		// find new target
+		var nearest = GameObjectManager.getMaximum(
+			function(other) return -Useful.distance2(x, y, other.x, other.y),
+			function(other) return Std.is(other, Unit) && isEnemy(cast(other, Unit)));
+		if(nearest != null)
+			target = cast(nearest, Unit);
 	}
 }

@@ -41,21 +41,13 @@ class Marine extends Unit
 	}
 
 	// ---------------------------------------------------------------------------
-	// TEAMS
-	// ---------------------------------------------------------------------------
-
-	public override function isEnemy(other : Unit) : Bool
-	{
-		return (other.team == Unit.TEAM_ALIENS);
-	}
-
-	// ---------------------------------------------------------------------------
 	// UPDATE
 	// ---------------------------------------------------------------------------
 
 	public override function update(dt : Float) : Void
 	{
-		
+		if(target == null || target.purge)
+			refreshTarget();
 	}
 
 	// ---------------------------------------------------------------------------
@@ -73,5 +65,14 @@ class Marine extends Unit
 
 	public override function onPurge() : Void
 	{
+	}
+
+	// ---------------------------------------------------------------------------
+	// COMBAT
+	// ---------------------------------------------------------------------------
+
+	public override function isEnemy(other : Unit) : Bool
+	{
+		return (other.team == Unit.TEAM_ALIENS);
 	}
 }
