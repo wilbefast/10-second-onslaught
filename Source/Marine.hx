@@ -2,7 +2,7 @@ class Zergling extends Unit
 {
 	public function new(_x : Float, _y : Float) : Void
 	{
-		super(_x, _y, 16, 50); // radius, hitpoints
+		super(_x, _y, 24, 100); // radius, hitpoints
 	}
 
 	// ---------------------------------------------------------------------------

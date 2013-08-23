@@ -30,8 +30,15 @@ class EvacuateScene extends Scene
 
 	public override function onEnter(previous : Scene) : Void 
 	{
-		new Zergling(100, 100);
-		new Zergling(101, 100);
+		GameObjectManager.purgeAll();
+
+		var spawn_radius = 300;
+		for(i in 0 ... 10)
+		{
+			var spawn_angle = Math.random()*Math.PI*2;
+			new Zergling(spawn_radius + Math.cos(spawn_angle)*spawn_radius, 
+									spawn_radius + Math.sin(spawn_angle)*spawn_radius);
+		}
 	}
 
 	public override function onExit(next : Scene) : Void 
