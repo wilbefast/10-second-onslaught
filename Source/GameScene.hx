@@ -74,7 +74,7 @@ class GameScene extends Scene
 										(1 + Math.sin(spawn_angle))*spawn_height);
 		}
 
-		// create marines
+		// create marines// ------------------------------------------------------------------------------
 		for(i in 0 ... 10)
 		{
 			var spawn_angle = Math.random()*Math.PI*2;

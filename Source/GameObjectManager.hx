@@ -83,6 +83,16 @@ class GameObjectManager extends Sprite
 	}
 
 	// ---------------------------------------------------------------------------
+	// QUERY
+	// ---------------------------------------------------------------------------
+
+	private function __getMatching(condition : GameObject->Bool) : GameObjectIterator
+	{
+		return (new GameObjectIterator(objects, condition));
+	}
+
+
+	// ---------------------------------------------------------------------------
 	// UPDATE
 	// ---------------------------------------------------------------------------
 
