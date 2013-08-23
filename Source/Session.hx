@@ -4,7 +4,7 @@ class Session extends Sprite
 {
 	private var money : Int;
 	private var nbReplay : Int;
-	private var timer : Int ;
+	private var timer : Int ; //delay between two waves in seconds
 	
 	public function new(ptimer : Int) 
 	{
@@ -27,5 +27,10 @@ class Session extends Sprite
 	public function incrementNbReplay()
 	{
 		nbReplay ++ ;
+	}
+	
+	public function getMoney()
+	{
+		return money ;
 	}
 }

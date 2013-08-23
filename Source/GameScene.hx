@@ -4,6 +4,7 @@ import flash.display.Bitmap;
 import openfl.Assets;
 import flash.display.Sprite;
 import flash.display.DisplayObject;
+import flash.events.Event;
 
 class GameScene extends Scene
 {
@@ -21,12 +22,15 @@ class GameScene extends Scene
 	private var ui_cont : Sprite;
 	private var timeline_cont : Sprite;
 	
+	private var timer : Float ;
+	
 	public function new (ptimer : Int) 
 	{
 		super ();
 		if (!initialised) init();
 		gameState = true ;
 		session = new Session(ptimer);
+		timer = session.getTimer() * 100 ;
 		map_cont = new Sprite();
         ui_cont = new Sprite();
 		timeline_cont = new Sprite();
@@ -48,23 +52,31 @@ class GameScene extends Scene
 		initialised = true ;
 	}
 	
-	//changer par un clic bouton ou la fin du décompte
-	public override function onMouseClick(event : MouseEvent) : Void
+	//la fin du décompte pour la phase d'attaque. Pour la phase de deploy c'est dans le bouton ButtonDeployEnd
+	/*public override function onMouseClick(event : MouseEvent) : Void
 	{
 		switchPhase();
-		if (gameState) playDeployPhase();
-		else playAttackPhase();
+	}*/
+	public override function onFrameEnter(event : Event) : Void
+	{
+		if (!gameState) 
+		{
+			timer -= Time.getDelta();
+			if (timer < 0) switchPhase();
+		}
 	}
 	
 	public function switchPhase()
 	{
+		timer = session.getTimer() ;
 		if (gameState) gameState = false ;
 		else
 		{
 			gameState = true ;
 			session.incrementNbReplay();
 		}
-		trace("gameState : " + gameState + " " + session.getTimer() + " nbReplay :" + session.getNbReplay() );
+		if (gameState) playDeployPhase();
+		else playAttackPhase();
 	}
 	
 	private function playDeployPhase()
@@ -89,9 +101,12 @@ class GameScene extends Scene
 		addChild(map_cont);
 		addChild(ui_cont);
 		addChild(timeline_cont);
+		// Text to show score
+		addChild (new DefaultTextField("Replay n°: " + session.getNbReplay() , 20, uiBitmap.y));
+		addChild (new DefaultTextField("$ : " + session.getMoney() , 20, uiBitmap.y + 50));
 		// button to switch to attack phase
 		var buttonSwitchToAttack : ButtonDeployEnd = new ButtonDeployEnd(this);
-		buttonSwitchToAttack.x = 12 ;
+		buttonSwitchToAttack.x = 200 ;
 		buttonSwitchToAttack.y = uiBitmap.y ;
 		addChild(buttonSwitchToAttack);
 	}
