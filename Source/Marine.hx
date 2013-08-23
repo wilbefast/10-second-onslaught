@@ -1,8 +1,40 @@
-class Zergling extends Unit 
+import openfl.Assets;
+import flash.display.Bitmap;
+import flash.display.BitmapData;
+
+class Marine extends Unit 
 {
+	// ---------------------------------------------------------------------------
+	// LOAD ASSETS
+	// ---------------------------------------------------------------------------
+
+	private static var initialised : Bool = false;
+
+	private static var bitmapData : BitmapData;
+
+	private static function init() : Void
+	{
+		bitmapData = Assets.getBitmapData("assets/marine.png");
+		initialised = true;
+	}
+
+	// ---------------------------------------------------------------------------
+	// CONSTRUCTOR
+	// ---------------------------------------------------------------------------
+
+	private var bitmap : Bitmap;
+
 	public function new(_x : Float, _y : Float) : Void
 	{
-		super(_x, _y, 24, 100); // radius, hitpoints
+		super(_x, _y, 16, 50); // radius, hitpoints
+
+		if(!initialised)
+			init();
+
+		bitmap = new Bitmap(bitmapData);
+		bitmap.x = -radius;
+		bitmap.y = -radius;
+		addChild(bitmap);
 	}
 
 	// ---------------------------------------------------------------------------
