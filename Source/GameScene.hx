@@ -142,15 +142,5 @@ class GameScene extends Scene
 			new Marine((3 + Math.cos(spawn_angle))*spawn_width/3, 
 										(3 + Math.sin(spawn_angle))*spawn_height/3);
 		}
-
-		trace("ALL MARINES");
-		for(object in GameObjectManager.getMatching(blah))
-			trace(object);
-	}
-
-	public function blah(go : GameObject) : Bool
-	{
-		//trace(Type.getClassName(Type.getClass(go))); 
-		return (Type.getClass(go) == Marine);
 	}
 }

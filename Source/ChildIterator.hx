@@ -17,7 +17,7 @@ class ChildIterator
 	private function flushNextMatching() : Void
 	{
 		while(nextIndex < container.numChildren 
-		&& ((condition == null) || !condition(container.getChildAt(nextIndex))))
+		&& (condition != null) && !condition(container.getChildAt(nextIndex)))
 			nextIndex++;
 	}
 
