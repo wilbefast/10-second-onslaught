@@ -62,21 +62,18 @@ class GameObjectManager extends Sprite
 
 	private function __add(newObject : GameObject) : Void
 	{
-		objects.push(newObject);
 		addChild(newObject);
 	}
 
 	private function __purge(object : GameObject) : Void
 	{
-		objects.remove(object);
 		removeChild(object);
 	}
 
 	private function __purgeAll() : Void
 	{
-		for(a in objects)
-			removeChild(a);
-		objects.clear();
+		while (numChildren > 0)
+    	removeChildAt(0);
 	}
 
 	private function __load(loader : Iterator<GameObject>) : Void
@@ -91,27 +88,43 @@ class GameObjectManager extends Sprite
 
 	private function onFrameEnter(event : Event) : Void
 	{
-		for(a in objects)
+		var previous_y : Float = Math.NEGATIVE_INFINITY;
+
+		// for each object
+		for(i in 0 ... numChildren)
 		{
+			var a : GameObject = cast(this.getChildAt(i), GameObject);
+
 			// purge objects
 			if(a.purge)
 			{
 				a.onPurge();
-				__remove(a);
+				__purge(a);
 				break;
 			}
 
 			// update objects
 			a.update(Time.getDelta());
 
-			// generate collisions
-			for(b in objects)
+			// for each other object
+			for(j in i+1 ... numChildren)
 			{
+				var b : GameObject = cast(this.getChildAt(j), GameObject);
+
+				// generate collisions between objects
 				if(a.isCollidingWith(b))
 					a.onCollisionWith(b);
 				if(b.isCollidingWith(a))
 					b.onCollisionWith(a);
 			}
+
+			// sort objects by y coordinate
+			if(a.y < previous_y)
+			{
+				trace("previous_y = ", previous_y, "y = ", a.y);
+				setChildIndex(a, i-1);
+			}
+			previous_y = a.y;
 		}
 	}
 }

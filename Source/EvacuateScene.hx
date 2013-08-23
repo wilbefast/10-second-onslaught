@@ -21,6 +21,7 @@ class EvacuateScene extends Scene
 		graphics.drawRect(100, 50, 200, 200);
 
 		addChild (new DefaultTextField("Save the colonies!", 200, 200));
+
 	}
 
 	// ---------------------------------------------------------------------------
