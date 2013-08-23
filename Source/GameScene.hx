@@ -1,4 +1,5 @@
 import flash.events.MouseEvent;
+import flash.display.DisplayObject;
 
 class GameScene extends Scene
 {
@@ -90,9 +91,9 @@ class GameScene extends Scene
 			trace(object);
 	}
 
-	public function blah(go : GameObject) : Bool
+	public function blah(go : DisplayObject) : Bool
 	{
-		trace(Type.getClassName(Type.getClass(go))); 
+		//trace(Type.getClassName(Type.getClass(go))); 
 		return (Type.getClassName(Type.getClass(go)) == "Marine");
 	}
 }

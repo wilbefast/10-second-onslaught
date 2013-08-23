@@ -1,6 +1,7 @@
 import flash.Lib;
 import flash.display.Sprite;
 import flash.events.Event;
+import flash.display.DisplayObject;
 
 class GameObjectManager extends Sprite 
 {
@@ -51,7 +52,7 @@ class GameObjectManager extends Sprite
 		get().__load(loader);
 	}
 
-	public static function getMatching(condition : GameObject->Bool) : SpriteChildIterator<GameObject>
+	public static function getMatching(condition : DisplayObject->Bool) : ChildIterator
 	{
 		return get().__getMatching(condition);
 	}
@@ -86,9 +87,9 @@ class GameObjectManager extends Sprite
 	// QUERY
 	// ---------------------------------------------------------------------------
 
-	private function __getMatching(condition : GameObject->Bool) : SpriteChildIterator<GameObject>
+	private function __getMatching(condition : DisplayObject->Bool) : ChildIterator
 	{
-		return (new SpriteChildIterator<GameObject>(this, condition));
+		return (new ChildIterator(this, condition));
 	}
 
 
