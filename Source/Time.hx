@@ -26,7 +26,7 @@ class Time
 
 	// shortcut static functions
 
-	public static function getDelta() : Int
+	public static function getDelta() : Float
 	{
     return get().__getDelta();
 	}
@@ -46,8 +46,8 @@ class Time
 	    previous = current;
   }
 
-	public function __getDelta() : Int
+	public function __getDelta() : Float
 	{
-    return delta;
+    return (cast(delta, Float)  / 1000); // convert to seconds
 	}
 }

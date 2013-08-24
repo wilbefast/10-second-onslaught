@@ -110,7 +110,6 @@ class GameObjectManager extends Sprite
 			for(j in i+1 ... numChildren)
 			{
 				var b : GameObject = cast(this.getChildAt(j), GameObject);
-
 				// generate collisions between objects
 				if(a.isCollidingWith(b))
 					a.onCollisionWith(b);

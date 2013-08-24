@@ -37,14 +37,13 @@ class GameObject extends Sprite
 
 	public function isCollidingWith(other : GameObject) : Bool
 	{
-		if(Useful.distance2({x : x, y : y}, {x : other.x, y : other.y}) < Useful.sqr(radius))
-			return true;
-		else 
-			return false;
+		return 
+			(Useful.distance2(x, y, other.x, other.y) < Useful.sqr(radius + other.radius));
 	}
 
 	public function onCollisionWith(other : GameObject) : Void
 	{
+		trace("GameObject::onCollisionWith");
 		// override me !
 	}
 
