@@ -92,8 +92,8 @@ class Unit extends GameObject
 		{
 			// repulsion vector
 			var repulse = new V2(x - other.x, y - other.y);
-			x += Useful.sqr(radius + other.radius)/repulse.x * 0.1 * Time.getDelta();
-			y += Useful.sqr(radius + other.radius)/repulse.y * 0.1 * Time.getDelta();
+			x += (radius + other.radius)/repulse.x * 10 * Time.getDelta();
+			y +=(radius + other.radius)/repulse.y * 10 * Time.getDelta();
 		}
 	}
 

@@ -13,7 +13,7 @@ class ZerglingClaws extends UnitWeapon
 {
 	public function new()
 	{
-		super(16, 0.5, function(u) u.hitpoints -= 10);
+		super(24, 1, function(u) u.hitpoints -= 20);
 	}
 }
 
@@ -29,30 +29,30 @@ class Zergling extends Unit
 
 	private static function init() : Void
 	{
-		sheet = BitmapImporter.create(Assets.getBitmapData("assets/zergling.png"), 8, 2, 48, 48);
+		sheet = BitmapImporter.create(Assets.getBitmapData("assets/zergling.png"), 8, 5, 48, 48);
 		sheet.addBehavior(new BehaviorData("walk_NE", [0, 1], true, 10));
-		sheet.addBehavior(new BehaviorData("bite_NE", [3, 2], false, 10));
+		sheet.addBehavior(new BehaviorData("bite_NE", [3, 3, 2], false, 2));
 
 		sheet.addBehavior(new BehaviorData("walk_NW", [4, 5], true, 10));
-		sheet.addBehavior(new BehaviorData("bite_NW", [7, 6], false, 10));
+		sheet.addBehavior(new BehaviorData("bite_NW", [7, 7, 6], false, 2));
 
 		sheet.addBehavior(new BehaviorData("walk_N", [8, 9], true, 10));
-		sheet.addBehavior(new BehaviorData("bite_N", [11, 10], false, 10));
+		sheet.addBehavior(new BehaviorData("bite_N", [11, 10], false, 2));
 
 		sheet.addBehavior(new BehaviorData("walk_SE", [16, 17], true, 10));
-		sheet.addBehavior(new BehaviorData("bite_SE", [19, 18], false, 10));
+		sheet.addBehavior(new BehaviorData("bite_SE", [19, 18], false, 25));
 
 		sheet.addBehavior(new BehaviorData("walk_SW", [20, 21], true, 10));
-		sheet.addBehavior(new BehaviorData("bite_SW", [23, 22], false, 10));
+		sheet.addBehavior(new BehaviorData("bite_SW", [23, 22], false, 2));
 
 		sheet.addBehavior(new BehaviorData("walk_S", [24, 25], true, 10));
-		sheet.addBehavior(new BehaviorData("bite_S", [27, 26], false, 10));
+		sheet.addBehavior(new BehaviorData("bite_S", [27, 26], false, 2));
 
 		sheet.addBehavior(new BehaviorData("walk_E", [32, 33], true, 10));
-		sheet.addBehavior(new BehaviorData("bite_E", [35, 34], false, 10));
+		sheet.addBehavior(new BehaviorData("bite_E", [35, 34], false, 2));
 
 		sheet.addBehavior(new BehaviorData("walk_W", [36, 37], true, 10));
-		sheet.addBehavior(new BehaviorData("bite_W", [39, 38], false, 10));
+		sheet.addBehavior(new BehaviorData("bite_W", [39, 38], false, 2));
 
 		SoundManager.loadSound("zergling_die");
 		SoundManager.loadSound("zergling_attack");
@@ -95,7 +95,10 @@ class Zergling extends Unit
 	// UPDATE
 	// ---------------------------------------------------------------------------
 
-	private var dust_timer : Float = 0;
+	private static inline var WALK = 0;
+	private static inline var BITE = 1;
+
+	private var state : Int = WALK;
 
 	public override function update(dt : Float) : Void
 	{
@@ -123,8 +126,7 @@ class Zergling extends Unit
 				x += toTargetNormalised.x * Time.getDelta() * SPEED;
 				y += toTargetNormalised.y * Time.getDelta() * SPEED;
 
-				animated.showBehavior("walk_NE");
-				//animated.showBehavior(facing + "_move");
+				animated.showBehavior("walk_" + facing);
 			}
 
 			// attack target
@@ -132,7 +134,7 @@ class Zergling extends Unit
 			{
 				weapon.fireAt(target);
 
-				//animated.showBehavior(facing + "_bite");
+				animated.showBehavior("bite_" + facing);
 
 				SoundManager.playSound("zergling_attack");
 			}
@@ -164,7 +166,7 @@ class Zergling extends Unit
 	public override function onPurge() : Void
 	{
 		// create gibs
-		new SpecialEffect(x, y-1, sheet, "death");
+		//new SpecialEffect(x, y-1, sheet, "death");
 
 		// play sound
 		SoundManager.playSound("zergling_die");
