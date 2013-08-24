@@ -5,6 +5,9 @@ import flash.text.TextFormat;
 import flash.events.Event;
 import flash.events.MouseEvent;
 
+import openfl.Assets;
+import flash.display.Bitmap;
+import flash.display.BitmapData;
 
 class TitleScene extends Scene 
 {
@@ -19,6 +22,11 @@ class TitleScene extends Scene
 		// draw a shape
 		graphics.beginFill(0xFF0000);
 		graphics.drawRect(100, 50, 200, 200);
+
+		var title = new Bitmap(Assets.getBitmapData("assets/title.jpg"));
+		title.x = 100;
+		title.y = 300;
+		addChild(title);
 
 		addChild (new DefaultTextField("I am a title: Click to start game", 200, 200));
 	}

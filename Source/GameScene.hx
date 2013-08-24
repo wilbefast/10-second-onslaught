@@ -224,6 +224,18 @@ class GameScene extends Scene
 		buttonSwitchToAttack.x = bombsCostBitmap.x + bombsCostBitmap.width ;
 		buttonSwitchToAttack.y = uiBitmap.y ;
 		addChild(buttonSwitchToAttack);
+
+
+
+
+
+
+		// ---- CUT HERE ---
+
+		var title = new Bitmap(Assets.getBitmapData("assets/title2.jpg"));
+		title.x = 300;
+		title.y = 100;
+		addChild(title);
 	}
 	
 	private function playAttackPhase()
