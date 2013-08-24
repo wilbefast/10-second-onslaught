@@ -6,6 +6,7 @@ import flash.events.MouseEvent;
 class Main extends Sprite
 {
 
+	private static var timer : Int = 10 ;
 	// ---------------------------------------------------------------------------
 	// CONSTRUCTOR
 	// ---------------------------------------------------------------------------
@@ -17,7 +18,6 @@ class Main extends Sprite
 		DefaultFont.load();
 
 		SceneManager.add("Title", new TitleScene());
-		SceneManager.add("Deploy", new DeployScene());
-		SceneManager.add("Evacuate", new EvacuateScene());
+		SceneManager.add("Game", new GameScene(timer));
 	}
 }
