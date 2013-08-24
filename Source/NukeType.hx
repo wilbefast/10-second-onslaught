@@ -13,4 +13,10 @@ class NukeType extends UnitType
 		this.icon = Assets.getBitmapData("assets/GUI_ic_bombe_01.png");
 		this.mouseOverText = "Bombs rock !";
 	}
+	
+	public function increment() : Void
+	{
+			super();
+			nukeCount = nukeCount + 1;
+	}
 }
