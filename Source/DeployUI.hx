@@ -17,20 +17,37 @@ class DeployUI extends Sprite
 
 		resourcesCounter = new ResourcesCounterUI();
 		addChild(resourcesCounter);
-		resourcesCounter.y = replaysCounter.height;
 
 		buyMarine = new BuyUI(); // TODO - parameters
 		addChild(buyMarine);
-		buyMarine.x = replaysCounter.width;
 
 		buyNuke = new BuyUI(); // TODO - parameters
 		addChild(buyNuke);
-		buyNuke.x = resourcesCounter.width;
-		buyNuke.y = buyMarine.y + buyMarine.height;
 
 		startButton = new StartButtonUI();
 		addChild(startButton);
-		startButton.x = Math.max(buyMarine.x + buyMarine.width, buyNuke.x + buyNuke.width);
+
+		recalculateLayout();
+	}
+
+	public function recalculateLayout() : Void
+	{
+		// size
+		if(stage != null)
+		{
+			buyMarine.width = buyNuke.width = stage.stageWidth*0.5;
+			resourcesCounter.width = replaysCounter.width = stage.stageWidth*0.3;
+			startButton.width = Math.min(startButton.height, stage.stageWidth*0.2);
+
+			var rightmost = Math.max(buyMarine.x + buyMarine.width, buyNuke.x + buyNuke.width);
+			startButton.x = rightmost + (stage.stageWidth - rightmost - startButton.width)/2;
+		}
+
+		// position
+		resourcesCounter.y = replaysCounter.height;
+		buyMarine.x = replaysCounter.width;
+		buyNuke.x = resourcesCounter.width;
+		buyNuke.y = buyMarine.y + buyMarine.height;
 	}
 
 

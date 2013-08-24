@@ -214,6 +214,7 @@ class GameScene extends Scene
 		addChild(deploy);
 		deploy.y = timeline.y + timeline.height;
 		deploy.height = stage.stageHeight - deploy.y;
+		deploy.recalculateLayout();
 	}
 
 
