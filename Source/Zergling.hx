@@ -25,8 +25,6 @@ class Zergling extends Unit
 
 	private static var sheet : Spritesheet;
 
-	private static var claws : UnitWeapon;
-
 	private static function init() : Void
 	{
 		sheet = BitmapImporter.create(Assets.getBitmapData("assets/zergling.png"), 8, 1, 48, 48);
@@ -58,7 +56,7 @@ class Zergling extends Unit
 		animated = new AnimatedSprite(sheet, true);
 		animated.showBehavior("idle");
 		animated.x = -animated.width/2;
-		animated.y = -animated.height/2;
+		animated.y = -animated.height*0.7;
 		addChild(animated);
 	}
 

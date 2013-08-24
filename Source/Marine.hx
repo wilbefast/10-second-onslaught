@@ -58,7 +58,7 @@ class Marine extends Unit
 		animated = new AnimatedSprite(sheet, true);
 		animated.showBehavior("idle");
 		animated.x = -animated.width/2;
-		animated.y = -animated.height/2;
+		animated.y = -animated.height*0.7;
 		addChild(animated);
 	}
 
