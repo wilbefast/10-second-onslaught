@@ -128,6 +128,11 @@ class GameScene extends Scene
 		}
 	}
 
+	public override function onMouseClick(event : MouseEvent) : Void
+	{
+		switchPhase();
+	}
+
 	// ---------------------------------------------------------------------------
 	// PHASE MANAGEMENT
 	// ---------------------------------------------------------------------------
@@ -154,20 +159,6 @@ class GameScene extends Scene
 	// ---------------------------------------------------------------------------
 	// LAYOUTS
 	// ---------------------------------------------------------------------------
-
-	public function layoutCommon()
-	{
-		// map
-		addChild(map);
-		map.width = stage.stageWidth;
-		map.x = (stage.stageWidth - map.width)/2;
-
-		// timeline
-		addChild(timeline);
-		timeline.width = stage.stageWidth;
-		timeline.x = 0;
-		timeline.y = map.y + map.height;
-	}
 
 	public function recalculateLayout()
 	{
@@ -207,8 +198,17 @@ class GameScene extends Scene
 		while (numChildren > 0) 
 			this.removeChildAt(0);
 
-		// shared UI elements
-		layoutCommon();
+		// map
+		addChild(map);
+		map.width = stage.stageWidth;
+		map.height = stage.stageHeight * 0.8;
+		map.x = map.y = 0;
+
+		// timeline
+		addChild(timeline);
+		timeline.width = stage.stageWidth;
+		timeline.x = 0;
+		timeline.y = map.y + map.height;
 
 		// special deploy layout
 		addChild(deploy);
@@ -272,24 +272,18 @@ class GameScene extends Scene
 		while (numChildren > 0) 
 			this.removeChildAt(0);
 
-		// shared UI elements
-		layoutCommon();
+		// timeline
+		addChild(timeline);
+		timeline.width = stage.stageWidth;
+		timeline.x = 0;
+		timeline.y = stage.stageHeight - timeline.height;
+
+		// map
+		addChild(map);
+		map.width = stage.stageWidth;
+		map.height = timeline.y;
+		map.x = map.y = 0;
 		
-		// new Layout
-		// var mapBitmap : Bitmap = new Bitmap(mapA_bd) ;
-		// var uiBitmap : Bitmap = new Bitmap(uiA_bd) ;
-		// var timelineBitmap : Bitmap = new Bitmap(timelineA_bd) ;
-		// mapBitmap.x = 12 ;
-		// uiBitmap.x = 12 ;
-		// timelineBitmap.x = 12 ;
-		// mapBitmap.y = 12 ;
-		// timelineBitmap.y = mapBitmap.height + 12 ;
-		// uiBitmap.y = mapBitmap.height + timelineBitmap.height + 12;
-		// map.addChild(mapBitmap);
-		// ui.addChild(uiBitmap);
-		// timeline.addChild(timelineBitmap);
-		// addChild(map);
-		// addChild(ui);
-		// addChild(timeline);
+
 	}
 }
