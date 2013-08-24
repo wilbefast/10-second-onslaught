@@ -6,6 +6,9 @@ import flash.display.Sprite;
 import flash.display.DisplayObject;
 import flash.events.Event;
 
+import motion.Actuate;
+import motion.easing.Quad;
+
 class GameScene extends Scene
 {
 	// ---------------------------------------------------------------------------
@@ -47,7 +50,6 @@ class GameScene extends Scene
 		map = new MapUI(this);
 		timeline = new TimelineUI(this);
 		deploy = new DeployUI(this);
-
 	}
 
 	public function getSession()
@@ -66,6 +68,35 @@ class GameScene extends Scene
 
 	public override function onEnter(previous : Scene) : Void 
 	{
+		// build hierarchy
+		// ---------------------------------------------------------------------------
+
+		// map
+		addChild(map);
+		map.width = stage.stageWidth;
+		map.height = stage.stageHeight;
+		map.x = map.y = 0;
+
+		// game objects
+		addChild(GameObjectManager.get());
+
+		// timeline
+		addChild(timeline);
+		timeline.width = stage.stageWidth;
+		timeline.x = 0;
+		timeline.y = stage.stageHeight*0.8 - timeline.height;
+
+		// special deploy layout
+		addChild(deploy);
+		deploy.height = stage.stageHeight*0.2;
+		deploy.y = stage.stageHeight - deploy.height;
+		deploy.recalculateLayout();
+
+		// radial menu
+		addChild(radialMenu);
+
+		// build hierarchy
+		// ---------------------------------------------------------------------------
 		recalculateLayout();
 		playDeployPhase();
 	}
@@ -118,6 +149,7 @@ class GameScene extends Scene
 			case PHASE_ATTACK:
 				playDeployPhase();
 		}
+
 	}
 
 	// ---------------------------------------------------------------------------
@@ -126,15 +158,6 @@ class GameScene extends Scene
 
 	public function recalculateLayout()
 	{
-		switch(phase)
-		{
-			case PHASE_DEPLOY:
-				layoutDeploy();
-
-			case PHASE_ATTACK:
-				layoutAttack();
-		}
-
 		GameObjectManager.setCameraPosition(map.x + map.width/2, map.y + map.height/2);
 	}
 
@@ -154,40 +177,14 @@ class GameScene extends Scene
 		// clear all dudes
 		GameObjectManager.purgeAll();
 
+		// show deploy layout
+		Actuate.tween(timeline, 1, { y : stage.stageHeight-deploy.height-timeline.height }, true)
+					.ease (Quad.easeOut);
+		Actuate.tween(deploy, 1, { y : stage.stageHeight-deploy.height }, true)
+					.ease (Quad.easeOut);
+
 		// create colonies
 		spawnColonies();
-
-		// Reset Layout
-		layoutDeploy();
-	}
-	
-	private function layoutDeploy()
-	{
-		// clear UI
-		while (numChildren > 0) 
-			this.removeChildAt(0);
-
-		// map
-		addChild(map);
-		map.width = stage.stageWidth;
-		map.height = stage.stageHeight;
-		map.x = map.y = 0;
-
-		// timeline
-		addChild(timeline);
-		timeline.width = stage.stageWidth;
-		timeline.x = 0;
-		timeline.y = stage.stageHeight*0.8;
-
-		// special deploy layout
-		addChild(deploy);
-		deploy.y = timeline.y + timeline.height;
-		deploy.height = stage.stageHeight - deploy.y;
-		deploy.recalculateLayout();
-
-		// radial menu
-		addChild(radialMenu);
-		//radialMenu.visible = false;
 	}
 
 	// ---------------------------------------------------------------------------
@@ -199,71 +196,15 @@ class GameScene extends Scene
 	{
 		// phase is now attack phase
 		phase = PHASE_ATTACK;
-	
-		// change layout
-		layoutAttack();
+
+		// hide deploy layout
+		Actuate.tween(timeline, 1, { y : stage.stageHeight-timeline.height }, true)
+					.ease (Quad.easeOut);
+		Actuate.tween(deploy, 1, { y : stage.stageHeight }, true)
+					.ease (Quad.easeOut);
 
 		// create units
 		spawnUnits();
-
-		// ------------------------------------------------------------------------------
-		// NB - these dudes should be spawned based on deploy
-
-		// create dudes
-		/*var spawn_width = 800; // TODO - get from stage.stageWidth
-		var spawn_height = 600; // TODO - get from stage.stageWidth
-
-		// create zerglings
-		for(i in 0 ... 30)
-		{
-			var spawn_angle = Math.random()*Math.PI*2;
-			new Zergling(Math.cos(spawn_angle)*spawn_width, 
-										Math.sin(spawn_angle)*spawn_height);
-		}
-
-		// create  nukes
-		for(i in 0 ... 3)
-		{
-			var spawn_angle = Math.random()*Math.PI*2;
-			new Nuke(Math.cos(spawn_angle)*spawn_width/2, 
-										Math.sin(spawn_angle)*spawn_height/2);
-		}
-
-
-		// create marines
-		for(i in 0 ... 10)
-		{
-			var spawn_angle = Math.random()*Math.PI*2;
-			new Marine(Math.cos(spawn_angle)*spawn_width/4, 
-										Math.sin(spawn_angle)*spawn_height/4);
-		}
-
-		// create colonies
-		for(i in 0 ... 5)
-		{
-			var spawn_angle = Math.random()*Math.PI*2;
-			new Colony(Math.cos(spawn_angle)*spawn_width/8, 
-										Math.sin(spawn_angle)*spawn_height/8);
-		}*/
-	}
-
-	public function layoutAttack()
-	{
-		// clear UI
-		while (numChildren > 0) 
-			this.removeChildAt(0);
-
-		// map
-		addChild(map);
-		map.width = stage.stageWidth;
-		map.height = stage.stageHeight;
-		map.x = map.y = 0;
-
-		// timeline
-		addChild(timeline);
-		timeline.width = stage.stageWidth;
-		timeline.x = 0;
-		timeline.y = stage.stageHeight - timeline.height;
 	}
 
 	// ---------------------------------------------------------------------------

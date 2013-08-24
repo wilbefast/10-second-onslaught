@@ -33,11 +33,6 @@ class GameObjectManager extends Sprite
 
 	// shortcut static functions
 
-	public static function init() : Void
-	{
-		get();
-	}
-
 	public static function add(newObject : GameObject) : Void
 	{
 		get().__add(newObject);
