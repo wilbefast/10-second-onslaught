@@ -74,13 +74,22 @@ class DeployUI extends Sprite
 		// size
 		if(stage != null)
 		{
+			var available_height = (stage.stageHeight - y);
+
 			background.width = stage.stageWidth;
+			background.height = available_height;
 			
 			buyMarine.width = buyNuke.width = stage.stageWidth*0.5;
+			buyMarine.height = buyNuke.height = available_height/2;
+
 			resourcesCounter.width = replaysCounter.width = stage.stageWidth*0.3;
-			startButton.width = Math.min(startButton.height, stage.stageWidth*0.2);
+			resourcesCounter.height = available_height*0.67;
+
+			replaysCounter.height = available_height*0.33;
 
 			var rightmost = Math.max(buyMarine.x + buyMarine.width, buyNuke.x + buyNuke.width);
+			var available_width = (stage.stageWidth - rightmost);
+			startButton.width = startButton.height = Math.min(available_width, available_height);
 			startButton.x = rightmost + (stage.stageWidth - rightmost - startButton.width)/2;
 		}
 
