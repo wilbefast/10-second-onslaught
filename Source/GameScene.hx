@@ -56,6 +56,7 @@ class GameScene extends Scene
 
 	private var timeline : TimelineUI;
 	private var map : MapUI;
+	private var deploy : DeployUI;
 
 	// private var replay : Sprite;
 	// private var money : Sprite;
@@ -85,6 +86,7 @@ class GameScene extends Scene
 
   	map = new MapUI();
 		timeline = new TimelineUI();
+		deploy = new DeployUI();
 
 		// replay = new Sprite();
 		// money = new Sprite();
@@ -110,19 +112,6 @@ class GameScene extends Scene
 	public override function onEnter(previous : Scene) : Void 
 	{
 		playDeployPhase();
-	}
-
-	public override function onMouseDown(event : MouseEvent) : Void
-	{
-	}
-
-	public override function onMouseUp(event : MouseEvent) : Void
-	{
-	}
-	
-	public override function onMouseClick(event : MouseEvent) : Void
-	{
-
 	}
 
 	// la fin du décompte pour la phase d'attaque. Pour la phase de deploy c'est dans le bouton ButtonDeployEnd
@@ -172,6 +161,12 @@ class GameScene extends Scene
 		addChild(map);
 		map.width = stage.stageWidth;
 		map.x = (stage.stageWidth - map.width)/2;
+
+		// timeline
+		addChild(timeline);
+		timeline.width = stage.stageWidth;
+		timeline.x = 0;
+		timeline.y = map.y + map.height;
 	}
 
 	public function recalculateLayout()
@@ -215,11 +210,10 @@ class GameScene extends Scene
 		// shared UI elements
 		layoutCommon();
 
-		// timeline
-		addChild(timeline);
-		timeline.width = stage.stageWidth*0.9;
-		timeline.x = (stage.stageWidth - timeline.width)/2;
-		timeline.y = stage.stageHeight - 100;
+		// special deploy layout
+		addChild(deploy);
+		deploy.y = timeline.y + timeline.height;
+		deploy.height = stage.stageHeight - deploy.y;
 	}
 
 
@@ -279,12 +273,6 @@ class GameScene extends Scene
 
 		// shared UI elements
 		layoutCommon();
-
-		// timeline
-		addChild(timeline);
-		timeline.width = stage.stageWidth*0.9;
-		timeline.x = (stage.stageWidth - timeline.width)/2;
-		timeline.y = stage.stageHeight - timeline.height;
 		
 		// new Layout
 		// var mapBitmap : Bitmap = new Bitmap(mapA_bd) ;
