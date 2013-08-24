@@ -29,7 +29,7 @@ class Zergling extends Unit
 
 	private static function init() : Void
 	{
-		sheet = BitmapImporter.create(Assets.getBitmapData("assets/zergling.png"), 8, 5, 48, 48);
+		sheet = BitmapImporter.create(Assets.getBitmapData("assets/zergling.png"), 8, 6, 48, 48);
 		sheet.addBehavior(new BehaviorData("walk_NE", [0, 1], true, 10));
 		sheet.addBehavior(new BehaviorData("bite_NE", [3, 3, 2], false, 2));
 
@@ -53,6 +53,8 @@ class Zergling extends Unit
 
 		sheet.addBehavior(new BehaviorData("walk_W", [36, 37], true, 10));
 		sheet.addBehavior(new BehaviorData("bite_W", [39, 38], false, 2));
+
+		sheet.addBehavior(new BehaviorData("death", [40, 41, 42, 43, 44], false, 5));
 
 		SoundManager.loadSound("zergling_die");
 		SoundManager.loadSound("zergling_attack");
@@ -166,7 +168,7 @@ class Zergling extends Unit
 	public override function onPurge() : Void
 	{
 		// create gibs
-		//new SpecialEffect(x, y-1, sheet, "death");
+		new SpecialEffect(x, y-1, sheet, "death");
 
 		// play sound
 		SoundManager.playSound("zergling_die");
