@@ -1,12 +1,15 @@
 import flash.Lib;
 import flash.display.Sprite;
+import flash.system.System;
 import flash.events.Event;
 import flash.events.MouseEvent;
-
+import flash.events.KeyboardEvent;
 import flash.media.Sound;
 import flash.media.SoundChannel;
 
 import openfl.Assets;
+
+
 
 class Main extends Sprite
 {
@@ -30,6 +33,8 @@ class Main extends Sprite
 
 		snd_music = Assets.getSound("assets/music.mp3"); // flash doesn't like OOG :'(
 
+		Lib.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyboard);
+
 		// start music
 		//channel = snd_music.play();
 		//channel.addEventListener(Event.SOUND_COMPLETE, onMusicEnd);
@@ -39,5 +44,11 @@ class Main extends Sprite
 	{
 		channel = snd_music.play();
 		channel.addEventListener(Event.SOUND_COMPLETE, onMusicEnd);
+	}
+
+	private function onKeyboard(event : KeyboardEvent) : Void
+	{
+		if(event.keyCode == 27) // exit
+			System.exit(0);
 	}
 }

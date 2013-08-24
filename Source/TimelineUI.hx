@@ -3,7 +3,7 @@ import flash.display.Bitmap;
 import flash.display.BitmapData;
 import openfl.Assets;
 
-class Timeline extends Sprite 
+class TimelineUI extends Sprite 
 {
 	private static var bitmapData : BitmapData;
 
