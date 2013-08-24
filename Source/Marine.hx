@@ -8,11 +8,13 @@ import spritesheet.data.BehaviorData;
 import spritesheet.importers.BitmapImporter;
 import spritesheet.Spritesheet;
 
+import flash.media.Sound;
+
 class PlasmaGun extends UnitWeapon
 {
 	public function new()
 	{
-		super(128, 0.1, function(u) u.hitpoints -= 1);
+		super(128, 1, function(u) u.hitpoints -= 10);
 	}
 }
 
@@ -25,6 +27,8 @@ class Marine extends Unit
 	private static var initialised : Bool = false;
 
 	private static var sheet : Spritesheet;
+	private static var snd_die : Sound;
+	private static var snd_attack : Sound;
 
 	private static function init() : Void
 	{
@@ -32,6 +36,9 @@ class Marine extends Unit
 		sheet.addBehavior(new BehaviorData("idle", [0], true, 10));
 		sheet.addBehavior(new BehaviorData("shoot", [1, 2], true, 3));
 		sheet.addBehavior(new BehaviorData("death", [5, 6, 7, 8, 9], true, 10));
+
+		snd_die = Assets.getSound ("assets/marine_die.wav");
+		snd_attack = Assets.getSound ("assets/marine_shoot.wav");
 
 		initialised = true;
 	}
@@ -83,8 +90,11 @@ class Marine extends Unit
 			var toTarget = new V2(target.x - x, target.y - y);
 
 			// attack target
-			if(toTarget.getNorm() - radius - target.radius <= weapon.range)
+			if(weapon.timeTillReloaded == 0 && toTarget.getNorm() - radius - target.radius <= weapon.range)
+			{
 				weapon.fireAt(target);
+				snd_attack.play();
+			}
 		}
 	}
 
@@ -103,7 +113,11 @@ class Marine extends Unit
 
 	public override function onPurge() : Void
 	{
+		// create gibs
 		new SpecialEffect(x, y, sheet, "death");
+
+		// play sound
+		snd_die.play();
 	}
 
 	// ---------------------------------------------------------------------------

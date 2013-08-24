@@ -11,7 +11,7 @@ class ZerglingClaws extends UnitWeapon
 {
 	public function new()
 	{
-		super(16, 1, function(u) u.hitpoints -= 10);
+		super(16, 0.5, function(u) u.hitpoints -= 10);
 	}
 }
 
@@ -89,7 +89,7 @@ class Zergling extends Unit
 			}
 
 			// attack target
-			else
+			else if(weapon.timeTillReloaded == 0)
 				weapon.fireAt(target);
 		}
 	}

@@ -21,6 +21,10 @@ class Unit extends GameObject
 		// check for death
 		if(hitpoints <= 0)
 			purge = true;
+
+		// reload weapon
+		if(weapon != null)
+			weapon.reload();
 	}
 
 	// ---------------------------------------------------------------------------
