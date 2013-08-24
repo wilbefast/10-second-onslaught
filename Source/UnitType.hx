@@ -1,13 +1,13 @@
 import flash.display.BitmapData;
 
-class UnitType extends Unit
+class UnitType
 {
 	private var instanceNumber : Int;
 	private var price : Int;
 	private var icon : BitmapData;
 	private var mouseOverText : String;
 	
-	//Units
+	// Units
 	
 	private var marineCount : Int;
 	private var nukeCount : Int;
