@@ -1,4 +1,5 @@
 import flash.display.BitmapData;
+import haxe.ds.StringMap;
 
 class UnitType
 {
@@ -6,6 +7,8 @@ class UnitType
 	private var price : Int;
 	private var icon : BitmapData;
 	private var mouseOverText : String;
+	
+	public static var byName : StringMap<UnitType> ;
 	
 	// Units
 	
