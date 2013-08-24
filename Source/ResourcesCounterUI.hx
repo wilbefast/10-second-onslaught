@@ -46,23 +46,8 @@ class ResourcesCounterUI extends Sprite
 		
 		session_attribut = session;
 		money = session_attribut.getMoney();
-		
-		Font.registerFont(DefaultFont);
-		
-		var format = new TextFormat("Katamotz Ikasi", 30, 0x7A0026);
-		textField = new TextField();
-		
-		textField.defaultTextFormat = format;
-		textField.embedFonts = true;
-		textField.selectable = false;
-		
-		textField.x = 50;
-		textField.y = 50;
-		textField.width = 200;
-		
-		textField.text = "Money : " + money ;
-		
-		addChild (textField);
+		textField = new DefaultTextField("Money : " + money);
+		addChild(textField);
 	}
 	
 	public function update()

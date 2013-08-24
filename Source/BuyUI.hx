@@ -52,17 +52,20 @@ private var nuke : UnitType;
 		icon = new Sprite();
 		icon.addChild(new Bitmap(unitType.icon));
 		addChild(icon);
+		icon.width = width/4;
 
 		up = new Sprite();
 		up.addChild(new Bitmap(up_data));
 		up.x = icon.x + icon.width;
 		up.y = icon.y;
 		addChild(up);
+		up.width = width/6;
 
 		down = new Sprite();
 		down.addChild(new Bitmap(down_data));
 		down.x = icon.x + icon.width;
 		down.y = icon.y + icon.height - down.height;
 		addChild(down);
+		down.width = width/6;
 	}
 }

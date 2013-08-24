@@ -43,33 +43,19 @@ class ReplaysCounterUI extends Sprite
 
 		super();
 		
-		addChild(new Bitmap(bitmapData));
+		var background = new Bitmap(bitmapData);
+		addChild(background);
 		
 		session_attribut = session;
 		nbReplay = session_attribut.getNbReplay();
-		
-		Font.registerFont(DefaultFont);
-		
-		var format = new TextFormat("Katamotz Ikasi", 30, 0x7A0026);
-		textField = new TextField();
-		
-		textField.defaultTextFormat = format;
-		textField.embedFonts = true;
-		textField.selectable = false;
-		
-		textField.x = 200;
-		textField.y = 5;
-		textField.width = 50;
-		textField.height = 30;
-		
-		textField.text = " " + nbReplay;
-
+		textField = new DefaultTextField("Attempt #" + nbReplay);
+		textField.height = background.height;
 		addChild(textField);
 	}
 	
 	public function update()
 	{
 		nbReplay = session_attribut.getNbReplay();
-		textField.text = " " + nbReplay ;
+		textField.text = "Attempt #" + nbReplay ;
 	}
 }

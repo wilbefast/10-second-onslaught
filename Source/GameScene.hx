@@ -162,7 +162,7 @@ class GameScene extends Scene
 		addChild(timeline);
 		timeline.width = stage.stageWidth;
 		timeline.x = 0;
-		timeline.y = stage.stageHeight*0.7;
+		timeline.y = stage.stageHeight*0.8;
 
 		// special deploy layout
 		addChild(deploy);
@@ -190,8 +190,8 @@ class GameScene extends Scene
 		// NB - these dudes should be spawned based on deploy
 
 		// create dudes
-		var spawn_width = 400; // TODO - get from stage.stageWidth
-		var spawn_height = 300; // TODO - get from stage.stageWidth
+		var spawn_width = 800; // TODO - get from stage.stageWidth
+		var spawn_height = 600; // TODO - get from stage.stageWidth
 
 		// create zerglings
 		for(i in 0 ... 30)
@@ -205,16 +205,16 @@ class GameScene extends Scene
 		for(i in 0 ... 10)
 		{
 			var spawn_angle = Math.random()*Math.PI*2;
-			new Marine(Math.cos(spawn_angle)*spawn_width/2, 
-										Math.sin(spawn_angle)*spawn_height/2);
+			new Marine(Math.cos(spawn_angle)*spawn_width/4, 
+										Math.sin(spawn_angle)*spawn_height/4);
 		}
 
 		// create colonies
 		for(i in 0 ... 5)
 		{
 			var spawn_angle = Math.random()*Math.PI*2;
-			new Colony(Math.cos(spawn_angle)*spawn_width/5, 
-										Math.sin(spawn_angle)*spawn_height/5);
+			new Colony(Math.cos(spawn_angle)*spawn_width/8, 
+										Math.sin(spawn_angle)*spawn_height/8);
 		}
 	}
 
