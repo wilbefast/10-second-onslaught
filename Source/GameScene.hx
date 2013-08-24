@@ -4,6 +4,7 @@ import flash.display.Bitmap;
 import openfl.Assets;
 import flash.display.Sprite;
 import flash.display.DisplayObject;
+import flash.events.Event;
 
 class GameScene extends Scene
 {
@@ -21,12 +22,15 @@ class GameScene extends Scene
 	private var ui_cont : Sprite;
 	private var timeline_cont : Sprite;
 	
+	private var timer : Float ;
+	
 	public function new (ptimer : Int) 
 	{
 		super ();
 		if (!initialised) init();
 		gameState = true ;
 		session = new Session(ptimer);
+		timer = session.getTimer() * 100 ;
 		map_cont = new Sprite();
         ui_cont = new Sprite();
 		timeline_cont = new Sprite();
@@ -48,23 +52,29 @@ class GameScene extends Scene
 		initialised = true ;
 	}
 	
-	//changer par un clic bouton ou la fin du décompte
-	public override function onMouseClick(event : MouseEvent) : Void
+	//la fin du décompte pour la phase d'attaque. Pour la phase de deploy c'est dans le bouton ButtonDeployEnd
+	/*public override function onMouseClick(event : MouseEvent) : Void
 	{
 		switchPhase();
-/*		if (gameState) playDeployPhase();
-		else playAttackPhase();*/
+	}*/
+	public override function onFrameEnter(event : Event) : Void
+	{
+		if (!gameState) 
+		{
+			timer -= Time.getDelta();
+			if (timer < 0) switchPhase();
+		}
 	}
 	
 	public function switchPhase()
 	{
+		timer = session.getTimer() ;
 		if (gameState) gameState = false ;
 		else
 		{
 			gameState = true ;
 			session.incrementNbReplay();
 		}
-		trace("gameState : " + gameState + " " + session.getTimer() + " nbReplay :" + session.getNbReplay() );
 		if (gameState) playDeployPhase();
 		else playAttackPhase();
 	}
@@ -148,9 +158,11 @@ class GameScene extends Scene
 										(3 + Math.sin(spawn_angle))*spawn_height/3);
 		}
 
-		trace("ALL MARINES");
-		for(object in GameObjectManager.getMatching(blah))
-			trace(object);
+		//trace("ALL MARINES");
+		/*for(object in GameObjectManager.getMatching(blah))
+			trace(object);*/
+			
+		
 	}
 
 	public function blah(go : GameObject) : Bool
