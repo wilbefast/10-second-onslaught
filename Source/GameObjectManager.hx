@@ -74,6 +74,16 @@ class GameObjectManager extends Sprite
 
 	private function __add(newObject : GameObject) : Void
 	{
+		for(i in 0 ... numChildren)
+		{
+			if(this.getChildAt(i).y > newObject.y)
+			{
+				addChildAt(newObject, i);
+				return;
+			}
+		}
+
+		// assuming we didn't return, add to the end of the list
 		addChild(newObject);
 	}
 
