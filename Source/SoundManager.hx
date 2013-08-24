@@ -1,6 +1,10 @@
 import flash.media.Sound;
+import flash.media.SoundChannel;
 import haxe.ds.StringMap;
-import flash.media.SoundChannel
+
+import flash.events.Event;
+
+import openfl.Assets;
 
 class SoundManager
 {
@@ -12,7 +16,7 @@ class SoundManager
 
 	private function new()
 	{
-		super();
+		sounds = new StringMap< { sound : Sound, instances : Int, max_instances : Int } >();
 	}
 
 	private static var instance : SoundManager;
@@ -40,7 +44,7 @@ class SoundManager
 	// SOUNDS
 	// ---------------------------------------------------------------------------
 
-	private var sounds : StringMap< { sound : Sound, instances : Int } >
+	private var sounds : StringMap< { sound : Sound, instances : Int, max_instances : Int } >;
 
 	private var channel : SoundChannel;
 
@@ -49,7 +53,7 @@ class SoundManager
 		sounds.set(name, { 
 			sound : Assets.getSound ("assets/" + name + ".wav"), 
 			instances : 0,
-			max_instances = _max_instances
+			max_instances : _max_instances
 		});
 	}
 
@@ -61,7 +65,7 @@ class SoundManager
 		{
 			value.instances++;
 			value.sound.play().addEventListener(Event.SOUND_COMPLETE, 
-				function() value.instances--);
+				function(e) value.instances--);
 			return true;
 		}
 		else

@@ -28,9 +28,6 @@ class Marine extends Unit
 
 	private static var sheet : Spritesheet;
 
-	private static var snd_die : Sound;
-	private static var snd_attack : Sound;
-
 	private static function init() : Void
 	{
 		sheet = BitmapImporter.create(Assets.getBitmapData("assets/marine.png"), 10, 6, 48, 48);
@@ -67,8 +64,8 @@ class Marine extends Unit
 
 		//! flipped die is not used
 
-		snd_die = Assets.getSound ("assets/marine_die.wav");
-		snd_attack = Assets.getSound ("assets/marine_shoot.wav");
+		SoundManager.loadSound("marine_die");
+		SoundManager.loadSound("marine_shoot");
 
 		initialised = true;
 	}
@@ -131,7 +128,7 @@ class Marine extends Unit
 				{
 					animated.showBehavior(facing + "_shoot");
 					weapon.fireAt(target);
-					snd_attack.play();
+					SoundManager.playSound("marine_shoot");
 				}
 				else
 					animated.showBehavior(facing + "_idle");
@@ -158,7 +155,7 @@ class Marine extends Unit
 		new SpecialEffect(x, y, sheet, "die");
 
 		// play sound
-		snd_die.play();
+		SoundManager.playSound("marine_die");
 	}
 
 	// ---------------------------------------------------------------------------
