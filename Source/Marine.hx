@@ -2,7 +2,7 @@ import openfl.Assets;
 import flash.display.Bitmap;
 import flash.display.BitmapData;
 
-class Zergling extends Unit 
+class Marine extends Unit 
 {
 	// ---------------------------------------------------------------------------
 	// LOAD ASSETS
@@ -14,7 +14,7 @@ class Zergling extends Unit
 
 	private static function init() : Void
 	{
-		bitmapData = Assets.getBitmapData("assets/zergling.png");
+		bitmapData = Assets.getBitmapData("assets/marine.png");
 		initialised = true;
 	}
 

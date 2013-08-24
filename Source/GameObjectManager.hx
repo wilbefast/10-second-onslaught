@@ -119,10 +119,7 @@ class GameObjectManager extends Sprite
 
 			// sort objects by y coordinate
 			if(a.y < previous_y)
-			{
-				trace("previous_y = ", previous_y, "y = ", a.y);
 				setChildIndex(a, i-1);
-			}
 			previous_y = a.y;
 		}
 	}

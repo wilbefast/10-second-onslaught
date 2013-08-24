@@ -68,6 +68,9 @@ class GameScene extends Scene
 	
 	private function playDeployPhase()
 	{
+			// clear all dudes
+		GameObjectManager.purgeAll();
+
 		trace("playDeploy");
 		while (numChildren > 0) this.removeChildAt(0);
 		//addChild (new DefaultTextField("Deploy your dudes!", 200, 200));
@@ -90,8 +93,37 @@ class GameScene extends Scene
 	
 	private function playAttackPhase()
 	{
+		// clear all dudes
+		GameObjectManager.purgeAll();
+
 		trace("playAttack");
 		while (numChildren > 0) this.removeChildAt(0);
 		addChild (new DefaultTextField("Alien Attack !!!", 200, 200));
+
+
+		// ------------------------------------------------------------------------------
+		// PLACEHOLDER TEST CODE : these dudes should be spawned based on deploy
+		// ------------------------------------------------------------------------------
+
+		// create dudes
+		var spawn_width = 400; // TODO - get from stage.stageWidth
+		var spawn_height = 300; // TODO - get from stage.stageWidth
+
+		// create zerglings
+		for(i in 0 ... 30)
+		{
+			var spawn_angle = Math.random()*Math.PI*2;
+			new Zergling((1 + Math.cos(spawn_angle))*spawn_width, 
+										(1 + Math.sin(spawn_angle))*spawn_height);
+		}
+
+		// create marines
+		for(i in 0 ... 10)
+		{
+			var spawn_angle = Math.random()*Math.PI*2;
+			new Marine((3 + Math.cos(spawn_angle))*spawn_width/3, 
+										(3 + Math.sin(spawn_angle))*spawn_height/3);
+		}
+
 	}
 }
