@@ -201,6 +201,15 @@ class GameScene extends Scene
 										Math.sin(spawn_angle)*spawn_height);
 		}
 
+		// create  nukes
+		for(i in 0 ... 3)
+		{
+			var spawn_angle = Math.random()*Math.PI*2;
+			new Nuke(Math.cos(spawn_angle)*spawn_width/2, 
+										Math.sin(spawn_angle)*spawn_height/2);
+		}
+
+
 		// create marines
 		for(i in 0 ... 10)
 		{
