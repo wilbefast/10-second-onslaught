@@ -75,6 +75,7 @@ class Marine extends Unit
 		animated.showBehavior("S_idle");
 		animated.x = -animated.width/2;
 		animated.y = -animated.height*0.7;
+
 		addChild(animated);
 	}
 
@@ -97,12 +98,22 @@ class Marine extends Unit
 		if(target != null)
 		{
 			var toTarget = new V2(target.x - x, target.y - y);
+			var targetDistance = toTarget.getNorm() - radius - target.radius;
+			
+			// face target ...
+			var facing = Facing.which(toTarget);
 
 			// attack target
-			if(weapon.timeTillReloaded == 0 && toTarget.getNorm() - radius - target.radius <= weapon.range)
+			if(weapon.timeTillReloaded == 0)
 			{
-				weapon.fireAt(target);
-				snd_attack.play();
+				if(targetDistance <= weapon.range)
+				{
+					animated.showBehavior(facing + "_shoot");
+					weapon.fireAt(target);
+					snd_attack.play();
+				}
+				else
+					animated.showBehavior(facing + "_idle");
 			}
 		}
 	}
