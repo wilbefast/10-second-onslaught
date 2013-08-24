@@ -52,8 +52,8 @@ class GameScene extends Scene
 	public override function onMouseClick(event : MouseEvent) : Void
 	{
 		switchPhase();
-		if (gameState) playDeployPhase();
-		else playAttackPhase();
+/*		if (gameState) playDeployPhase();
+		else playAttackPhase();*/
 	}
 	
 	public function switchPhase()
@@ -65,6 +65,8 @@ class GameScene extends Scene
 			session.incrementNbReplay();
 		}
 		trace("gameState : " + gameState + " " + session.getTimer() + " nbReplay :" + session.getNbReplay() );
+		if (gameState) playDeployPhase();
+		else playAttackPhase();
 	}
 	
 	private function playDeployPhase()
@@ -89,9 +91,12 @@ class GameScene extends Scene
 		addChild(map_cont);
 		addChild(ui_cont);
 		addChild(timeline_cont);
+		// Text to show score
+		addChild (new DefaultTextField("Replay n°: " + session.getNbReplay() , 20, uiBitmap.y));
+		addChild (new DefaultTextField("$ : " + session.getMoney() , 20, uiBitmap.y + 50));
 		// button to switch to attack phase
 		var buttonSwitchToAttack : ButtonDeployEnd = new ButtonDeployEnd(this);
-		buttonSwitchToAttack.x = 12 ;
+		buttonSwitchToAttack.x = 200 ;
 		buttonSwitchToAttack.y = uiBitmap.y ;
 		addChild(buttonSwitchToAttack);
 	}

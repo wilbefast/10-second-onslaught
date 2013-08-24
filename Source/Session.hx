@@ -28,4 +28,9 @@ class Session extends Sprite
 	{
 		nbReplay ++ ;
 	}
+	
+	public function getMoney()
+	{
+		return money ;
+	}
 }
