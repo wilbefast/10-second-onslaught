@@ -8,13 +8,7 @@ class UnitType
 	private var icon : BitmapData;
 	private var mouseOverText : String;
 	
-	public static var byName : StringMap<UnitType> ;
-	
-	// Units
-	
-	private var marineCount : Int;
-	private var nukeCount : Int;
-	private var zergCount : Int;
+	public static var byName : StringMap<UnitType>;
 	
 	// ---------------------------------------------------------------------------
 	// CONSTRUCTOR
@@ -40,21 +34,6 @@ class UnitType
 		return icon;
 	}
 	
-	public function getMarineCount() : Int
-	{
-		return marineCount;
-	}
-	
-	public function getNukeCount() : Int
-	{
-		return nukeCount;
-	}
-	
-	public function getZergCount() : Int
-	{
-		return zergCount;
-	}
-	
 	public function getMouseOverText() : String
 	{
 		return mouseOverText;
@@ -66,6 +45,11 @@ class UnitType
 
 	public function increment() : Void
 	{
-		
+		instanceNumber++;
+	}
+
+	public function decrement() : Void
+	{
+		instanceNumber--;
 	}
 }

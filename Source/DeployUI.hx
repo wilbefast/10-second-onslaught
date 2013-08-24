@@ -15,12 +15,6 @@ class DeployUI extends Sprite
 	private static var background_data : BitmapData;
 	
 	private static var session_attribut : Session;
-	
-	private var byName : StringMap<UnitType>;
-	
-	private var marine1 : UnitType;
-	
-	private var nuke2 : UnitType;
 
 	private static function init() : Void
 	{
@@ -47,10 +41,6 @@ class DeployUI extends Sprite
 
 		if(!initialised)
 			init();
-			
-		byName = UnitType.byName;
-		marine1 = byName.get(marine);
-		nuke1 = byName.get(nuke);
 
 		background = new Bitmap(background_data);
 		addChild(background);
@@ -61,10 +51,10 @@ class DeployUI extends Sprite
 		resourcesCounter = new ResourcesCounterUI(session_attribut);
 		addChild(resourcesCounter);
 
-		buyMarine = new BuyUI(marine); // TODO - parameters
+		buyMarine = new BuyUI(UnitType.byName.get("Marine")); // TODO - parameters
 		addChild(buyMarine);
 
-		buyNuke = new BuyUI(nuke); // TODO - parameters
+		buyNuke = new BuyUI(UnitType.byName.get("Nuke")); // TODO - parameters
 		addChild(buyNuke);
 
 		startButton = new StartButtonUI(pgameScene);

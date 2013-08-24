@@ -20,13 +20,9 @@ private var nuke : UnitType;
 	private static var background_data : BitmapData;
 	private static var up_data : BitmapData;
 	private static var down_data : BitmapData;
-
-	private static var icons_data : StringMap<BitmapData>;
-
+	
 	private static function init() : Void
 	{
-		icons_data = new StringMap<BitmapData>();
-
 		background_data = Assets.getBitmapData("assets/GUI_fond_achat_01.png");
 
 		up_data = Assets.getBitmapData("assets/GUI_button_up_01.png");
@@ -45,29 +41,14 @@ private var nuke : UnitType;
 
 	public function new(unitType : UnitType)
 	{
+		super();
+
 		if(!initialised)
 			init();
 
-		super();
-
-
-		// Cache icons
-		//var icon_data;
-		//if(!icons_data.exists(icon_path))
-		//{
-			//icon_data = Assets.getBitmapData(icon_path);
-			//icons_data.set(icon_path, icon_data);
-		//}
-		//else
-			//icon_data = icons_data.get(icon_path);
-
-
 		// Build hierarchy
-		addChild(new Bitmap(background_data));
-
-		//icon = new Sprite();
-		//icon.addChild(new Bitmap(icon_data));
-		icon = unitType.getIcon();
+		icon = new Sprite();
+		icon.addChild(new Bitmap(unitType.getIcon()));
 		addChild(icon);
 
 		up = new Sprite();
