@@ -125,10 +125,11 @@ class Marine extends Unit
 		if(target != null)
 		{
 			var toTarget = new V2(target.x - x, target.y - y);
+			var toTargetNormalised = toTarget.normalised();
 			var targetDistance = toTarget.getNorm() - radius - target.radius;
 			
 			// face target ...
-			var facing = Facing.which(toTarget);
+			var facing = Facing.which(toTargetNormalised);
 
 			// attack target
 			if(weapon.timeTillReloaded == 0)
@@ -147,7 +148,7 @@ class Marine extends Unit
 				}
 
 				// move shadows
-				var toTargetNormalised = toTarget.normalised();
+				
 				shadow.x = -shadow.width/2 -6*Useful.sign(toTargetNormalised.x);
 				shadow.y = -4*Useful.sign(toTargetNormalised.y);
 			}

@@ -30,9 +30,29 @@ class Zergling extends Unit
 	private static function init() : Void
 	{
 		sheet = BitmapImporter.create(Assets.getBitmapData("assets/zergling.png"), 8, 2, 48, 48);
-		sheet.addBehavior(new BehaviorData("idle", [0, 1, 2, 3, 4, 5, 6, 7], true, 10));
-		sheet.addBehavior(new BehaviorData("death", [8, 9, 10, 11, 12], false, 10));
-		sheet.addBehavior(new BehaviorData("dust", [13, 14, 15], true, 10));
+		sheet.addBehavior(new BehaviorData("walk_NE", [0, 1], true, 10));
+		sheet.addBehavior(new BehaviorData("bite_NE", [3, 2], false, 10));
+
+		sheet.addBehavior(new BehaviorData("walk_NW", [4, 5], true, 10));
+		sheet.addBehavior(new BehaviorData("bite_NW", [7, 6], false, 10));
+
+		sheet.addBehavior(new BehaviorData("walk_N", [8, 9], true, 10));
+		sheet.addBehavior(new BehaviorData("bite_N", [11, 10], false, 10));
+
+		sheet.addBehavior(new BehaviorData("walk_SE", [16, 17], true, 10));
+		sheet.addBehavior(new BehaviorData("bite_SE", [19, 18], false, 10));
+
+		sheet.addBehavior(new BehaviorData("walk_SW", [20, 21], true, 10));
+		sheet.addBehavior(new BehaviorData("bite_SW", [23, 22], false, 10));
+
+		sheet.addBehavior(new BehaviorData("walk_S", [24, 25], true, 10));
+		sheet.addBehavior(new BehaviorData("bite_S", [27, 26], false, 10));
+
+		sheet.addBehavior(new BehaviorData("walk_E", [32, 33], true, 10));
+		sheet.addBehavior(new BehaviorData("bite_E", [35, 34], false, 10));
+
+		sheet.addBehavior(new BehaviorData("walk_W", [36, 37], true, 10));
+		sheet.addBehavior(new BehaviorData("bite_W", [39, 38], false, 10));
 
 		SoundManager.loadSound("zergling_die");
 		SoundManager.loadSound("zergling_attack");
@@ -65,7 +85,7 @@ class Zergling extends Unit
 		addChild(shadow);
 
 		animated = new AnimatedSprite(sheet, true);
-		animated.showBehavior("idle");
+		animated.showBehavior("walk_S");
 		animated.x = -animated.width/2;
 		animated.y = -animated.height*0.7;
 		addChild(animated);
@@ -81,14 +101,6 @@ class Zergling extends Unit
 	{
 		super.update(dt);
 
-		// dust trail
-		// dust_timer -= dt;
-		// if(dust_timer < 0)
-		// {
-		// 	new SpecialEffect(x, y, sheet, "dust");
-		// 	dust_timer = 1 + Math.random();
-		// }
-
 		// update animation
 		animated.update(cast(dt*1000, Int));
 
@@ -100,19 +112,28 @@ class Zergling extends Unit
 		if(target != null)
 		{
 			var toTarget = new V2(target.x - x, target.y - y);
+			var toTargetNormalised = toTarget.normalised();
+
+			// face target ...
+			var facing = Facing.which(toTargetNormalised);
 
 			// move towards target
 			if(toTarget.getNorm() - radius - target.radius > weapon.range)
 			{
-				var toTargetNormalised = toTarget.normalised();
 				x += toTargetNormalised.x * Time.getDelta() * SPEED;
 				y += toTargetNormalised.y * Time.getDelta() * SPEED;
+
+				animated.showBehavior("walk_NE");
+				//animated.showBehavior(facing + "_move");
 			}
 
 			// attack target
 			else if(weapon.timeTillReloaded == 0)
 			{
 				weapon.fireAt(target);
+
+				//animated.showBehavior(facing + "_bite");
+
 				SoundManager.playSound("zergling_attack");
 			}
 		}
