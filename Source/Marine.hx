@@ -21,6 +21,12 @@ class PlasmaGun extends UnitWeapon
 class Marine extends Unit 
 {
 	// ---------------------------------------------------------------------------
+	// TYPE
+	// ---------------------------------------------------------------------------
+
+	public static var type : UnitType;
+
+	// ---------------------------------------------------------------------------
 	// LOAD ASSETS
 	// ---------------------------------------------------------------------------
 
@@ -30,6 +36,14 @@ class Marine extends Unit
 
 	private static function init() : Void
 	{
+		// ---------------------------------------------------------------------------
+		// TYPE
+
+		type = new UnitType(100, Assets.getBitmapData("assets/GUI_ic_marine_01.png"));
+
+		// ---------------------------------------------------------------------------
+		// ASSETS
+
 		sheet = BitmapImporter.create(Assets.getBitmapData("assets/marine.png"), 10, 6, 48, 48);
 
 		sheet.addBehavior(new BehaviorData("NW_idle", [0], true, 10));
@@ -81,7 +95,7 @@ class Marine extends Unit
 
 	public function new(_x : Float, _y : Float) : Void
 	{
-		super(_x, _y, HITPOINTS, UnitType.byName.get("Terran"), RADIUS);
+		super(_x, _y, HITPOINTS, RADIUS);
 
 		if(!initialised)
 			init();

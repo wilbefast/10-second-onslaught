@@ -52,7 +52,7 @@ class Zergling extends Unit
 
 	public function new(_x : Float, _y : Float) : Void
 	{
-		super(_x, _y, HITPOINTS, UnitType.byName.get("Zergling"), RADIUS);
+		super(_x, _y, HITPOINTS, RADIUS);
 
 		if(!initialised)
 			init();

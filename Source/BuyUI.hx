@@ -48,7 +48,7 @@ private var nuke : UnitType;
 
 		// Build hierarchy
 		icon = new Sprite();
-		icon.addChild(new Bitmap(unitType.getIcon()));
+		icon.addChild(new Bitmap(unitType.icon));
 		addChild(icon);
 
 		up = new Sprite();
