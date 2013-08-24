@@ -23,7 +23,6 @@ class StartButtonUI extends Sprite
 	// CONSTRUCTOR
 	// ---------------------------------------------------------------------------
 
-
 	public function new()
 	{
 		if(!initialised)

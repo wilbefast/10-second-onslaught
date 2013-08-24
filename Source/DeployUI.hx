@@ -1,16 +1,45 @@
 import flash.display.Sprite;
+import flash.display.Bitmap;
+import flash.display.BitmapData;
+import openfl.Assets;
 
 class DeployUI extends Sprite 
 {
+	// ---------------------------------------------------------------------------
+	// LOAD ASSETS
+	// ---------------------------------------------------------------------------
+
+	private static var initialised : Bool = false;
+
+	private static var background_data : BitmapData;
+
+	private static function init() : Void
+	{
+		background_data = Assets.getBitmapData("assets/GabariGUI_01.png");
+		initialised = true;
+	}
+
+	// ---------------------------------------------------------------------------
+	// CONSTRUCTOR
+	// ---------------------------------------------------------------------------
+
 	private var replaysCounter : ReplaysCounterUI;
 	private var resourcesCounter : ResourcesCounterUI;
 	private var buyMarine : BuyUI;
 	private var buyNuke : BuyUI;
 	private var startButton : StartButtonUI;
 
+	private var background : Bitmap;
+
 	public function new()
 	{
 		super();
+
+		if(!initialised)
+			init();
+
+		background = new Bitmap(background_data);
+		addChild(background);
 
 		replaysCounter = new ReplaysCounterUI();
 		addChild(replaysCounter);
@@ -35,6 +64,8 @@ class DeployUI extends Sprite
 		// size
 		if(stage != null)
 		{
+			background.width = stage.stageWidth;
+			
 			buyMarine.width = buyNuke.width = stage.stageWidth*0.5;
 			resourcesCounter.width = replaysCounter.width = stage.stageWidth*0.3;
 			startButton.width = Math.min(startButton.height, stage.stageWidth*0.2);
