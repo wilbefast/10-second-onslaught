@@ -145,10 +145,10 @@ class Marine extends Unit
 				{
 					animated.showBehavior(facing + "_idle");
 					shadow.alpha = 1.0;
+					refreshTarget();
 				}
 
 				// move shadows
-				
 				shadow.x = -shadow.width/2 -6*Useful.sign(toTargetNormalised.x);
 				shadow.y = -4*Useful.sign(toTargetNormalised.y);
 			}
