@@ -26,7 +26,8 @@ class GameScene extends Scene
 	// Attributes
 	private var session : Session;
 	private var timer : Float ;
-
+	private var radialMenu : RadialMenu;
+	
 	private var timeline : TimelineUI;
 	private var map : MapUI;
 	private var deploy : DeployUI;
@@ -41,6 +42,7 @@ class GameScene extends Scene
 		// Initialise attributes
 		session = new Session(_timer);
 		timer = session.getTimer() * 100;
+		radialMenu = new RadialMenu();
 
 		map = new MapUI(this);
 		timeline = new TimelineUI(this);
@@ -83,6 +85,13 @@ class GameScene extends Scene
 		map.update();
 		timeline.update();
 		deploy.update();
+	}
+
+	public override function onMouseClick(event : MouseEvent) : Void
+	{
+		radialMenu.x = event.stageX;
+		radialMenu.y = event.stageY;
+		radialMenu.open();
 	}
 
 	// ---------------------------------------------------------------------------
@@ -129,7 +138,7 @@ class GameScene extends Scene
 	// ---------------------------------------------------------------------------
 	// DEPLOYMENT PHASE
 	// ---------------------------------------------------------------------------
-	
+
 	private function playDeployPhase()
 	{
 		// increment # replays if previous phase was attack
@@ -172,6 +181,10 @@ class GameScene extends Scene
 		deploy.y = timeline.y + timeline.height;
 		deploy.height = stage.stageHeight - deploy.y;
 		deploy.recalculateLayout();
+
+		// radial menu
+		addChild(radialMenu);
+		//radialMenu.visible = false;
 	}
 
 	// ---------------------------------------------------------------------------
