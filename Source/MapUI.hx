@@ -21,4 +21,9 @@ class MapUI extends Sprite
 
 		addChild(new Bitmap(bitmapData));
 	}
+	
+	public function update()
+	{
+		
+	}
 }

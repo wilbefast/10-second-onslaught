@@ -1,6 +1,7 @@
 import flash.display.Sprite;
 import flash.display.Bitmap;
 import flash.display.BitmapData;
+import flash.events.MouseEvent;
 import openfl.Assets;
 
 class TimelineUI extends Sprite 
@@ -18,7 +19,20 @@ class TimelineUI extends Sprite
 			bitmapData = Assets.getBitmapData("assets/TimelineBG_01.png");
 			initialised = true;
 		}
-
+		
+		// register callbacks
+        this.addEventListener(MouseEvent.CLICK, onMouseClick);
+		
 		addChild(new Bitmap(bitmapData));
 	}
+	
+	public function update()
+	{
+		
+	}
+	
+	private function onMouseClick(event : MouseEvent) : Void
+    {
+		trace("cliked on timeline");
+    }
 }

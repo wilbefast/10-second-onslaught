@@ -19,9 +19,11 @@ class ReplaysCounterUI extends Sprite
 
 	private static var bitmapData : BitmapData;
 	
-	private static var session_attribut : Session;
+	private var session_attribut : Session;
 	
-	private static var nbReplay : Int;
+	private var nbReplay : Int;
+	
+	private var textField : TextField;
 
 	private static function init() : Void
 	{
@@ -49,7 +51,7 @@ class ReplaysCounterUI extends Sprite
 		Font.registerFont(DefaultFont);
 		
 		var format = new TextFormat("Katamotz Ikasi", 30, 0x7A0026);
-		var textField = new TextField();
+		textField = new TextField();
 		
 		textField.defaultTextFormat = format;
 		textField.embedFonts = true;
@@ -60,8 +62,14 @@ class ReplaysCounterUI extends Sprite
 		textField.width = 50;
 		textField.height = 30;
 		
-		textField.text = "7";
+		textField.text = " " + nbReplay;
 
 		addChild(textField);
+	}
+	
+	public function update()
+	{
+		nbReplay = session_attribut.getNbReplay();
+		textField.text = " " + nbReplay ;
 	}
 }
