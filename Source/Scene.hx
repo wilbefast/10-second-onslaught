@@ -41,6 +41,16 @@ class Scene extends Sprite
 	{
 		// override me !
 	}
+
+	public function onMouseDown(event : MouseEvent) : Void
+	{
+		// override me !
+	}
+
+	public function onMouseUp(event : MouseEvent) : Void
+	{
+		// override me !
+	}
 	
 	public function onMouseClick(event : MouseEvent) : Void
 	{
