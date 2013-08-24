@@ -2,11 +2,14 @@ class Unit extends GameObject
 {
 	public var hitpoints : Int;
 
-	public function new(_x : Float, _y : Float, _radius : Float = 0, _hitpoints : Int = 100) : Void
+	public static inline var TEAM_CIVILLIANS : Int = 0;
+	public static inline var TEAM_MARINES : Int = 1;
+	public static inline var TEAM_ALIENS : Int = 2;
+	public var team : Int;
+
+	public function new(_x : Float, _y : Float, _radius : Float = 0) : Void
 	{
 		super(_x, _y, _radius);
-
-		hitpoints = _hitpoints;
 	}
 
 	// ---------------------------------------------------------------------------

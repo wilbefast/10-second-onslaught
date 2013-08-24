@@ -1,6 +1,7 @@
 import flash.Lib;
 import flash.display.Sprite;
 import flash.events.Event;
+import flash.display.DisplayObject;
 
 class GameObjectManager extends Sprite 
 {
@@ -13,9 +14,6 @@ class GameObjectManager extends Sprite
 	private function new()
 	{
 		super();
-
-		// create object list
-		objects = new List<GameObject>();
 
 		// add to draw list
 		Lib.current.stage.addChild(this);
@@ -54,11 +52,14 @@ class GameObjectManager extends Sprite
 		get().__load(loader);
 	}
 
+	public static function getMatching(condition : DisplayObject->Bool) : ChildIterator
+	{
+		return get().__getMatching(condition);
+	}
+
 	// ---------------------------------------------------------------------------
 	// OBJECT LIST
 	// ---------------------------------------------------------------------------
-
-	private var objects : List<GameObject>;
 
 	private function __add(newObject : GameObject) : Void
 	{
@@ -81,6 +82,16 @@ class GameObjectManager extends Sprite
 		for(loaded in loader)
 			__add(loaded);
 	}
+
+	// ---------------------------------------------------------------------------
+	// QUERY
+	// ---------------------------------------------------------------------------
+
+	private function __getMatching(condition : DisplayObject->Bool) : ChildIterator
+	{
+		return (new ChildIterator(this, condition));
+	}
+
 
 	// ---------------------------------------------------------------------------
 	// UPDATE

@@ -3,6 +3,7 @@ import flash.display.BitmapData;
 import flash.display.Bitmap;
 import openfl.Assets;
 import flash.display.Sprite;
+import flash.display.DisplayObject;
 
 class GameScene extends Scene
 {
@@ -142,5 +143,14 @@ class GameScene extends Scene
 										(3 + Math.sin(spawn_angle))*spawn_height/3);
 		}
 
+		trace("ALL MARINES");
+		for(object in GameObjectManager.getMatching(blah))
+			trace(object);
+	}
+
+	public function blah(go : DisplayObject) : Bool
+	{
+		//trace(Type.getClassName(Type.getClass(go))); 
+		return (Type.getClassName(Type.getClass(go)) == "Marine");
 	}
 }

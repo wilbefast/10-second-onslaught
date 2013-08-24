@@ -1,2 +1,6 @@
 Export
 Source_Images
+*.orig*
+*.BASE*
+*.REMOTE*
+*.LOCAL*
