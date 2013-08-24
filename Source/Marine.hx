@@ -31,8 +31,10 @@ class Marine extends Unit
 	{
 		bitmapData = Assets.getBitmapData("assets/marine.png");
 
-		sheet = BitmapImporter.create(Assets.getBitmapData("assets/gore.png"), 5, 1, 48, 48);
-		sheet.addBehavior(new BehaviorData("boom", [0, 1, 2], true, 10));
+		sheet = BitmapImporter.create(Assets.getBitmapData("assets/marine.png"), 5, 1, 48, 48);
+		sheet.addBehavior(new BehaviorData("idle", [0], true, 10));
+		sheet.addBehavior(new BehaviorData("shoot", [1, 2], true, 3));
+		sheet.addBehavior(new BehaviorData("death", [5, 6, 7, 8, 9], false, 10));
 
 		initialised = true;
 	}
@@ -41,7 +43,6 @@ class Marine extends Unit
 	// CONSTRUCTOR
 	// ---------------------------------------------------------------------------
 
-	private var bitmap : Bitmap;
 	private var animated : AnimatedSprite;
 
 	private static inline var HITPOINTS : Int = 100;
@@ -57,10 +58,11 @@ class Marine extends Unit
 		team = Unit.TEAM_MARINES;
 		weapon = new PlasmaGun();
 
-		bitmap = new Bitmap(bitmapData);
-		bitmap.x = -bitmap.width/2;
-		bitmap.y = -bitmap.height*0.75;
-		addChild(bitmap);
+		animated = new AnimatedSprite(sheet, true);
+		animated.showBehavior("idle");
+		animated.x = -animated.width/2;
+		animated.y = -animated.height/2;
+		addChild(animated);
 	}
 
 	// ---------------------------------------------------------------------------
@@ -72,7 +74,7 @@ class Marine extends Unit
 		super.update(dt);
 
 		// update animation
-		//animated.update(cast(dt*1000, Int));
+		animated.update(cast(dt*1000, Int));
 
 		// get new target
 		if(target == null || target.purge)
@@ -104,7 +106,7 @@ class Marine extends Unit
 
 	public override function onPurge() : Void
 	{
-		new SpecialEffect(x, y, sheet, "boom");
+		new SpecialEffect(x, y, sheet, "shoot");
 	}
 
 	// ---------------------------------------------------------------------------
