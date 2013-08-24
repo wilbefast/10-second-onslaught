@@ -11,11 +11,12 @@ class StartButtonUI extends Sprite
 
 	private static var initialised : Bool = false;
 
-	private static var bitmapData : BitmapData;
+	private static var background_data : BitmapData;
 
 	private static function init() : Void
 	{
-		bitmapData = Assets.getBitmapData("assets/ButtonGo_01.png");
+		background_data = Assets.getBitmapData("assets/ButtonGo_01.png");
+
 		initialised = true;
 	}
 
@@ -25,11 +26,12 @@ class StartButtonUI extends Sprite
 
 	public function new()
 	{
+		super();
+
+		// load resources
 		if(!initialised)
 			init();
 
-		super();
-
-		addChild(new Bitmap(bitmapData));
+		addChild(new Bitmap(background_data));
 	}
 }

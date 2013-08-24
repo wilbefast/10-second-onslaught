@@ -47,10 +47,10 @@ class DeployUI extends Sprite
 		resourcesCounter = new ResourcesCounterUI();
 		addChild(resourcesCounter);
 
-		buyMarine = new BuyUI(); // TODO - parameters
+		buyMarine = new BuyUI("assets/GUI_ic_marine_01.png"); // TODO - parameters
 		addChild(buyMarine);
 
-		buyNuke = new BuyUI(); // TODO - parameters
+		buyNuke = new BuyUI("assets/GUI_ic_bombe_01.png"); // TODO - parameters
 		addChild(buyNuke);
 
 		startButton = new StartButtonUI();

@@ -201,7 +201,7 @@ class GameScene extends Scene
 		// map
 		addChild(map);
 		map.width = stage.stageWidth;
-		map.height = stage.stageHeight * 0.8;
+		map.height = stage.stageHeight * 0.7;
 		map.x = map.y = 0;
 
 		// timeline
