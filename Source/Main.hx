@@ -31,7 +31,8 @@ class Main extends Sprite
 		snd_music = Assets.getSound("assets/music.mp3"); // flash doesn't like OOG :'(
 
 		// start music
-		onMusicEnd(null);
+		//channel = snd_music.play();
+		//channel.addEventListener(Event.SOUND_COMPLETE, onMusicEnd);
 	}
 
 	private function onMusicEnd(event : Event) : Void
