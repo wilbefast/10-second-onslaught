@@ -27,7 +27,7 @@ class Marine extends Unit
 	private static var initialised : Bool = false;
 
 	private static var sheet : Spritesheet;
-	
+
 	private static var snd_die : Sound;
 	private static var snd_attack : Sound;
 
@@ -36,7 +36,7 @@ class Marine extends Unit
 		sheet = BitmapImporter.create(Assets.getBitmapData("assets/marine.png"), 5, 2, 48, 48);
 		sheet.addBehavior(new BehaviorData("idle", [0], true, 10));
 		sheet.addBehavior(new BehaviorData("shoot", [1, 2], true, 3));
-		sheet.addBehavior(new BehaviorData("death", [5, 6, 7, 8, 9], true, 10));
+		sheet.addBehavior(new BehaviorData("death", [5, 6, 7, 8, 9], false, 10));
 
 		snd_die = Assets.getSound ("assets/marine_die.wav");
 		snd_attack = Assets.getSound ("assets/marine_shoot.wav");
