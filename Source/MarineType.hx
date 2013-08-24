@@ -15,9 +15,8 @@ public class MarineType extends UnitType
 		this.mouseOverText = "Marines are on fire !";
 	}
 	
-	public function getCount() : Int
+	public override function getCount() : Int
 	{
-		super();
 		return marineCountt;
 	}
 	
