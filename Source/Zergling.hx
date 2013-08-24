@@ -31,16 +31,16 @@ class Zergling extends Unit
 	{
 		sheet = BitmapImporter.create(Assets.getBitmapData("assets/zergling.png"), 8, 6, 48, 48);
 		sheet.addBehavior(new BehaviorData("walk_NE", [0, 1], true, 10));
-		sheet.addBehavior(new BehaviorData("bite_NE", [3, 3, 2], false, 2));
+		sheet.addBehavior(new BehaviorData("bite_NE", [3, 2], false, 2));
 
 		sheet.addBehavior(new BehaviorData("walk_NW", [4, 5], true, 10));
-		sheet.addBehavior(new BehaviorData("bite_NW", [7, 7, 6], false, 2));
+		sheet.addBehavior(new BehaviorData("bite_NW", [7, 6], false, 2));
 
 		sheet.addBehavior(new BehaviorData("walk_N", [8, 9], true, 10));
 		sheet.addBehavior(new BehaviorData("bite_N", [11, 10], false, 2));
 
 		sheet.addBehavior(new BehaviorData("walk_SE", [16, 17], true, 10));
-		sheet.addBehavior(new BehaviorData("bite_SE", [19, 18], false, 25));
+		sheet.addBehavior(new BehaviorData("bite_SE", [19, 18], false, 2));
 
 		sheet.addBehavior(new BehaviorData("walk_SW", [20, 21], true, 10));
 		sheet.addBehavior(new BehaviorData("bite_SW", [23, 22], false, 2));
@@ -71,6 +71,8 @@ class Zergling extends Unit
 	private static inline var RADIUS : Int = 16;
 
 	private var animated : AnimatedSprite;
+
+	private var prev_facing : String = "S";
 
 	public function new(_x : Float, _y : Float) : Void
 	{
@@ -128,7 +130,9 @@ class Zergling extends Unit
 				x += toTargetNormalised.x * Time.getDelta() * SPEED;
 				y += toTargetNormalised.y * Time.getDelta() * SPEED;
 
-				animated.showBehavior("walk_" + facing);
+				if (prev_facing != facing)
+					animated.showBehavior("walk_" + facing);
+				prev_facing = facing;
 			}
 
 			// attack target
