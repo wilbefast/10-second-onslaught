@@ -14,6 +14,14 @@ class GameScene extends Scene
 	private static var mapD_bd : BitmapData;
 	private static var uiD_bd : BitmapData;
 	private static var timelineD_bd : BitmapData;
+	private static var replayD_bd : BitmapData;
+	private static var moneyD_bd : BitmapData;
+	private static var buyingMarinesD_bd : BitmapData;
+	private static var buyingBombsD_bd : BitmapData;
+	private static var moreUnitsD_bd : BitmapData;
+	private static var lessUnitsD_bd : BitmapData;
+	private static var unitCostD_bd : BitmapData;
+	
 	private static var mapA_bd : BitmapData;
 	private static var uiA_bd : BitmapData;
 	private static var timelineA_bd : BitmapData;
@@ -21,6 +29,16 @@ class GameScene extends Scene
 	private var map_cont : Sprite;
 	private var ui_cont : Sprite;
 	private var timeline_cont : Sprite;
+	private var replay_cont : Sprite;
+	private var money_cont : Sprite;
+	private var buyingMarines_cont : Sprite;
+	private var buyingBombs_cont : Sprite;
+	private var moreMarines_cont : Sprite;
+	private var moreBombs_cont : Sprite;
+	private var lessMarines_cont : Sprite;
+	private var lessBombs_cont : Sprite;
+	private var marinesCost_cont : Sprite;
+	private var bombsCost_cont : Sprite;
 	
 	private var timer : Float ;
 	
@@ -34,6 +52,16 @@ class GameScene extends Scene
 		map_cont = new Sprite();
         ui_cont = new Sprite();
 		timeline_cont = new Sprite();
+		replay_cont = new Sprite();
+		money_cont = new Sprite();
+		buyingMarines_cont = new Sprite();
+		buyingBombs_cont = new Sprite();
+		moreMarines_cont = new Sprite();
+		moreBombs_cont = new Sprite();
+		lessMarines_cont = new Sprite();
+		lessBombs_cont = new Sprite();
+		marinesCost_cont = new Sprite();
+		bombsCost_cont = new Sprite();
 	}
 	
 	public override function onEnter(previous : Scene) : Void 
@@ -45,10 +73,17 @@ class GameScene extends Scene
 	{
 		mapD_bd = Assets.getBitmapData("assets/GabariPlateau_01.png");
 		uiD_bd = Assets.getBitmapData("assets/GabariGUI_01.png");
-		timelineD_bd = Assets.getBitmapData("assets/GabariTimeline_01.png");
+		timelineD_bd = Assets.getBitmapData("assets/TimelineBG_01.png");
 		mapA_bd = Assets.getBitmapData("assets/GabariPlateau_01.png");
 		uiA_bd = Assets.getBitmapData("assets/GabariGUI_01.png");
-		timelineA_bd = Assets.getBitmapData("assets/GabariTimeline_01.png");
+		timelineA_bd = Assets.getBitmapData("assets/TimelineBG_01.png");
+		replayD_bd = Assets.getBitmapData("assets/GUI_fond_replay_01.png");
+		moneyD_bd = Assets.getBitmapData("assets/GUI_fond_bank_01.png");
+		buyingMarinesD_bd = Assets.getBitmapData("assets/GUI_ic_marine_01.png");
+		buyingBombsD_bd = Assets.getBitmapData("assets/GUI_ic_bombe_01.png");
+		moreUnitsD_bd = Assets.getBitmapData("assets/GUI_button_up_01.png");
+		lessUnitsD_bd = Assets.getBitmapData("assets/GUI_button_down_01.png");
+		unitCostD_bd = Assets.getBitmapData("assets/GUI_fond_achat_01.png");
 		initialised = true ;
 	}
 	
@@ -86,6 +121,11 @@ class GameScene extends Scene
 		// clear UI
 		while (numChildren > 0) this.removeChildAt(0);
 		// New Layout
+		layoutDeploy();
+	}
+	
+	private function layoutDeploy()
+	{
 		var mapBitmap : Bitmap = new Bitmap(mapD_bd) ;
 		var uiBitmap : Bitmap = new Bitmap(uiD_bd) ;
 		var timelineBitmap : Bitmap = new Bitmap(timelineD_bd) ;
@@ -101,12 +141,77 @@ class GameScene extends Scene
 		addChild(map_cont);
 		addChild(ui_cont);
 		addChild(timeline_cont);
-		// Text to show score
-		addChild (new DefaultTextField("Replay n°: " + session.getNbReplay() , 20, uiBitmap.y));
-		addChild (new DefaultTextField("$ : " + session.getMoney() , 20, uiBitmap.y + 50));
+		// Score
+		var replayBitmap : Bitmap = new Bitmap(replayD_bd);
+		replayBitmap.x = 20 ;
+		replayBitmap.y = uiBitmap.y ;
+		replay_cont.addChild(replayBitmap);
+		addChild(replay_cont);
+		addChild (new DefaultTextField("" + session.getNbReplay() , 160, uiBitmap.y ));
+		var moneyBitmap : Bitmap = new Bitmap(moneyD_bd);
+		moneyBitmap.x = 20 ;
+		moneyBitmap.y = uiBitmap.y + replayBitmap.height ;
+		money_cont.addChild(moneyBitmap);
+		addChild(money_cont);
+		addChild (new DefaultTextField("" + session.getMoney() , 150, uiBitmap.y + replayBitmap.height + 50 ));
+		//Achat d'units
+		var buyingMarinesBitmap : Bitmap = new Bitmap(buyingMarinesD_bd);
+		buyingMarinesBitmap.x = moneyBitmap.width ;
+		buyingMarinesBitmap.y = uiBitmap.y ;
+		buyingMarines_cont.addChild(buyingMarinesBitmap);
+		addChild(buyingMarines_cont);
+		
+		var moreMarinesBitmap : Bitmap = new Bitmap(moreUnitsD_bd);
+		moreMarinesBitmap.x = moneyBitmap.width + buyingMarinesBitmap.width ;
+		moreMarinesBitmap.y = uiBitmap.y ;
+		moreMarines_cont.addChild(moreMarinesBitmap);
+		addChild(moreMarines_cont);
+			
+			//calcul de la hauteur
+			var yLessMarines = uiBitmap.y + buyingMarinesBitmap.height - moreMarinesBitmap.height ;
+		var lessMarinesBitmap : Bitmap = new Bitmap(lessUnitsD_bd);
+		lessMarinesBitmap.x = moneyBitmap.width + buyingMarinesBitmap.width ;
+		lessMarinesBitmap.y = yLessMarines ;
+		lessMarines_cont.addChild(lessMarinesBitmap);
+		addChild(lessMarines_cont);
+		
+			//champ pour le cout des marines
+		var marinesCostBitmap : Bitmap = new Bitmap(unitCostD_bd);
+		marinesCostBitmap.x = moreMarinesBitmap.x + moreMarinesBitmap.width;
+		marinesCostBitmap.y = uiBitmap.y ;
+		marinesCost_cont.addChild(marinesCostBitmap);
+		addChild(marinesCost_cont);
+		
+		var buyingBombsBitmap : Bitmap = new Bitmap(buyingBombsD_bd);
+		buyingBombsBitmap.x = moneyBitmap.width ;
+		buyingBombsBitmap.y = uiBitmap.y + buyingMarinesBitmap.height ;
+		buyingBombs_cont.addChild(buyingBombsBitmap);
+		addChild(buyingBombs_cont);
+		
+		var moreBombsBitmap : Bitmap = new Bitmap(moreUnitsD_bd);
+		moreBombsBitmap.x = moneyBitmap.width + buyingBombsBitmap.width ;
+		moreBombsBitmap.y = uiBitmap.y + buyingMarinesBitmap.height ;
+		moreBombs_cont.addChild(moreBombsBitmap);
+		addChild(moreBombs_cont);
+		
+			//calcul de la hauteur
+			var yLessBombs = uiBitmap.y + buyingMarinesBitmap.height + buyingMarinesBitmap.height - moreMarinesBitmap.height ;
+		var lessBombsBitmap : Bitmap = new Bitmap(lessUnitsD_bd);
+		lessBombsBitmap.x = moneyBitmap.width + buyingMarinesBitmap.width ;
+		lessBombsBitmap.y = yLessBombs ;
+		lessBombs_cont.addChild(lessBombsBitmap);
+		addChild(lessBombs_cont);
+		
+			//champ pour le cout des bombes
+		var bombsCostBitmap : Bitmap = new Bitmap(unitCostD_bd);
+		bombsCostBitmap.x = moreBombsBitmap.x + moreBombsBitmap.width;
+		bombsCostBitmap.y = uiBitmap.y + buyingMarinesBitmap.height  ;
+		bombsCost_cont.addChild(bombsCostBitmap);
+		addChild(bombsCost_cont);
+		
 		// button to switch to attack phase
 		var buttonSwitchToAttack : ButtonDeployEnd = new ButtonDeployEnd(this);
-		buttonSwitchToAttack.x = 200 ;
+		buttonSwitchToAttack.x = bombsCostBitmap.x + bombsCostBitmap.width ;
 		buttonSwitchToAttack.y = uiBitmap.y ;
 		addChild(buttonSwitchToAttack);
 	}

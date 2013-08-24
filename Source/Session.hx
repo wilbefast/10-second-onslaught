@@ -6,6 +6,9 @@ class Session extends Sprite
 	private var nbReplay : Int;
 	private var timer : Int ; //delay between two waves in seconds
 	
+	//units
+	private var marines : Int ;
+	
 	public function new(ptimer : Int) 
 	{
 		super();
