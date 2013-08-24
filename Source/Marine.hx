@@ -32,7 +32,7 @@ class Marine extends Unit
 		bitmapData = Assets.getBitmapData("assets/marine.png");
 
 		sheet = BitmapImporter.create(Assets.getBitmapData("assets/gore.png"), 5, 1, 48, 48);
-		sheet.addBehavior(new BehaviorData("boom", [0, 1, 2], true, 5));
+		sheet.addBehavior(new BehaviorData("boom", [0, 1, 2], true, 10));
 
 		initialised = true;
 	}
@@ -57,14 +57,10 @@ class Marine extends Unit
 		team = Unit.TEAM_MARINES;
 		weapon = new PlasmaGun();
 
-		/*bitmap = new Bitmap(bitmapData);
+		bitmap = new Bitmap(bitmapData);
 		bitmap.x = -bitmap.width/2;
 		bitmap.y = -bitmap.height*0.75;
-		addChild(bitmap);*/
-
-		animated = new AnimatedSprite(sheet, true);
-		animated.showBehavior("boom");
-		addChild(animated);
+		addChild(bitmap);
 	}
 
 	// ---------------------------------------------------------------------------
@@ -76,7 +72,7 @@ class Marine extends Unit
 		super.update(dt);
 
 		// update animation
-		animated.update(cast(dt*1000, Int));
+		//animated.update(cast(dt*1000, Int));
 
 		// get new target
 		if(target == null || target.purge)
@@ -108,6 +104,7 @@ class Marine extends Unit
 
 	public override function onPurge() : Void
 	{
+		new SpecialEffect(x, y, sheet, "boom");
 	}
 
 	// ---------------------------------------------------------------------------
