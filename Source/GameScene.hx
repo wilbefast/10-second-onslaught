@@ -142,6 +142,9 @@ class GameScene extends Scene
 		// clear all dudes
 		GameObjectManager.purgeAll();
 
+		// create colonies
+		spawnColonies();
+
 		// Reset Layout
 		layoutDeploy();
 	}
@@ -174,23 +177,24 @@ class GameScene extends Scene
 	// ---------------------------------------------------------------------------
 	// ATTACK PHASE
 	// ---------------------------------------------------------------------------
+
 	
 	private function playAttackPhase()
 	{
 		// phase is now attack phase
 		phase = PHASE_ATTACK;
-
-		// clear all dudes
-		GameObjectManager.purgeAll();
 	
 		// change layout
 		layoutAttack();
+
+		// create units
+		spawnUnits();
 
 		// ------------------------------------------------------------------------------
 		// NB - these dudes should be spawned based on deploy
 
 		// create dudes
-		var spawn_width = 800; // TODO - get from stage.stageWidth
+		/*var spawn_width = 800; // TODO - get from stage.stageWidth
 		var spawn_height = 600; // TODO - get from stage.stageWidth
 
 		// create zerglings
@@ -224,7 +228,7 @@ class GameScene extends Scene
 			var spawn_angle = Math.random()*Math.PI*2;
 			new Colony(Math.cos(spawn_angle)*spawn_width/8, 
 										Math.sin(spawn_angle)*spawn_height/8);
-		}
+		}*/
 	}
 
 	public function layoutAttack()
@@ -233,16 +237,60 @@ class GameScene extends Scene
 		while (numChildren > 0) 
 			this.removeChildAt(0);
 
+		// map
+		addChild(map);
+		map.width = stage.stageWidth;
+		map.height = stage.stageHeight;
+		map.x = map.y = 0;
+
 		// timeline
 		addChild(timeline);
 		timeline.width = stage.stageWidth;
 		timeline.x = 0;
 		timeline.y = stage.stageHeight - timeline.height;
+	}
 
-		// map
-		addChild(map);
-		map.width = stage.stageWidth;
-		map.height = timeline.y;
-		map.x = map.y = 0;
+	// ---------------------------------------------------------------------------
+	// SPAWN UNITS
+	// ---------------------------------------------------------------------------
+
+	private function spawnColonies()
+	{
+			new Colony(0, 0);
+			new Colony(-200, -250);
+			new Colony(450, 10);
+			new Colony(-350, 100);
+			new Colony(50, -150);
+	}
+
+	private function spawnUnits()
+	{
+		var spawn_width = 800; // TODO - get from stage.stageWidth
+		var spawn_height = 600; // TODO - get from stage.stageWidth
+
+		// create zerglings
+		for(i in 0 ... 30)
+		{
+			var spawn_angle = Math.random()*Math.PI*2;
+			new Zergling(Math.cos(spawn_angle)*spawn_width, 
+										Math.sin(spawn_angle)*spawn_height);
+		}
+
+		// create  nukes
+		for(i in 0 ... 3)
+		{
+			var spawn_angle = Math.random()*Math.PI*2;
+			new Nuke(Math.cos(spawn_angle)*spawn_width/2, 
+										Math.sin(spawn_angle)*spawn_height/2);
+		}
+
+
+		// create marines
+		for(i in 0 ... 10)
+		{
+			var spawn_angle = Math.random()*Math.PI*2;
+			new Marine(Math.cos(spawn_angle)*spawn_width/4, 
+										Math.sin(spawn_angle)*spawn_height/4);
+		}
 	}
 }
