@@ -55,7 +55,7 @@ class GameScene extends Scene
 		else playAttackPhase();
 	}
 	
-	private function switchPhase()
+	public function switchPhase()
 	{
 		if (gameState) gameState = false ;
 		else
@@ -68,12 +68,11 @@ class GameScene extends Scene
 	
 	private function playDeployPhase()
 	{
-			// clear all dudes
+		// clear all dudes
 		GameObjectManager.purgeAll();
-
-		trace("playDeploy");
+		// clear UI
 		while (numChildren > 0) this.removeChildAt(0);
-		//addChild (new DefaultTextField("Deploy your dudes!", 200, 200));
+		// New Layout
 		var mapBitmap : Bitmap = new Bitmap(mapD_bd) ;
 		var uiBitmap : Bitmap = new Bitmap(uiD_bd) ;
 		var timelineBitmap : Bitmap = new Bitmap(timelineD_bd) ;
@@ -89,17 +88,35 @@ class GameScene extends Scene
 		addChild(map_cont);
 		addChild(ui_cont);
 		addChild(timeline_cont);
+		// button to switch to attack phase
+		var buttonSwitchToAttack : ButtonDeployEnd = new ButtonDeployEnd(this);
+		buttonSwitchToAttack.x = 12 ;
+		buttonSwitchToAttack.y = uiBitmap.y ;
+		addChild(buttonSwitchToAttack);
 	}
 	
 	private function playAttackPhase()
 	{
 		// clear all dudes
 		GameObjectManager.purgeAll();
-
-		trace("playAttack");
+		// clear UI
 		while (numChildren > 0) this.removeChildAt(0);
-		addChild (new DefaultTextField("Alien Attack !!!", 200, 200));
-
+		// New Layout
+		var mapBitmap : Bitmap = new Bitmap(mapA_bd) ;
+		var uiBitmap : Bitmap = new Bitmap(uiA_bd) ;
+		var timelineBitmap : Bitmap = new Bitmap(timelineA_bd) ;
+		mapBitmap.x = 12 ;
+		uiBitmap.x = 12 ;
+		timelineBitmap.x = 12 ;
+		mapBitmap.y = 12 ;
+		timelineBitmap.y = mapBitmap.height + 12 ;
+		uiBitmap.y = mapBitmap.height + timelineBitmap.height + 12;
+		map_cont.addChild(mapBitmap);
+		ui_cont.addChild(uiBitmap);
+		timeline_cont.addChild(timelineBitmap);
+		addChild(map_cont);
+		addChild(ui_cont);
+		addChild(timeline_cont);
 
 		// ------------------------------------------------------------------------------
 		// PLACEHOLDER TEST CODE : these dudes should be spawned based on deploy
