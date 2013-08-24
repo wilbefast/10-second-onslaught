@@ -24,17 +24,14 @@ class Marine extends Unit
 
 	private static var initialised : Bool = false;
 
-	private static var bitmapData : BitmapData;
 	private static var sheet : Spritesheet;
 
 	private static function init() : Void
 	{
-		bitmapData = Assets.getBitmapData("assets/marine.png");
-
-		sheet = BitmapImporter.create(Assets.getBitmapData("assets/marine.png"), 5, 1, 48, 48);
+		sheet = BitmapImporter.create(Assets.getBitmapData("assets/marine.png"), 5, 2, 48, 48);
 		sheet.addBehavior(new BehaviorData("idle", [0], true, 10));
 		sheet.addBehavior(new BehaviorData("shoot", [1, 2], true, 3));
-		sheet.addBehavior(new BehaviorData("death", [5, 6, 7, 8, 9], false, 10));
+		sheet.addBehavior(new BehaviorData("death", [5, 6, 7, 8, 9], true, 10));
 
 		initialised = true;
 	}
@@ -106,7 +103,7 @@ class Marine extends Unit
 
 	public override function onPurge() : Void
 	{
-		new SpecialEffect(x, y, sheet, "shoot");
+		new SpecialEffect(x, y, sheet, "death");
 	}
 
 	// ---------------------------------------------------------------------------

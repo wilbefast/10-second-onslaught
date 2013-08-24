@@ -2,6 +2,11 @@ import openfl.Assets;
 import flash.display.Bitmap;
 import flash.display.BitmapData;
 
+import spritesheet.AnimatedSprite;
+import spritesheet.data.BehaviorData;
+import spritesheet.importers.BitmapImporter;
+import spritesheet.Spritesheet;
+
 class ZerglingClaws extends UnitWeapon
 {
 	public function new()
@@ -18,13 +23,14 @@ class Zergling extends Unit
 
 	private static var initialised : Bool = false;
 
-	private static var bitmapData : BitmapData;
+	private static var sheet : Spritesheet;
 
 	private static var claws : UnitWeapon;
 
 	private static function init() : Void
 	{
-		bitmapData = Assets.getBitmapData("assets/zergling.png");
+		sheet = BitmapImporter.create(Assets.getBitmapData("assets/zergling.png"), 8, 1, 48, 48);
+		sheet.addBehavior(new BehaviorData("idle", [0, 1, 2, 3, 4, 5, 6, 7], true, 10));
 
 		initialised = true;
 	}
@@ -37,7 +43,7 @@ class Zergling extends Unit
 	private static inline var HITPOINTS : Int = 30;
 	private static inline var RADIUS : Int = 16;
 
-	private var bitmap : Bitmap;
+	private var animated : AnimatedSprite;
 
 	public function new(_x : Float, _y : Float) : Void
 	{
@@ -49,10 +55,11 @@ class Zergling extends Unit
 		team = Unit.TEAM_ALIENS;
 		weapon = new ZerglingClaws();
 
-		bitmap = new Bitmap(bitmapData);
-		bitmap.x = -bitmap.width/2;
-		bitmap.y = -bitmap.height*0.75;
-		addChild(bitmap);
+		animated = new AnimatedSprite(sheet, true);
+		animated.showBehavior("idle");
+		animated.x = -animated.width/2;
+		animated.y = -animated.height/2;
+		addChild(animated);
 	}
 
 	// ---------------------------------------------------------------------------
@@ -62,6 +69,9 @@ class Zergling extends Unit
 	public override function update(dt : Float) : Void
 	{
 		super.update(dt);
+
+		// update animation
+		animated.update(cast(dt*1000, Int));
 
 		// get new target
 		if(target == null || target.purge)
