@@ -28,10 +28,11 @@ class Main extends Sprite
 
 		DefaultFont.load();
 
+		GameObjectManager.init();
+
 		UnitType.init();
 
 		SceneManager.add("Title", new TitleScene());
-
 		SceneManager.add("Game", new GameScene(TIMER));
 
 		snd_music = Assets.getSound("assets/music.mp3"); // flash doesn't like OOG :'(

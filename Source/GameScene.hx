@@ -89,9 +89,12 @@ class GameScene extends Scene
 
 	public override function onMouseClick(event : MouseEvent) : Void
 	{
-		radialMenu.x = event.stageX;
-		radialMenu.y = event.stageY;
-		radialMenu.open();
+		if(!radialMenu.isOpen())
+		{
+			radialMenu.x = event.stageX;
+			radialMenu.y = event.stageY;
+		}
+		radialMenu.toggle();
 	}
 
 	// ---------------------------------------------------------------------------

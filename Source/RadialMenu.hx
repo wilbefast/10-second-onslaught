@@ -57,18 +57,40 @@ class RadialMenu extends Sprite
 		alpha = 0;
 	}
 
-	public function open()
+	private var open : Bool = false;
+
+	public function isOpen() : Bool return open;
+
+	public function toggle()
 	{
-		Actuate.tween(this, 0.3, { alpha : 1.0 }, true)
+		if(open)
+		{
+			Actuate.tween(this, 0.3, { alpha : 0.0 }, true)
 						.ease (Quad.easeOut);
 
-		Actuate.tween(marineIcon, 0.3, { x : -32 }, true)
-					.ease (Quad.easeOut);
+			Actuate.tween(marineIcon, 0.3, { x : 0 }, true)
+						.ease (Quad.easeOut);
 
-		Actuate.tween(nukeIcon, 0.3, { x : 32 }, true)
-					.ease (Quad.easeOut);	
+			Actuate.tween(nukeIcon, 0.3, { x : 0 }, true)
+						.ease (Quad.easeOut);	
 
-		Actuate.tween(cancelIcon, 0.3, { y : -32 }, true)
-					.ease (Quad.easeOut);
+			Actuate.tween(cancelIcon, 0.3, { y : 0 }, true)
+						.ease (Quad.easeOut);
+		}
+		else
+		{		
+			Actuate.tween(this, 0.3, { alpha : 1.0 }, true)
+						.ease (Quad.easeOut);
+
+			Actuate.tween(marineIcon, 0.3, { x : -32 }, true)
+						.ease (Quad.easeOut);
+
+			Actuate.tween(nukeIcon, 0.3, { x : 32 }, true)
+						.ease (Quad.easeOut);	
+
+			Actuate.tween(cancelIcon, 0.3, { y : -32 }, true)
+						.ease (Quad.easeOut);
+		}
+		open = !open;
 	}
 }

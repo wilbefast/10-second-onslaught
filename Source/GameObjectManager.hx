@@ -2,6 +2,7 @@ import flash.Lib;
 import flash.display.Sprite;
 import flash.events.Event;
 import flash.display.DisplayObject;
+import flash.display.DisplayObjectContainer;
 
 class GameObjectManager extends Sprite 
 {
@@ -23,7 +24,7 @@ class GameObjectManager extends Sprite
 
 	private static var instance : GameObjectManager;
 
-	private static function get()
+	public static function get()
 	{
 		if(instance == null)
 			instance = new GameObjectManager();
@@ -31,6 +32,11 @@ class GameObjectManager extends Sprite
 	}
 
 	// shortcut static functions
+
+	public static function init() : Void
+	{
+		get();
+	}
 
 	public static function add(newObject : GameObject) : Void
 	{
@@ -176,7 +182,7 @@ class GameObjectManager extends Sprite
 	}
 
 	// ---------------------------------------------------------------------------
-	// UPDATE
+	// DRAW LIST
 	// ---------------------------------------------------------------------------
 
 	private function __setCameraPosition(_x : Float, _y : Float)
