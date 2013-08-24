@@ -26,6 +26,7 @@ class DeployUI extends Sprite
 		buyNuke = new BuyUI(); // TODO - parameters
 		addChild(buyNuke);
 		buyNuke.x = resourcesCounter.width;
+		buyNuke.y = buyMarine.y + buyMarine.height;
 
 		startButton = new StartButtonUI();
 		addChild(startButton);
