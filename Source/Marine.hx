@@ -138,9 +138,13 @@ class Marine extends Unit
 					animated.showBehavior(facing + "_shoot");
 					weapon.fireAt(target);
 					SoundManager.playSound("marine_shoot");
+					shadow.alpha = 0.8;
 				}
 				else
+				{
 					animated.showBehavior(facing + "_idle");
+					shadow.alpha = 1.0;
+				}
 
 				// move shadows
 				var toTargetNormalised = toTarget.normalised();
