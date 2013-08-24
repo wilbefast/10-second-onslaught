@@ -60,6 +60,10 @@ class Zergling extends Unit
 		team = Unit.TEAM_ALIENS;
 		weapon = new ZerglingClaws();
 
+		var shadow = new Bitmap(Unit.shadow_data);
+		shadow.x = -shadow.width/2;
+		addChild(shadow);
+
 		animated = new AnimatedSprite(sheet, true);
 		animated.showBehavior("idle");
 		animated.x = -animated.width/2;

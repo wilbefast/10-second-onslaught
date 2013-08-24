@@ -1,5 +1,23 @@
+import openfl.Assets;
+import flash.display.Bitmap;
+import flash.display.BitmapData;
+
 class Unit extends GameObject 
 {
+	// ---------------------------------------------------------------------------
+	// LOAD ASSETS
+	// ---------------------------------------------------------------------------
+
+	private static var initialised : Bool = false;
+
+	public static var shadow_data : BitmapData;
+
+	private static function init() : Void
+	{
+		shadow_data = Assets.getBitmapData("assets/shadow.png");
+		initialised = true;
+	}
+
 	// ---------------------------------------------------------------------------
 	// CONSTRUCTOR
 	// ---------------------------------------------------------------------------
@@ -7,6 +25,10 @@ class Unit extends GameObject
 	public function new(_x : Float, _y : Float, _hitpoints : Int, _radius : Float = 0) : Void
 	{
 		super(_x, _y, _radius);
+
+		if(!initialised)
+			init();
+
 		hitpoints = max_hitpoints = _hitpoints;
 	}
 	

@@ -79,6 +79,7 @@ class Marine extends Unit
 	// ---------------------------------------------------------------------------
 
 	private var animated : AnimatedSprite;
+	private var shadow : Bitmap;
 
 	private static inline var HITPOINTS : Int = 100;
 	private static inline var RADIUS : Int = 16;
@@ -92,6 +93,10 @@ class Marine extends Unit
 
 		team = Unit.TEAM_MARINES;
 		weapon = new PlasmaGun();
+
+		shadow = new Bitmap(Unit.shadow_data);
+		shadow.x = -shadow.width/2;
+		addChild(shadow);
 
 		animated = new AnimatedSprite(sheet, true);
 		animated.showBehavior("S_idle");
@@ -136,6 +141,11 @@ class Marine extends Unit
 				}
 				else
 					animated.showBehavior(facing + "_idle");
+
+				// move shadows
+				var toTargetNormalised = toTarget.normalised();
+				shadow.x = -shadow.width/2 -6*Useful.sign(toTargetNormalised.x);
+				shadow.y = -4*Useful.sign(toTargetNormalised.y);
 			}
 		}
 	}
