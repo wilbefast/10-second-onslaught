@@ -27,6 +27,7 @@ class Marine extends Unit
 	private static var initialised : Bool = false;
 
 	private static var sheet : Spritesheet;
+	
 	private static var snd_die : Sound;
 	private static var snd_attack : Sound;
 
