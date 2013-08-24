@@ -13,12 +13,6 @@ import flash.media.Sound;
 class Nuke extends Unit 
 {
 	// ---------------------------------------------------------------------------
-	// TYPE
-	// ---------------------------------------------------------------------------
-
-	public static var type : UnitType;
-
-	// ---------------------------------------------------------------------------
 	// LOAD ASSETS
 	// ---------------------------------------------------------------------------
 
@@ -28,11 +22,6 @@ class Nuke extends Unit
 
 	private static function init() : Void
 	{
-		// ---------------------------------------------------------------------------
-		// TYPE
-
-		type = new UnitType(200, Assets.getBitmapData("assets/GUI_ic_bomb_01.png"));
-
 		initialised = true;
 	}
 

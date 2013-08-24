@@ -20,11 +20,6 @@ class PlasmaGun extends UnitWeapon
 
 class Marine extends Unit 
 {
-	// ---------------------------------------------------------------------------
-	// TYPE
-	// ---------------------------------------------------------------------------
-
-	public static var type : UnitType;
 
 	// ---------------------------------------------------------------------------
 	// LOAD ASSETS
@@ -36,11 +31,6 @@ class Marine extends Unit
 
 	private static function init() : Void
 	{
-		// ---------------------------------------------------------------------------
-		// TYPE
-
-		type = new UnitType(100, Assets.getBitmapData("assets/GUI_ic_marine_01.png"));
-
 		// ---------------------------------------------------------------------------
 		// ASSETS
 

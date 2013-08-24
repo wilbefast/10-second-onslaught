@@ -4,7 +4,6 @@ class Unit extends GameObject
 	// CONSTRUCTOR
 	// ---------------------------------------------------------------------------
 
-
 	public function new(_x : Float, _y : Float, _hitpoints : Int, _radius : Float = 0) : Void
 	{
 		super(_x, _y, _radius);
