@@ -6,7 +6,7 @@ do
     if [ -d "${D}" ]; then
     	for F in ${D}/*.png; 
     	do
-      	convert ${F} -flop ${F}_reverse.png
+      	convert ${F} -flop ${D}/reverse_$(basename $F)
     	done
     fi
 done
