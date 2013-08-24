@@ -12,7 +12,7 @@ class ButtonDeployEnd extends Sprite
 	
 	private static function init() : Void
     {
-        container_bd = Assets.getBitmapData("assets/button.png");
+        container_bd = Assets.getBitmapData("assets/ButtonGo_01.png");
         initialised = true;
     }
 	
