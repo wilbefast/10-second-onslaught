@@ -167,6 +167,11 @@ class GameScene extends Scene
 		moreMarines_cont.addChild(moreMarinesBitmap);
 		addChild(moreMarines_cont);
 			
+			//champ indiquant le nombre de marines
+		var centernbMarinesWidth = moreMarinesBitmap.x + moreMarinesBitmap.width/2 ;
+		var centernbMarinesHeight = uiBitmap.y + buyingMarinesBitmap.height/2 ;
+		addChild (new DefaultTextField("0", centernbMarinesWidth, centernbMarinesHeight ));
+		
 			//calcul de la hauteur
 			var yLessMarines = uiBitmap.y + buyingMarinesBitmap.height - moreMarinesBitmap.height ;
 		var lessMarinesBitmap : Bitmap = new Bitmap(lessUnitsD_bd);
@@ -201,6 +206,11 @@ class GameScene extends Scene
 		lessBombsBitmap.y = yLessBombs ;
 		lessBombs_cont.addChild(lessBombsBitmap);
 		addChild(lessBombs_cont);
+		
+			//champ indiquant le nombre de bombes
+		var centernbBombsWidth = moreBombsBitmap.x + moreBombsBitmap.width/2 ;
+		var centernbBombsHeight = uiBitmap.y + buyingMarinesBitmap.height + buyingBombsBitmap.height/2 ;
+		addChild (new DefaultTextField("0", centernbBombsWidth, centernbBombsHeight ));
 		
 			//champ pour le cout des bombes
 		var bombsCostBitmap : Bitmap = new Bitmap(unitCostD_bd);
