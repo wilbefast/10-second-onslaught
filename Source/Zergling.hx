@@ -81,12 +81,12 @@ class Zergling extends Unit
 		super.update(dt);
 
 		// dust trail
-		dust_timer -= dt;
-		if(dust_timer < 0)
-		{
-			new SpecialEffect(x, y, sheet, "dust");
-			dust_timer = 1 + Math.random();
-		}
+		// dust_timer -= dt;
+		// if(dust_timer < 0)
+		// {
+		// 	new SpecialEffect(x, y, sheet, "dust");
+		// 	dust_timer = 1 + Math.random();
+		// }
 
 		// update animation
 		animated.update(cast(dt*1000, Int));

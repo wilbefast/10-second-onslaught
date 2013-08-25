@@ -33,10 +33,18 @@ class Marine extends Unit
 
 	private static function init() : Void
 	{
-		sheet = BitmapImporter.create(Assets.getBitmapData("assets/marine.png"), 5, 2, 48, 48);
-		sheet.addBehavior(new BehaviorData("idle", [0], true, 10));
-		sheet.addBehavior(new BehaviorData("shoot", [1, 2], true, 3));
-		sheet.addBehavior(new BehaviorData("death", [5, 6, 7, 8, 9], false, 10));
+		sheet = BitmapImporter.create(Assets.getBitmapData("assets/marine.png"), 5, 6, 48, 48);
+		sheet.addBehavior(new BehaviorData("NW_idle", [0], true, 10));
+		sheet.addBehavior(new BehaviorData("NW_shoot", [1, 2, 3, 4], true, 10));
+		sheet.addBehavior(new BehaviorData("N_idle", [5], true, 10));
+		sheet.addBehavior(new BehaviorData("N_shoot", [6, 7, 8, 9], true, 10));
+		sheet.addBehavior(new BehaviorData("SW_idle", [10], true, 10));
+		sheet.addBehavior(new BehaviorData("SW_shoot", [11, 12, 13, 14], true, 10));
+		sheet.addBehavior(new BehaviorData("S_idle", [15], true, 10));
+		sheet.addBehavior(new BehaviorData("S_shoot", [16, 17, 18, 19], true, 10));
+		sheet.addBehavior(new BehaviorData("W_idle", [20], true, 10));
+		sheet.addBehavior(new BehaviorData("W_shoot", [21, 22, 23, 24], true, 10));
+		sheet.addBehavior(new BehaviorData("die", [25, 26, 27, 28, 29], false, 10));
 
 		snd_die = Assets.getSound ("assets/marine_die.wav");
 		snd_attack = Assets.getSound ("assets/marine_shoot.wav");
@@ -64,7 +72,7 @@ class Marine extends Unit
 		weapon = new PlasmaGun();
 
 		animated = new AnimatedSprite(sheet, true);
-		animated.showBehavior("idle");
+		animated.showBehavior("S_idle");
 		animated.x = -animated.width/2;
 		animated.y = -animated.height*0.7;
 		addChild(animated);
@@ -115,7 +123,7 @@ class Marine extends Unit
 	public override function onPurge() : Void
 	{
 		// create gibs
-		new SpecialEffect(x, y, sheet, "death");
+		new SpecialEffect(x, y, sheet, "die");
 
 		// play sound
 		snd_die.play();
