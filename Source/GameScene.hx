@@ -131,7 +131,7 @@ class GameScene extends Scene
 
 	public function clickOnRadialMenu(option : Int) : Void
 	{
-
+		trace(option);
 	}
 
 	// ---------------------------------------------------------------------------

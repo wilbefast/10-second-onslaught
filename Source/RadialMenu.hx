@@ -34,7 +34,7 @@ class RadialMenu extends Sprite
 	// CONSTRUCTOR
 	// ---------------------------------------------------------------------------
 
-	private var icons : Array<Bitmap>;
+	private var icons : Array<Sprite>;
 
 	private var onSelectOption : Int->Void;
 
@@ -47,10 +47,11 @@ class RadialMenu extends Sprite
 
 		onSelectOption = _onSelectOption;
 
-		icons = new Array<Bitmap>();
+		icons = new Array<Sprite>();
 		for (i in 0 ... N_OPTIONS)
 		{
-			var icon = new Bitmap(data[i]);
+			var icon = new Sprite();
+			icon.addChild(new Bitmap(data[i]));
 
 			icon.addEventListener(MouseEvent.CLICK, function(event) {
 				if(open)
