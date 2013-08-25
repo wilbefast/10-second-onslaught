@@ -1,6 +1,6 @@
 import flash.display.BitmapData;
 
-class UnitType extends Unit
+class UnitType
 {
 	private var instanceNumber : Int;
 	private var price : Int;
@@ -14,6 +14,6 @@ class UnitType extends Unit
 	
 	public function new () : Void
 	{
-		
+
 	}
 }
