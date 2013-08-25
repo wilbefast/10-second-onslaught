@@ -4,3 +4,4 @@ Source_Images
 *.BASE*
 *.REMOTE*
 *.LOCAL*
+*.DS_Store
