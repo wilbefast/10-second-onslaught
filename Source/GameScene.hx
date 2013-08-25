@@ -13,32 +13,9 @@ class GameScene extends Scene
 	// ---------------------------------------------------------------------------
 
 	private static var initialised : Bool = false ;
-	// private static var mapD_bd : BitmapData;
-	// private static var uiD_bd : BitmapData;
-	// private static var replayD_bd : BitmapData;
-	// private static var moneyD_bd : BitmapData;
-	// private static var buyingMarinesD_bd : BitmapData;
-	// private static var buyingBombsD_bd : BitmapData;
-	// private static var moreUnitsD_bd : BitmapData;
-	// private static var lessUnitsD_bd : BitmapData;
-	// private static var unitCostD_bd : BitmapData;
-	
-	// private static var mapA_bd : BitmapData;
-	// private static var uiA_bd : BitmapData;
-	// private static var timelineA_bd : BitmapData;
 
 	private static function init()
 	{
-		// map_bd = Assets.getBitmapData("assets/GabariPlateau_01.png");
-		// ui_bd = Assets.getBitmapData("assets/GabariGUI_01.png");
-
-		// replayD_bd = Assets.getBitmapData("assets/GUI_fond_replay_01.png");
-		// moneyD_bd = Assets.getBitmapData("assets/GUI_fond_bank_01.png");
-		// buyingMarinesD_bd = Assets.getBitmapData("assets/GUI_ic_marine_01.png");
-		// buyingBombsD_bd = Assets.getBitmapData("assets/GUI_ic_bombe_01.png");
-		// moreUnitsD_bd = Assets.getBitmapData("assets/GUI_button_up_01.png");
-		// lessUnitsD_bd = Assets.getBitmapData("assets/GUI_button_down_01.png");
-		// unitCostD_bd = Assets.getBitmapData("assets/GUI_fond_achat_01.png");
 		initialised = true ;
 	}
 
@@ -50,24 +27,9 @@ class GameScene extends Scene
 	private var session : Session;
 	private var timer : Float ;
 
-	// Sprites
-	// private var map : Sprite;
-	// private var ui : Sprite;
-
 	private var timeline : TimelineUI;
 	private var map : MapUI;
 	private var deploy : DeployUI;
-
-	// private var replay : Sprite;
-	// private var money : Sprite;
-	// private var buyingMarines : Sprite;
-	// private var buyingBombs : Sprite;
-	// private var moreMarines : Sprite;
-	// private var moreBombs : Sprite;
-	// private var lessMarines : Sprite;
-	// private var lessBombs : Sprite;
-	// private var marinesCost : Sprite;
-	// private var bombsCost : Sprite;
 	
 	public function new (_timer : Int) // NB - Int is NOT an object (reference) in Haxe !
 	{
@@ -80,24 +42,10 @@ class GameScene extends Scene
 		session = new Session(_timer);
 		timer = session.getTimer() * 100;
 
-		// Build draw list
-		// map = new Sprite();
-  	// ui = new Sprite();
-
   	map = new MapUI();
 		timeline = new TimelineUI();
 		deploy = new DeployUI();
 
-		// replay = new Sprite();
-		// money = new Sprite();
-		// buyingMarines = new Sprite();
-		// buyingBombs = new Sprite();
-		// moreMarines = new Sprite();
-		// moreBombs = new Sprite();
-		// lessMarines = new Sprite();
-		// lessBombs = new Sprite();
-		// marinesCost = new Sprite();
-		// bombsCost = new Sprite();
 	}
 
 	// ---------------------------------------------------------------------------
