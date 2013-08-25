@@ -42,7 +42,7 @@ class GameScene extends Scene
 		session = new Session(_timer);
 		timer = session.getTimer() * 100;
 
-  	map = new MapUI();
+		map = new MapUI();
 		timeline = new TimelineUI();
 		deploy = new DeployUI(session);
 
@@ -74,6 +74,9 @@ class GameScene extends Scene
 
 			case PHASE_DEPLOY:
 		}
+		map.update();
+		timeline.update();
+		deploy.update();
 	}
 
 	public override function onMouseClick(event : MouseEvent) : Void
@@ -165,8 +168,6 @@ class GameScene extends Scene
 		deploy.recalculateLayout();
 	}
 
-
-
 	// ---------------------------------------------------------------------------
 	// ATTACK PHASE
 	// ---------------------------------------------------------------------------
@@ -231,7 +232,5 @@ class GameScene extends Scene
 		map.width = stage.stageWidth;
 		map.height = timeline.y;
 		map.x = map.y = 0;
-		
-
 	}
 }

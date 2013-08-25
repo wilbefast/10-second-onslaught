@@ -18,9 +18,11 @@ class ResourcesCounterUI extends Sprite
 
 	private static var bitmapData : BitmapData;
 	
-	private static var session_attribut : Session;
+	private var session_attribut : Session;
 
-	private static var money : Int;
+	private var money : Int;
+	
+	private var textField : TextField;
 	
 	private static function init() : Void
 	{
@@ -48,7 +50,7 @@ class ResourcesCounterUI extends Sprite
 		Font.registerFont(DefaultFont);
 		
 		var format = new TextFormat("Katamotz Ikasi", 30, 0x7A0026);
-		var textField = new TextField();
+		textField = new TextField();
 		
 		textField.defaultTextFormat = format;
 		textField.embedFonts = true;
@@ -61,5 +63,11 @@ class ResourcesCounterUI extends Sprite
 		textField.text = "Money : " + money ;
 		
 		addChild (textField);
+	}
+	
+	public function update()
+	{
+		money = session_attribut.getMoney();
+		textField.text = "Money : " + money ;
 	}
 }

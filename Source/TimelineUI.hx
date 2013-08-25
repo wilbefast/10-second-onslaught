@@ -21,4 +21,9 @@ class TimelineUI extends Sprite
 
 		addChild(new Bitmap(bitmapData));
 	}
+	
+	public function update()
+	{
+		
+	}
 }
