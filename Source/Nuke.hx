@@ -15,12 +15,9 @@ class NukeExplosion extends GameObject
 	public function new(_x : Float, _y : Float)
 	{
 		super(_x, _y, 48);
-
-		graphics.beginFill(0xFF0000);
-		graphics.drawCircle(0, 0, radius);
 	}
 
-	public var timer : Float = 0.5;
+	public var timer : Float = 0.75;
 
 	public override function update(dt : Float) : Void
 	{
@@ -51,6 +48,7 @@ class Nuke extends Unit
 	private static var initialised : Bool = false;
 
 	private static var sheet : Spritesheet;
+	private static var sheetExplode : Spritesheet;
 
 	private static function init() : Void
 	{
@@ -58,6 +56,9 @@ class Nuke extends Unit
 		// ASSETS
 		sheet = BitmapImporter.create(Assets.getBitmapData("assets/nuke.png"), 7, 1, 48, 48);
 		sheet.addBehavior(new BehaviorData("idle", [0, 1, 2, 3, 4, 5, 6], true, 10));
+
+		sheetExplode = BitmapImporter.create(Assets.getBitmapData("assets/nukeExplosion.png"), 7, 1, 270, 700);
+		sheetExplode.addBehavior(new BehaviorData("explode", [0, 1, 2, 3, 4, 5, 6], true, 9));
 
 		initialised = true;
 	}
@@ -111,6 +112,8 @@ class Nuke extends Unit
 		if(timer < 0 && !purge)
 		{
 			new NukeExplosion(x, y);
+			new SpecialEffect(x, y-300, sheetExplode, "explode");
+
 			purge = true;
 			exploded = true;
 		}
