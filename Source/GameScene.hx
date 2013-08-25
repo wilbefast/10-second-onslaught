@@ -131,7 +131,14 @@ class GameScene extends Scene
 
 	public function clickOnRadialMenu(option : Int) : Void
 	{
-		trace(option);
+		switch(option)
+		{
+			case 0:
+				session.placeUnit(radialMenu.x, radialMenu.y, UnitType.nuke);
+
+			case 1:
+				session.placeUnit(radialMenu.x, radialMenu.y, UnitType.marine);
+		}
 	}
 
 	// ---------------------------------------------------------------------------

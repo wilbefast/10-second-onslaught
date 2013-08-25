@@ -6,10 +6,7 @@ class Session extends Sprite
 	private var nbReplay : Int;
 	private var timer : Int ; //delay between two waves in seconds
 	private var timelineSelection : Int = 0 ;
-	private var unitsToDeploy : Array < List<UnitPlacement> > ;
-	
-	//units
-	private var marines : Int ;
+
 	
 	public function new(ptimer : Int) 
 	{
@@ -17,15 +14,30 @@ class Session extends Sprite
 		money = 1500 ;
 		nbReplay = 0 ;
 		timer = ptimer ;
+
 		//init array for storing units to deploy
-		unitsToDeploy = new Array< List<UnitPlacement> >() ;
-		var i : Int = 0 ;
-		while (i < 10) 
-		{
-			unitsToDeploy.push(new List<UnitPlacement>());
-			i ++ ;
-		}
+		unitsToDeploy = new Array<List<UnitPlacement>>();
+		for(i in 0 ... 10)
+			unitsToDeploy[i] = new List<UnitPlacement>();
 	}
+
+	// ---------------------------------------------------------------------------
+	// UNIT PLACEMENT
+	// ---------------------------------------------------------------------------
+
+	private var unitsToDeploy : Array<List<UnitPlacement>>;
+
+	public function placeUnit(_x : Float, _y : Float, t : UnitType) : Void
+	{
+		var placement = new UnitPlacement(t, _x, _y)
+		addChild(placement);
+		unitsToDeploy[timelineSelection].add(placement);
+	}
+
+	// ---------------------------------------------------------------------------
+	// ACCESSORS
+	// ---------------------------------------------------------------------------
+	
 	
 	public function getTimer()
 	{
