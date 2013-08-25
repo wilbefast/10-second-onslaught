@@ -44,10 +44,15 @@ class GameScene extends Scene
 
 		map = new MapUI();
 		timeline = new TimelineUI();
-		deploy = new DeployUI(session);
+		deploy = new DeployUI(this);
 
 	}
 
+	public function getSession()
+	{
+		return session ;
+	}
+	
 	// ---------------------------------------------------------------------------
 	// CALLBACKS
 	// ---------------------------------------------------------------------------
@@ -77,11 +82,6 @@ class GameScene extends Scene
 		map.update();
 		timeline.update();
 		deploy.update();
-	}
-
-	public override function onMouseClick(event : MouseEvent) : Void
-	{
-		switchPhase();
 	}
 
 	// ---------------------------------------------------------------------------
