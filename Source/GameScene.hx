@@ -43,7 +43,7 @@ class GameScene extends Scene
 		timer = session.getTimer() * 100;
 
 		map = new MapUI();
-		timeline = new TimelineUI();
+		timeline = new TimelineUI(this);
 		deploy = new DeployUI(this);
 
 	}
