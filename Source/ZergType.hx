@@ -13,6 +13,11 @@ public class ZergType extends UnitType
 		this.mouseOverText = "Zergs look like balls !";
 	}
 	
+	public function getCount() : Int 
+	{
+		super();
+		return zergCount;
+	}
 
 	public function increment() : Void
 	{

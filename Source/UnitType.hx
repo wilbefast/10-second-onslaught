@@ -1,4 +1,5 @@
 import flash.display.BitmapData;
+import haxe.ds.StringMap;
 
 class UnitType extends Unit
 {
@@ -6,6 +7,8 @@ class UnitType extends Unit
 	private var price : Int;
 	private var icon : BitmapData;
 	private var mouseOverText : String;
+	
+	public static var byName : StringMap<UnitType> ;
 	
 	//Units
 	
@@ -39,17 +42,7 @@ class UnitType extends Unit
 	
 	public function getMarineCount() : Int
 	{
-		return marineCount;
-	}
-	
-	public function getNukeCount() : Int
-	{
-		return nukeCount;
-	}
-	
-	public function getZergCount() : Int
-	{
-		return zergCount;
+		
 	}
 	
 	public function getMouseOverText() : String

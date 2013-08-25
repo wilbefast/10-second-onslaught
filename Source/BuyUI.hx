@@ -7,6 +7,10 @@ import haxe.ds.StringMap;
 
 class BuyUI extends Sprite
 {
+	
+private var marine : UnitType;
+private var nuke : UnitType;
+	
 	// ---------------------------------------------------------------------------
 	// LOAD ASSETS
 	// ---------------------------------------------------------------------------
@@ -39,7 +43,7 @@ class BuyUI extends Sprite
 	private var up : Sprite;
 	private var down : Sprite;
 
-	public function new(icon_path : String)
+	public function new(unitType : UnitType)
 	{
 		if(!initialised)
 			init();
@@ -48,21 +52,22 @@ class BuyUI extends Sprite
 
 
 		// Cache icons
-		var icon_data;
-		if(!icons_data.exists(icon_path))
-		{
-			icon_data = Assets.getBitmapData(icon_path);
-			icons_data.set(icon_path, icon_data);
-		}
-		else
-			icon_data = icons_data.get(icon_path);
+		//var icon_data;
+		//if(!icons_data.exists(icon_path))
+		//{
+			//icon_data = Assets.getBitmapData(icon_path);
+			//icons_data.set(icon_path, icon_data);
+		//}
+		//else
+			//icon_data = icons_data.get(icon_path);
 
 
 		// Build hierarchy
 		addChild(new Bitmap(background_data));
 
-		icon = new Sprite();
-		icon.addChild(new Bitmap(icon_data));
+		//icon = new Sprite();
+		//icon.addChild(new Bitmap(icon_data));
+		icon = unitType.getIcon();
 		addChild(icon);
 
 		up = new Sprite();
