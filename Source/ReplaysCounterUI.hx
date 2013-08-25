@@ -60,7 +60,7 @@ class ReplaysCounterUI extends Sprite
 		textField.width = 50;
 		textField.height = 30;
 		
-		textField.text = "7";
+		textField.text = " " + nbReplay;
 
 		addChild(textField);
 	}
