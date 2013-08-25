@@ -42,8 +42,8 @@ class GameScene extends Scene
 		session = new Session(_timer);
 		timer = session.getTimer() * 100;
 
-		map = new MapUI();
-		timeline = new TimelineUI();
+		map = new MapUI(this);
+		timeline = new TimelineUI(this);
 		deploy = new DeployUI(this);
 
 	}
@@ -64,6 +64,7 @@ class GameScene extends Scene
 
 	public override function onEnter(previous : Scene) : Void 
 	{
+		recalculateLayout();
 		playDeployPhase();
 	}
 
@@ -121,6 +122,8 @@ class GameScene extends Scene
 			case PHASE_ATTACK:
 				layoutAttack();
 		}
+
+		GameObjectManager.setCameraPosition(map.x + map.width/2, map.y + map.height/2);
 	}
 
 	// ---------------------------------------------------------------------------
@@ -152,14 +155,14 @@ class GameScene extends Scene
 		// map
 		addChild(map);
 		map.width = stage.stageWidth;
-		map.height = stage.stageHeight * 0.7;
+		map.height = stage.stageHeight;
 		map.x = map.y = 0;
 
 		// timeline
 		addChild(timeline);
 		timeline.width = stage.stageWidth;
 		timeline.x = 0;
-		timeline.y = map.y + map.height;
+		timeline.y = stage.stageHeight*0.7;
 
 		// special deploy layout
 		addChild(deploy);
@@ -194,24 +197,24 @@ class GameScene extends Scene
 		for(i in 0 ... 30)
 		{
 			var spawn_angle = Math.random()*Math.PI*2;
-			new Zergling((1 + Math.cos(spawn_angle))*spawn_width, 
-										(1 + Math.sin(spawn_angle))*spawn_height);
+			new Zergling(Math.cos(spawn_angle)*spawn_width, 
+										Math.sin(spawn_angle)*spawn_height);
 		}
 
 		// create marines
 		for(i in 0 ... 10)
 		{
 			var spawn_angle = Math.random()*Math.PI*2;
-			new Marine((3 + Math.cos(spawn_angle))*spawn_width/3, 
-										(3 + Math.sin(spawn_angle))*spawn_height/3);
+			new Marine(Math.cos(spawn_angle)*spawn_width/2, 
+										Math.sin(spawn_angle)*spawn_height/2);
 		}
 
 		// create colonies
 		for(i in 0 ... 5)
 		{
 			var spawn_angle = Math.random()*Math.PI*2;
-			new Colony(spawn_width + Math.cos(spawn_angle)*spawn_width/5, 
-									spawn_height + Math.sin(spawn_angle)*spawn_height/5);
+			new Colony(Math.cos(spawn_angle)*spawn_width/5, 
+										Math.sin(spawn_angle)*spawn_height/5);
 		}
 	}
 
