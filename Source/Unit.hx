@@ -5,10 +5,10 @@ class Unit extends GameObject
 	// ---------------------------------------------------------------------------
 
 
-	public function new(_x : Float, _y : Float, _hitpoints : Int, _radius : Float = 0) : Void
+	public function new(_x : Float, _y : Float, _hitpoints : Int, _radius : Float = 0, t : UnitType) : Void
 	{
 		super(_x, _y, _radius);
-
+		t.increment();
 		hitpoints = max_hitpoints = _hitpoints;
 	}
 
