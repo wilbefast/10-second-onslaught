@@ -51,10 +51,10 @@ class DeployUI extends Sprite
 		resourcesCounter = new ResourcesCounterUI(session_attribut);
 		addChild(resourcesCounter);
 
-		buyMarine = new BuyUI(UnitType.marine); // TODO - parameters
+		buyMarine = new BuyUI(UnitType.marine, session_attribut); // TODO - parameters
 		addChild(buyMarine);
 
-		buyNuke = new BuyUI(UnitType.nuke); // TODO - parameters
+		buyNuke = new BuyUI(UnitType.nuke, session_attribut); // TODO - parameters
 		addChild(buyNuke);
 
 		startButton = new StartButtonUI(pgameScene);

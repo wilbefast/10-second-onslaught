@@ -29,4 +29,10 @@ class UnitType
 		price = _price;
 		icon = _icon;
 	}
+	
+	public function getCount() : Int
+	{
+			// override me !
+			return -1;
+	}
 }

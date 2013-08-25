@@ -15,9 +15,8 @@ class NukeType extends UnitType
 		this.mouseOverText = "Bombs rock !";
 	}
 	
-	public function getCount() : Int
+	public override function getCount() : Int
 	{
-		super();
 		return nukeCount;
 	}
 	
