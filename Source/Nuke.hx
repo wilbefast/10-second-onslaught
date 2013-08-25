@@ -33,7 +33,7 @@ class NukeExplosion extends GameObject
 		if(Std.is(other, Unit))
 		{
 			var unit : Unit = cast(other, Unit);
-			unit.hitpoints -= Math.floor(100*Time.getDelta());
+			unit.hitpoints -= Math.floor(radius*100*Time.getDelta()/Useful.distance(x, y, other.x, other.y));
 		}
 	}
 
@@ -59,6 +59,8 @@ class Nuke extends Unit
 
 		sheetExplode = BitmapImporter.create(Assets.getBitmapData("assets/nukeExplosion.png"), 7, 1, 270, 700);
 		sheetExplode.addBehavior(new BehaviorData("explode", [0, 1, 2, 3, 4, 5, 6], true, 9));
+
+		SoundManager.loadSound("nuke");
 
 		initialised = true;
 	}
@@ -112,7 +114,8 @@ class Nuke extends Unit
 		if(timer < 0 && !purge)
 		{
 			new NukeExplosion(x, y);
-			new SpecialEffect(x, y-300, sheetExplode, "explode");
+			new SpecialEffect(x, y, sheetExplode, "explode", 0, -300);
+			SoundManager.playSound("nuke");
 
 			purge = true;
 			exploded = true;
