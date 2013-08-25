@@ -4,14 +4,12 @@ class Unit extends GameObject
 	// CONSTRUCTOR
 	// ---------------------------------------------------------------------------
 
-
 	public function new(_x : Float, _y : Float, _hitpoints : Int, _radius : Float = 0) : Void
 	{
 		super(_x, _y, _radius);
-
 		hitpoints = max_hitpoints = _hitpoints;
 	}
-
+	
 	// ---------------------------------------------------------------------------
 	// UPDATE
 	// ---------------------------------------------------------------------------
@@ -39,10 +37,6 @@ class Unit extends GameObject
 	{
 		// clear
 		graphics.clear();
-
-		// collider debug
-		// graphics.beginFill(0x000000);
-		// graphics.drawCircle(0, 0, radius);
 
 		// healthbar background
 		graphics.beginFill(0x000000);

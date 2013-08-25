@@ -28,6 +28,8 @@ class Main extends Sprite
 
 		DefaultFont.load();
 
+		UnitType.init();
+
 		SceneManager.add("Title", new TitleScene());
 		SceneManager.add("Game", new GameScene(TIMER));
 

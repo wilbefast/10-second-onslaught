@@ -2,6 +2,7 @@ import flash.display.Sprite;
 import flash.display.Bitmap;
 import flash.display.BitmapData;
 import openfl.Assets;
+import haxe.ds.StringMap;
 
 class DeployUI extends Sprite 
 {
@@ -50,10 +51,10 @@ class DeployUI extends Sprite
 		resourcesCounter = new ResourcesCounterUI(session_attribut);
 		addChild(resourcesCounter);
 
-		buyMarine = new BuyUI("assets/GUI_ic_marine_01.png"); // TODO - parameters
+		buyMarine = new BuyUI(UnitType.marine); // TODO - parameters
 		addChild(buyMarine);
 
-		buyNuke = new BuyUI("assets/GUI_ic_bombe_01.png"); // TODO - parameters
+		buyNuke = new BuyUI(UnitType.nuke); // TODO - parameters
 		addChild(buyNuke);
 
 		startButton = new StartButtonUI(pgameScene);

@@ -27,9 +27,6 @@ class Zergling extends Unit
 
 	private static var sheet : Spritesheet;
 
-	private static var snd_die : Sound;
-	private static var snd_attack : Sound;
-
 	private static function init() : Void
 	{
 		sheet = BitmapImporter.create(Assets.getBitmapData("assets/zergling.png"), 8, 2, 48, 48);
@@ -37,8 +34,8 @@ class Zergling extends Unit
 		sheet.addBehavior(new BehaviorData("death", [8, 9, 10, 11, 12], false, 10));
 		sheet.addBehavior(new BehaviorData("dust", [13, 14, 15], true, 10));
 
-		snd_die = Assets.getSound ("assets/zergling_die.wav");
-		snd_attack = Assets.getSound ("assets/zergling_attack.wav");
+		SoundManager.loadSound("zergling_die");
+		SoundManager.loadSound("zergling_attack");
 
 		initialised = true;
 	}
@@ -112,7 +109,7 @@ class Zergling extends Unit
 			else if(weapon.timeTillReloaded == 0)
 			{
 				weapon.fireAt(target);
-				snd_attack.play();
+				SoundManager.playSound("zergling_attack");
 			}
 		}
 	}
@@ -145,6 +142,6 @@ class Zergling extends Unit
 		new SpecialEffect(x, y-1, sheet, "death");
 
 		// play sound
-		snd_die.play();
+		SoundManager.playSound("zergling_die");
 	}
 }

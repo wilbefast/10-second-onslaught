@@ -1,6 +1,6 @@
 import flash.display.BitmapData;
 
-public class MarineType extends UnitType
+public class ZergType extends UnitType
 {
 	// ---------------------------------------------------------------------------
 	// CONSTRUCTOR
@@ -9,21 +9,19 @@ public class MarineType extends UnitType
 	public function new() : Void 
 	{
 		super();
-		byName.set("marine", this);
-		this.price = 30;
-		this.icon = Assets.getBitmapData("assets/GUI_ic_marine_01.png");
-		this.mouseOverText = "Marines are on fire !";
+		this.price = 0;
+		this.mouseOverText = "Zergs look like balls !";
 	}
 	
-	public function getCount() : Int
+	public function getCount() : Int 
 	{
 		super();
-		return marineCountt;
+		return zergCount;
 	}
-	
+
 	public function increment() : Void
 	{
-		super();
-		marineCount = marineCount + 1;
+			super();
+			zergCount = zergCount + 1;
 	}
 }
