@@ -24,6 +24,7 @@ class SceneManager extends Sprite
 		Lib.current.stage.addEventListener(Event.RESIZE, function(event) { current.onResize(event); } );
 		Lib.current.stage.addEventListener(Event.ENTER_FRAME, function(event) { current.onFrameEnter(event); } );
 		// mouse events
+		Lib.current.stage.addEventListener(MouseEvent.MOUSE_OVER, function(event) { current.onMouseOver(event); } );
 		Lib.current.stage.addEventListener(MouseEvent.MOUSE_DOWN, function(event) { current.onMouseDown(event); } );
 		Lib.current.stage.addEventListener(MouseEvent.MOUSE_UP, function(event) { current.onMouseUp(event); } );
 		Lib.current.stage.addEventListener(MouseEvent.CLICK, function(event) { current.onMouseClick(event); } );

@@ -15,17 +15,17 @@ class RadialMenu extends Sprite
 	// ASSET LOADING
 	// ---------------------------------------------------------------------------
 
-	private static var marineIcon_data : BitmapData; 
-	private static var nukeIcon_data : BitmapData; 
-	private static var cancelIcon_data : BitmapData; 
+	private static inline var N_OPTIONS = 3;
+
+	private static var data : Array<BitmapData>; 
 
 	private static var initialised : Bool = false;
 
 	private function init()
 	{
-		marineIcon_data = Assets.getBitmapData("assets/rad1.png");
-		nukeIcon_data = Assets.getBitmapData("assets/rad2.png");
-		cancelIcon_data = Assets.getBitmapData("assets/rad3.png");
+		data = new Array<BitmapData>();
+		for (i in 0 ... N_OPTIONS)
+			data[i] = Assets.getBitmapData("assets/radial_menu_" + i + ".png");
 
 		initialised = true;
 	}
@@ -34,25 +34,21 @@ class RadialMenu extends Sprite
 	// CONSTRUCTOR
 	// ---------------------------------------------------------------------------
 
-	private var marineIcon : Bitmap;
-	private var nukeIcon : Bitmap;
-	private var cancelIcon : Bitmap;
+	private var icons : Array<Bitmap>;
 
 	public function new()
 	{
+		super();
+
 		if(!initialised)
 			init();
 
-		super();
-
-		marineIcon = new Bitmap(marineIcon_data);
-		addChild(marineIcon);
-
-		nukeIcon = new Bitmap(nukeIcon_data);
-		addChild(nukeIcon);
-
-		cancelIcon = new Bitmap(cancelIcon_data);
-		addChild(cancelIcon);
+		icons = new Array<Bitmap>();
+		for (i in 0 ... N_OPTIONS)
+		{
+			icons[i] = new Bitmap(data[i]);
+			addChild(icons[i]);
+		}
 
 		alpha = 0;
 	}
@@ -61,6 +57,8 @@ class RadialMenu extends Sprite
 
 	public function isOpen() : Bool return open;
 
+	public static inline var RADIUS : Float = 64;
+
 	public function toggle()
 	{
 		if(open)
@@ -68,13 +66,8 @@ class RadialMenu extends Sprite
 			Actuate.tween(this, 0.3, { alpha : 0.0 }, true)
 						.ease (Quad.easeOut);
 
-			Actuate.tween(marineIcon, 0.3, { x : 0 }, true)
-						.ease (Quad.easeOut);
-
-			Actuate.tween(nukeIcon, 0.3, { x : 0 }, true)
-						.ease (Quad.easeOut);	
-
-			Actuate.tween(cancelIcon, 0.3, { y : 0 }, true)
+			for (i in 0 ... N_OPTIONS)
+				Actuate.tween(icons[i], 0.3, { x : 0, y : 0 }, true)
 						.ease (Quad.easeOut);
 		}
 		else
@@ -82,14 +75,15 @@ class RadialMenu extends Sprite
 			Actuate.tween(this, 0.3, { alpha : 1.0 }, true)
 						.ease (Quad.easeOut);
 
-			Actuate.tween(marineIcon, 0.3, { x : -32 }, true)
-						.ease (Quad.easeOut);
-
-			Actuate.tween(nukeIcon, 0.3, { x : 32 }, true)
+			var radians_per_options = Math.PI*2/N_OPTIONS;
+			for (i in 0 ... N_OPTIONS)
+			{
+				var radians = radians_per_options*(i + 0.5);
+				var ox = Math.cos(radians)*RADIUS;
+				var oy = Math.sin(radians)*RADIUS;
+				Actuate.tween(icons[i], 0.3, { x : ox, y : oy }, true)
 						.ease (Quad.easeOut);	
-
-			Actuate.tween(cancelIcon, 0.3, { y : -32 }, true)
-						.ease (Quad.easeOut);
+			}
 		}
 		open = !open;
 	}

@@ -22,6 +22,6 @@ class Useful
 
 	public static inline function distance(x1 : Float, y1 : Float, x2 : Float, y2 : Float) : Float
 	{
-		return (Math.sqrt(distance2(x1, x2, y1, y2)));
+		return (Math.sqrt(distance2(x1, y1, x2, y2)));
 	}
 }

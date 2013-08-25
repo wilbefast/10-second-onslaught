@@ -73,29 +73,21 @@ class GameScene extends Scene
 
 		// map
 		addChild(map);
-		map.width = stage.stageWidth;
-		map.height = stage.stageHeight;
-		map.x = map.y = 0;
+		map.addEventListener(MouseEvent.CLICK, clickOnMap);
 
 		// game objects
 		addChild(GameObjectManager.get());
 
 		// timeline
 		addChild(timeline);
-		timeline.width = stage.stageWidth;
-		timeline.x = 0;
-		timeline.y = stage.stageHeight*0.8 - timeline.height;
 
 		// special deploy layout
 		addChild(deploy);
-		deploy.height = stage.stageHeight*0.2;
-		deploy.y = stage.stageHeight - deploy.height;
-		deploy.recalculateLayout();
 
 		// radial menu
 		addChild(radialMenu);
 
-		// build hierarchy
+		// start !
 		// ---------------------------------------------------------------------------
 		recalculateLayout();
 		playDeployPhase();
@@ -118,14 +110,31 @@ class GameScene extends Scene
 		deploy.update();
 	}
 
-	public override function onMouseClick(event : MouseEvent) : Void
+	public override function onMouseOver(event : MouseEvent) : Void
 	{
-		if(!radialMenu.isOpen())
+		if(radialMenu.isOpen())
 		{
-			radialMenu.x = event.stageX;
-			radialMenu.y = event.stageY;
+			trace(Useful.distance(event.stageX, event.stageY, radialMenu.x, radialMenu.y));
+			//if(Useful.distance(event.stageX, event.stageY, radialMenu.x, radialMenu.y) > RadialMenu.RADIUS)
+				//radialMenu.toggle();
 		}
-		radialMenu.toggle();
+	}
+
+	public function clickOnMap(event : MouseEvent) : Void
+	{
+
+		switch(phase)
+		{
+			case PHASE_DEPLOY:
+				if(!radialMenu.isOpen())
+				{
+					radialMenu.x = event.stageX;
+					radialMenu.y = event.stageY;
+				}
+				radialMenu.toggle();
+		}
+
+
 	}
 
 	// ---------------------------------------------------------------------------
@@ -158,7 +167,40 @@ class GameScene extends Scene
 
 	public function recalculateLayout()
 	{
+		// map
+		map.width = stage.stageWidth;
+		map.height = stage.stageHeight;
+		map.x = map.y = 0;
+
+		// game objects
 		GameObjectManager.setCameraPosition(map.x + map.width/2, map.y + map.height/2);
+
+		// timeline
+		timeline.width = stage.stageWidth;
+		timeline.x = 0;
+		timeline.y = stage.stageHeight*0.8 - timeline.height;
+
+		// special deploy layout
+		deploy.height = stage.stageHeight*0.2;
+		deploy.y = stage.stageHeight*0.8;
+		deploy.recalculateLayout();
+
+		switch(phase)
+		{
+			case PHASE_DEPLOY:
+				// show deploy layout
+				Actuate.tween(timeline, 1, { y : stage.stageHeight-deploy.height-timeline.height }, true)
+							.ease (Quad.easeOut);
+				Actuate.tween(deploy, 1, { y : stage.stageHeight-deploy.height }, true)
+							.ease (Quad.easeOut);
+
+			case PHASE_ATTACK:
+				// hide deploy layout
+				Actuate.tween(timeline, 1, { y : stage.stageHeight-timeline.height }, true)
+							.ease (Quad.easeOut);
+				Actuate.tween(deploy, 1, { y : stage.stageHeight }, true)
+							.ease (Quad.easeOut);
+		}
 	}
 
 	// ---------------------------------------------------------------------------
@@ -174,14 +216,11 @@ class GameScene extends Scene
 		// phase is now attack phase
 		phase = PHASE_DEPLOY;
 
+		// recalculate layout
+		recalculateLayout();
+
 		// clear all dudes
 		GameObjectManager.purgeAll();
-
-		// show deploy layout
-		Actuate.tween(timeline, 1, { y : stage.stageHeight-deploy.height-timeline.height }, true)
-					.ease (Quad.easeOut);
-		Actuate.tween(deploy, 1, { y : stage.stageHeight-deploy.height }, true)
-					.ease (Quad.easeOut);
 
 		// create colonies
 		spawnColonies();
@@ -197,11 +236,8 @@ class GameScene extends Scene
 		// phase is now attack phase
 		phase = PHASE_ATTACK;
 
-		// hide deploy layout
-		Actuate.tween(timeline, 1, { y : stage.stageHeight-timeline.height }, true)
-					.ease (Quad.easeOut);
-		Actuate.tween(deploy, 1, { y : stage.stageHeight }, true)
-					.ease (Quad.easeOut);
+		// recalculate layout
+		recalculateLayout();
 
 		// create units
 		spawnUnits();
