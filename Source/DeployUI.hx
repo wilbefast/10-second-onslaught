@@ -33,10 +33,10 @@ class DeployUI extends Sprite
 
 	private var background : Bitmap;
 
-	public function new(session : Session)
+	public function new(pgameScene : GameScene)
 	{
 		super();
-		session_attribut = session;
+		session_attribut = pgameScene.getSession();
 
 		if(!initialised)
 			init();
@@ -56,7 +56,7 @@ class DeployUI extends Sprite
 		buyNuke = new BuyUI("assets/GUI_ic_bombe_01.png"); // TODO - parameters
 		addChild(buyNuke);
 
-		startButton = new StartButtonUI();
+		startButton = new StartButtonUI(pgameScene);
 		addChild(startButton);
 
 		recalculateLayout();
