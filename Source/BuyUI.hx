@@ -60,6 +60,7 @@ private var session_attribut : Session;
 		icon = new Sprite();
 		icon.addChild(new Bitmap(unitType.icon));
 		addChild(icon);
+		icon.width = width/4;
 
 		up = new Sprite();
 		up.addEventListener(MouseEvent.CLICK, onMouseClickUp);
@@ -67,6 +68,7 @@ private var session_attribut : Session;
 		up.x = icon.x + icon.width;
 		up.y = icon.y;
 		addChild(up);
+		up.width = width/6;
 
 		down = new Sprite();
 		down.addEventListener(MouseEvent.CLICK, onMouseClickDown);
@@ -74,6 +76,7 @@ private var session_attribut : Session;
 		down.x = icon.x + icon.width;
 		down.y = icon.y + icon.height - down.height;
 		addChild(down);
+		down.width = width/6;
 	}
 	
 	private function onMouseClickUp (event : MouseEvent) : Void

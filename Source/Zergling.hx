@@ -44,7 +44,7 @@ class Zergling extends Unit
 	// CONSTRUCTOR
 	// ---------------------------------------------------------------------------
 
-	private static inline var SPEED : Float = 96;
+	private static inline var SPEED : Float = 128;
 	private static inline var HITPOINTS : Int = 30;
 	private static inline var RADIUS : Int = 16;
 

@@ -35,7 +35,6 @@ class MapUI extends Sprite
 	}
 	
 	private function onMouseClick(event : MouseEvent) : Void
-    {
-		trace("X : " + event.localX + " Y : " + event.localY);
+  {
 	}
 }

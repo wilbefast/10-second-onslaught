@@ -62,6 +62,11 @@ class GameObjectManager extends Sprite
 		return get().__getMaximum(evaluation, condition);
 	}
 
+	public static function setCameraPosition(_x : Float, _y : Float)
+	{
+		return get().__setCameraPosition(_x, _y);
+	}
+
 	// ---------------------------------------------------------------------------
 	// OBJECT LIST
 	// ---------------------------------------------------------------------------
@@ -131,7 +136,7 @@ class GameObjectManager extends Sprite
 
 	private function onFrameEnter(event : Event) : Void
 	{
-		var previous_y : Float = Math.NEGATIVE_INFINITY;
+	 	var previous_y : Float = Math.NEGATIVE_INFINITY;
 
 		// for each object
 		for(i in 0 ... numChildren)
@@ -168,5 +173,15 @@ class GameObjectManager extends Sprite
 			// apply pre-render logic
 			a.render();
 		}
+	}
+
+	// ---------------------------------------------------------------------------
+	// UPDATE
+	// ---------------------------------------------------------------------------
+
+	private function __setCameraPosition(_x : Float, _y : Float)
+	{
+		x = _x;
+		y = _y;
 	}
 }
