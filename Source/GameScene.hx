@@ -13,32 +13,9 @@ class GameScene extends Scene
 	// ---------------------------------------------------------------------------
 
 	private static var initialised : Bool = false ;
-	// private static var mapD_bd : BitmapData;
-	// private static var uiD_bd : BitmapData;
-	// private static var replayD_bd : BitmapData;
-	// private static var moneyD_bd : BitmapData;
-	// private static var buyingMarinesD_bd : BitmapData;
-	// private static var buyingBombsD_bd : BitmapData;
-	// private static var moreUnitsD_bd : BitmapData;
-	// private static var lessUnitsD_bd : BitmapData;
-	// private static var unitCostD_bd : BitmapData;
-	
-	// private static var mapA_bd : BitmapData;
-	// private static var uiA_bd : BitmapData;
-	// private static var timelineA_bd : BitmapData;
 
 	private static function init()
 	{
-		// map_bd = Assets.getBitmapData("assets/GabariPlateau_01.png");
-		// ui_bd = Assets.getBitmapData("assets/GabariGUI_01.png");
-
-		// replayD_bd = Assets.getBitmapData("assets/GUI_fond_replay_01.png");
-		// moneyD_bd = Assets.getBitmapData("assets/GUI_fond_bank_01.png");
-		// buyingMarinesD_bd = Assets.getBitmapData("assets/GUI_ic_marine_01.png");
-		// buyingBombsD_bd = Assets.getBitmapData("assets/GUI_ic_bombe_01.png");
-		// moreUnitsD_bd = Assets.getBitmapData("assets/GUI_button_up_01.png");
-		// lessUnitsD_bd = Assets.getBitmapData("assets/GUI_button_down_01.png");
-		// unitCostD_bd = Assets.getBitmapData("assets/GUI_fond_achat_01.png");
 		initialised = true ;
 	}
 
@@ -50,24 +27,9 @@ class GameScene extends Scene
 	private var session : Session;
 	private var timer : Float ;
 
-	// Sprites
-	// private var map : Sprite;
-	// private var ui : Sprite;
-
 	private var timeline : TimelineUI;
 	private var map : MapUI;
 	private var deploy : DeployUI;
-
-	// private var replay : Sprite;
-	// private var money : Sprite;
-	// private var buyingMarines : Sprite;
-	// private var buyingBombs : Sprite;
-	// private var moreMarines : Sprite;
-	// private var moreBombs : Sprite;
-	// private var lessMarines : Sprite;
-	// private var lessBombs : Sprite;
-	// private var marinesCost : Sprite;
-	// private var bombsCost : Sprite;
 	
 	public function new (_timer : Int) // NB - Int is NOT an object (reference) in Haxe !
 	{
@@ -80,26 +42,17 @@ class GameScene extends Scene
 		session = new Session(_timer);
 		timer = session.getTimer() * 100;
 
-		// Build draw list
-		// map = new Sprite();
-  	// ui = new Sprite();
+		map = new MapUI(this);
+		timeline = new TimelineUI(this);
+		deploy = new DeployUI(this);
 
-  	map = new MapUI();
-		timeline = new TimelineUI();
-		deploy = new DeployUI();
-
-		// replay = new Sprite();
-		// money = new Sprite();
-		// buyingMarines = new Sprite();
-		// buyingBombs = new Sprite();
-		// moreMarines = new Sprite();
-		// moreBombs = new Sprite();
-		// lessMarines = new Sprite();
-		// lessBombs = new Sprite();
-		// marinesCost = new Sprite();
-		// bombsCost = new Sprite();
 	}
 
+	public function getSession()
+	{
+		return session ;
+	}
+	
 	// ---------------------------------------------------------------------------
 	// CALLBACKS
 	// ---------------------------------------------------------------------------
@@ -111,6 +64,7 @@ class GameScene extends Scene
 
 	public override function onEnter(previous : Scene) : Void 
 	{
+		recalculateLayout();
 		playDeployPhase();
 	}
 
@@ -126,11 +80,9 @@ class GameScene extends Scene
 
 			case PHASE_DEPLOY:
 		}
-	}
-
-	public override function onMouseClick(event : MouseEvent) : Void
-	{
-		switchPhase();
+		map.update();
+		timeline.update();
+		deploy.update();
 	}
 
 	// ---------------------------------------------------------------------------
@@ -170,6 +122,8 @@ class GameScene extends Scene
 			case PHASE_ATTACK:
 				layoutAttack();
 		}
+
+		GameObjectManager.setCameraPosition(map.x + map.width/2, map.y + map.height/2);
 	}
 
 	// ---------------------------------------------------------------------------
@@ -201,14 +155,14 @@ class GameScene extends Scene
 		// map
 		addChild(map);
 		map.width = stage.stageWidth;
-		map.height = stage.stageHeight * 0.7;
+		map.height = stage.stageHeight;
 		map.x = map.y = 0;
 
 		// timeline
 		addChild(timeline);
 		timeline.width = stage.stageWidth;
 		timeline.x = 0;
-		timeline.y = map.y + map.height;
+		timeline.y = stage.stageHeight*0.8;
 
 		// special deploy layout
 		addChild(deploy);
@@ -216,8 +170,6 @@ class GameScene extends Scene
 		deploy.height = stage.stageHeight - deploy.y;
 		deploy.recalculateLayout();
 	}
-
-
 
 	// ---------------------------------------------------------------------------
 	// ATTACK PHASE
@@ -238,31 +190,40 @@ class GameScene extends Scene
 		// NB - these dudes should be spawned based on deploy
 
 		// create dudes
-		var spawn_width = 400; // TODO - get from stage.stageWidth
-		var spawn_height = 300; // TODO - get from stage.stageWidth
+		var spawn_width = 800; // TODO - get from stage.stageWidth
+		var spawn_height = 600; // TODO - get from stage.stageWidth
 
 		// create zerglings
 		for(i in 0 ... 30)
 		{
 			var spawn_angle = Math.random()*Math.PI*2;
-			new Zergling((1 + Math.cos(spawn_angle))*spawn_width, 
-										(1 + Math.sin(spawn_angle))*spawn_height);
+			new Zergling(Math.cos(spawn_angle)*spawn_width, 
+										Math.sin(spawn_angle)*spawn_height);
 		}
+
+		// create  nukes
+		for(i in 0 ... 3)
+		{
+			var spawn_angle = Math.random()*Math.PI*2;
+			new Nuke(Math.cos(spawn_angle)*spawn_width/2, 
+										Math.sin(spawn_angle)*spawn_height/2);
+		}
+
 
 		// create marines
 		for(i in 0 ... 10)
 		{
 			var spawn_angle = Math.random()*Math.PI*2;
-			new Marine((3 + Math.cos(spawn_angle))*spawn_width/3, 
-										(3 + Math.sin(spawn_angle))*spawn_height/3);
+			new Marine(Math.cos(spawn_angle)*spawn_width/4, 
+										Math.sin(spawn_angle)*spawn_height/4);
 		}
 
 		// create colonies
 		for(i in 0 ... 5)
 		{
 			var spawn_angle = Math.random()*Math.PI*2;
-			new Colony(spawn_width + Math.cos(spawn_angle)*spawn_width/5, 
-									spawn_height + Math.sin(spawn_angle)*spawn_height/5);
+			new Colony(Math.cos(spawn_angle)*spawn_width/8, 
+										Math.sin(spawn_angle)*spawn_height/8);
 		}
 	}
 
@@ -283,7 +244,5 @@ class GameScene extends Scene
 		map.width = stage.stageWidth;
 		map.height = timeline.y;
 		map.x = map.y = 0;
-		
-
 	}
 }

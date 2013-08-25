@@ -2,11 +2,19 @@ import openfl.Assets;
 import flash.display.Bitmap;
 import flash.display.BitmapData;
 import flash.display.Sprite;
+import flash.events.MouseEvent;
 
 import haxe.ds.StringMap;
 
 class BuyUI extends Sprite
 {
+	
+private var unit : UnitType;
+private var unitCount : Int;
+private var unitCost : Int;
+private var money : Int;
+private var session_attribut : Session;
+	
 	// ---------------------------------------------------------------------------
 	// LOAD ASSETS
 	// ---------------------------------------------------------------------------
@@ -16,13 +24,11 @@ class BuyUI extends Sprite
 	private static var background_data : BitmapData;
 	private static var up_data : BitmapData;
 	private static var down_data : BitmapData;
-
-	private static var icons_data : StringMap<BitmapData>;
-
+	private var marine_data : DefaultTextField ;
+	private var nuke_data : DefaultTextField ; 
+	
 	private static function init() : Void
 	{
-		icons_data = new StringMap<BitmapData>();
-
 		background_data = Assets.getBitmapData("assets/GUI_fond_achat_01.png");
 
 		up_data = Assets.getBitmapData("assets/GUI_button_up_01.png");
@@ -39,42 +45,55 @@ class BuyUI extends Sprite
 	private var up : Sprite;
 	private var down : Sprite;
 
-	public function new(icon_path : String)
+	public function new(unitType : UnitType, session : Session)
 	{
-		if(!initialised)
-			init();
-
 		super();
 
-
-		// Cache icons
-		var icon_data;
-		if(!icons_data.exists(icon_path))
-		{
-			icon_data = Assets.getBitmapData(icon_path);
-			icons_data.set(icon_path, icon_data);
-		}
-		else
-			icon_data = icons_data.get(icon_path);
-
+		if(!initialised)
+			init();
+		unitCost = unitType.price;
+		session_attribut = session;
 
 		// Build hierarchy
 		addChild(new Bitmap(background_data));
 
 		icon = new Sprite();
-		icon.addChild(new Bitmap(icon_data));
+		icon.addChild(new Bitmap(unitType.icon));
 		addChild(icon);
+		icon.width = width/4;
 
 		up = new Sprite();
+		up.addEventListener(MouseEvent.CLICK, onMouseClickUp);
 		up.addChild(new Bitmap(up_data));
 		up.x = icon.x + icon.width;
 		up.y = icon.y;
 		addChild(up);
+		up.width = width/6;
 
 		down = new Sprite();
+		down.addEventListener(MouseEvent.CLICK, onMouseClickDown);
 		down.addChild(new Bitmap(down_data));
 		down.x = icon.x + icon.width;
 		down.y = icon.y + icon.height - down.height;
 		addChild(down);
+		down.width = width/6;
+	}
+	
+	private function onMouseClickUp (event : MouseEvent) : Void
+	{
+		if (money>unitCost)
+			unitCount = unitCount + 1;
+	}
+	
+	private function onMouseClickDown (event : MouseEvent) : Void
+	{
+		if (unitCount > 0) 
+			unitCount = unitCount - 1;
+	}
+	
+	public function update() : Void
+	{
+		money = session_attribut.getMoney();
+		unitCount = unit.getCount();
 	}
 }

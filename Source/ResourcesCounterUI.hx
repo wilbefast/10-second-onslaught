@@ -1,7 +1,12 @@
+import flash.net.drm.DRMManagerSession;
 import openfl.Assets;
 import flash.display.Bitmap;
 import flash.display.BitmapData;
 import flash.display.Sprite;
+import flash.text.Font;
+import flash.text.TextField;
+import flash.text.TextFormat;
+
 
 class ResourcesCounterUI extends Sprite
 {
@@ -12,7 +17,13 @@ class ResourcesCounterUI extends Sprite
 	private static var initialised : Bool = false;
 
 	private static var bitmapData : BitmapData;
+	
+	private var session_attribut : Session;
 
+	private var money : Int;
+	
+	private var textField : TextField;
+	
 	private static function init() : Void
 	{
 		bitmapData = Assets.getBitmapData("assets/GUI_fond_bank_01.png");
@@ -24,7 +35,7 @@ class ResourcesCounterUI extends Sprite
 	// ---------------------------------------------------------------------------
 
 
-	public function new()
+	public function new( session : Session)
 	{
 		if(!initialised)
 			init();
@@ -32,5 +43,16 @@ class ResourcesCounterUI extends Sprite
 		super();
 
 		addChild(new Bitmap(bitmapData));
+		
+		session_attribut = session;
+		money = session_attribut.getMoney();
+		textField = new DefaultTextField("Money : " + money);
+		addChild(textField);
+	}
+	
+	public function update()
+	{
+		money = session_attribut.getMoney();
+		textField.text = "Money : " + money ;
 	}
 }

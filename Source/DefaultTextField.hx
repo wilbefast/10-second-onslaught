@@ -5,7 +5,7 @@ class DefaultTextField extends TextField
 
 	private static inline var FIELD_WIDTH = 256;
 
-	public function new (_text : String, _x : Float, _y : Float) 
+	public function new (_text : String, _x : Float = 0, _y : Float = 0) 
 	{
 		super();
 

@@ -1,17 +1,37 @@
+import openfl.Assets;
+import flash.display.Bitmap;
+import flash.display.BitmapData;
+
 class Unit extends GameObject 
 {
 	// ---------------------------------------------------------------------------
-	// CONSTRUCTOR
+	// LOAD ASSETS
 	// ---------------------------------------------------------------------------
 
+	private static var initialised : Bool = false;
+
+	public static var shadow_data : BitmapData;
+
+	private static function init() : Void
+	{
+		shadow_data = Assets.getBitmapData("assets/shadow.png");
+		initialised = true;
+	}
+
+	// ---------------------------------------------------------------------------
+	// CONSTRUCTOR
+	// ---------------------------------------------------------------------------
 
 	public function new(_x : Float, _y : Float, _hitpoints : Int, _radius : Float = 0) : Void
 	{
 		super(_x, _y, _radius);
 
+		if(!initialised)
+			init();
+
 		hitpoints = max_hitpoints = _hitpoints;
 	}
-
+	
 	// ---------------------------------------------------------------------------
 	// UPDATE
 	// ---------------------------------------------------------------------------
@@ -39,10 +59,6 @@ class Unit extends GameObject
 	{
 		// clear
 		graphics.clear();
-
-		// collider debug
-		// graphics.beginFill(0x000000);
-		// graphics.drawCircle(0, 0, radius);
 
 		// healthbar background
 		graphics.beginFill(0x000000);

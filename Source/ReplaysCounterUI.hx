@@ -1,7 +1,13 @@
+import flash.net.drm.DRMManagerSession;
+import flash.text.TextField;
+import flash.text.TextFormat;
 import openfl.Assets;
 import flash.display.Bitmap;
 import flash.display.BitmapData;
 import flash.display.Sprite;
+import flash.text.Font;
+import flash.text.TextField;
+import flash.text.TextFormat;
 
 class ReplaysCounterUI extends Sprite
 {
@@ -12,6 +18,12 @@ class ReplaysCounterUI extends Sprite
 	private static var initialised : Bool = false;
 
 	private static var bitmapData : BitmapData;
+	
+	private var session_attribut : Session;
+	
+	private var nbReplay : Int;
+	
+	private var textField : TextField;
 
 	private static function init() : Void
 	{
@@ -24,13 +36,26 @@ class ReplaysCounterUI extends Sprite
 	// ---------------------------------------------------------------------------
 
 
-	public function new()
+	public function new(session : Session)
 	{
 		if(!initialised)
 			init();
 
 		super();
-
-		addChild(new Bitmap(bitmapData));
+		
+		var background = new Bitmap(bitmapData);
+		addChild(background);
+		
+		session_attribut = session;
+		nbReplay = session_attribut.getNbReplay();
+		textField = new DefaultTextField("Attempt #" + nbReplay);
+		textField.height = background.height;
+		addChild(textField);
+	}
+	
+	public function update()
+	{
+		nbReplay = session_attribut.getNbReplay();
+		textField.text = "Attempt #" + nbReplay ;
 	}
 }

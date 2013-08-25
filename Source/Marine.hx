@@ -20,6 +20,7 @@ class PlasmaGun extends UnitWeapon
 
 class Marine extends Unit 
 {
+
 	// ---------------------------------------------------------------------------
 	// LOAD ASSETS
 	// ---------------------------------------------------------------------------
@@ -28,18 +29,47 @@ class Marine extends Unit
 
 	private static var sheet : Spritesheet;
 
-	private static var snd_die : Sound;
-	private static var snd_attack : Sound;
-
 	private static function init() : Void
 	{
-		sheet = BitmapImporter.create(Assets.getBitmapData("assets/marine.png"), 5, 2, 48, 48);
-		sheet.addBehavior(new BehaviorData("idle", [0], true, 10));
-		sheet.addBehavior(new BehaviorData("shoot", [1, 2], true, 3));
-		sheet.addBehavior(new BehaviorData("death", [5, 6, 7, 8, 9], false, 10));
+		// ---------------------------------------------------------------------------
+		// ASSETS
 
-		snd_die = Assets.getSound ("assets/marine_die.wav");
-		snd_attack = Assets.getSound ("assets/marine_shoot.wav");
+		sheet = BitmapImporter.create(Assets.getBitmapData("assets/marine.png"), 10, 6, 48, 48);
+
+		sheet.addBehavior(new BehaviorData("NW_idle", [0], true, 10));
+		sheet.addBehavior(new BehaviorData("NW_shoot", [1, 2, 3, 4], true, 10));
+
+		sheet.addBehavior(new BehaviorData("NE_idle", [5], true, 10));
+		sheet.addBehavior(new BehaviorData("NE_shoot", [6, 7, 8, 9], true, 10));
+
+		sheet.addBehavior(new BehaviorData("N_idle", [10], true, 10));
+		sheet.addBehavior(new BehaviorData("N_shoot", [11, 12, 13, 14], true, 10));
+
+		//! flipped north is not used
+
+		sheet.addBehavior(new BehaviorData("SW_idle", [20], true, 10));
+		sheet.addBehavior(new BehaviorData("SW_shoot", [21, 22, 23, 24], true, 10));
+
+		sheet.addBehavior(new BehaviorData("SE_idle", [25], true, 10));
+		sheet.addBehavior(new BehaviorData("SE_shoot", [26, 27, 28, 29], true, 10));
+
+		sheet.addBehavior(new BehaviorData("S_idle", [30], true, 10));
+		sheet.addBehavior(new BehaviorData("S_shoot", [31, 32, 33, 34], true, 10));
+
+		//! flipped south is not used
+
+		sheet.addBehavior(new BehaviorData("W_idle", [40], true, 10));
+		sheet.addBehavior(new BehaviorData("W_shoot", [41, 42, 43, 44], true, 10));
+
+		sheet.addBehavior(new BehaviorData("E_idle", [45], true, 10));
+		sheet.addBehavior(new BehaviorData("E_shoot", [46, 47, 48, 49], true, 10));
+
+		sheet.addBehavior(new BehaviorData("die", [50, 51, 52, 53, 54], false, 10));
+
+		//! flipped die is not used
+
+		SoundManager.loadSound("marine_die");
+		SoundManager.loadSound("marine_shoot");
 
 		initialised = true;
 	}
@@ -49,6 +79,7 @@ class Marine extends Unit
 	// ---------------------------------------------------------------------------
 
 	private var animated : AnimatedSprite;
+	private var shadow : Bitmap;
 
 	private static inline var HITPOINTS : Int = 100;
 	private static inline var RADIUS : Int = 16;
@@ -63,10 +94,15 @@ class Marine extends Unit
 		team = Unit.TEAM_MARINES;
 		weapon = new PlasmaGun();
 
+		shadow = new Bitmap(Unit.shadow_data);
+		shadow.x = -shadow.width/2;
+		addChild(shadow);
+
 		animated = new AnimatedSprite(sheet, true);
-		animated.showBehavior("idle");
+		animated.showBehavior("S_idle");
 		animated.x = -animated.width/2;
 		animated.y = -animated.height*0.7;
+
 		addChild(animated);
 	}
 
@@ -89,12 +125,31 @@ class Marine extends Unit
 		if(target != null)
 		{
 			var toTarget = new V2(target.x - x, target.y - y);
+			var targetDistance = toTarget.getNorm() - radius - target.radius;
+			
+			// face target ...
+			var facing = Facing.which(toTarget);
 
 			// attack target
-			if(weapon.timeTillReloaded == 0 && toTarget.getNorm() - radius - target.radius <= weapon.range)
+			if(weapon.timeTillReloaded == 0)
 			{
-				weapon.fireAt(target);
-				snd_attack.play();
+				if(targetDistance <= weapon.range)
+				{
+					animated.showBehavior(facing + "_shoot");
+					weapon.fireAt(target);
+					SoundManager.playSound("marine_shoot");
+					shadow.alpha = 0.8;
+				}
+				else
+				{
+					animated.showBehavior(facing + "_idle");
+					shadow.alpha = 1.0;
+				}
+
+				// move shadows
+				var toTargetNormalised = toTarget.normalised();
+				shadow.x = -shadow.width/2 -6*Useful.sign(toTargetNormalised.x);
+				shadow.y = -4*Useful.sign(toTargetNormalised.y);
 			}
 		}
 	}
@@ -115,10 +170,10 @@ class Marine extends Unit
 	public override function onPurge() : Void
 	{
 		// create gibs
-		new SpecialEffect(x, y, sheet, "death");
+		new SpecialEffect(x, y, sheet, "die");
 
 		// play sound
-		snd_die.play();
+		SoundManager.playSound("marine_die");
 	}
 
 	// ---------------------------------------------------------------------------
