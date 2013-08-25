@@ -33,18 +33,39 @@ class Marine extends Unit
 
 	private static function init() : Void
 	{
-		sheet = BitmapImporter.create(Assets.getBitmapData("assets/marine.png"), 5, 6, 48, 48);
+		sheet = BitmapImporter.create(Assets.getBitmapData("assets/marine.png"), 10, 6, 48, 48);
+
 		sheet.addBehavior(new BehaviorData("NW_idle", [0], true, 10));
 		sheet.addBehavior(new BehaviorData("NW_shoot", [1, 2, 3, 4], true, 10));
-		sheet.addBehavior(new BehaviorData("N_idle", [5], true, 10));
-		sheet.addBehavior(new BehaviorData("N_shoot", [6, 7, 8, 9], true, 10));
-		sheet.addBehavior(new BehaviorData("SW_idle", [10], true, 10));
-		sheet.addBehavior(new BehaviorData("SW_shoot", [11, 12, 13, 14], true, 10));
-		sheet.addBehavior(new BehaviorData("S_idle", [15], true, 10));
-		sheet.addBehavior(new BehaviorData("S_shoot", [16, 17, 18, 19], true, 10));
-		sheet.addBehavior(new BehaviorData("W_idle", [20], true, 10));
-		sheet.addBehavior(new BehaviorData("W_shoot", [21, 22, 23, 24], true, 10));
-		sheet.addBehavior(new BehaviorData("die", [25, 26, 27, 28, 29], false, 10));
+
+		sheet.addBehavior(new BehaviorData("NE_idle", [5], true, 10));
+		sheet.addBehavior(new BehaviorData("NE_shoot", [6, 7, 8, 9], true, 10));
+
+		sheet.addBehavior(new BehaviorData("N_idle", [10], true, 10));
+		sheet.addBehavior(new BehaviorData("N_shoot", [11, 12, 13, 14], true, 10));
+
+		//! flipped north is not used
+
+		sheet.addBehavior(new BehaviorData("SW_idle", [20], true, 10));
+		sheet.addBehavior(new BehaviorData("SW_shoot", [21, 22, 23, 24], true, 10));
+
+		sheet.addBehavior(new BehaviorData("SE_idle", [25], true, 10));
+		sheet.addBehavior(new BehaviorData("SE_shoot", [26, 27, 28, 29], true, 10));
+
+		sheet.addBehavior(new BehaviorData("S_idle", [30], true, 10));
+		sheet.addBehavior(new BehaviorData("S_shoot", [31, 32, 33, 34], true, 10));
+
+		//! flipped south is not used
+
+		sheet.addBehavior(new BehaviorData("W_idle", [40], true, 10));
+		sheet.addBehavior(new BehaviorData("W_shoot", [41, 42, 43, 44], true, 10));
+
+		sheet.addBehavior(new BehaviorData("E_idle", [45], true, 10));
+		sheet.addBehavior(new BehaviorData("E_shoot", [46, 47, 48, 49], true, 10));
+
+		sheet.addBehavior(new BehaviorData("die", [50, 51, 52, 53, 54], false, 10));
+
+		//! flipped die is not used
 
 		snd_die = Assets.getSound ("assets/marine_die.wav");
 		snd_attack = Assets.getSound ("assets/marine_shoot.wav");
@@ -75,6 +96,7 @@ class Marine extends Unit
 		animated.showBehavior("S_idle");
 		animated.x = -animated.width/2;
 		animated.y = -animated.height*0.7;
+
 		addChild(animated);
 	}
 
@@ -97,12 +119,22 @@ class Marine extends Unit
 		if(target != null)
 		{
 			var toTarget = new V2(target.x - x, target.y - y);
+			var targetDistance = toTarget.getNorm() - radius - target.radius;
+			
+			// face target ...
+			var facing = Facing.which(toTarget);
 
 			// attack target
-			if(weapon.timeTillReloaded == 0 && toTarget.getNorm() - radius - target.radius <= weapon.range)
+			if(weapon.timeTillReloaded == 0)
 			{
-				weapon.fireAt(target);
-				snd_attack.play();
+				if(targetDistance <= weapon.range)
+				{
+					animated.showBehavior(facing + "_shoot");
+					weapon.fireAt(target);
+					snd_attack.play();
+				}
+				else
+					animated.showBehavior(facing + "_idle");
 			}
 		}
 	}

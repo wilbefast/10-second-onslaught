@@ -40,7 +40,7 @@ class SpecialEffect extends GameObject
 
 		// destroy at end of animation
 		timer -= dt;
-		if(timer < 0)
+		if((timer < 0) || (animated.currentFrameIndex == animated.currentBehavior.frames.length-1))
 			purge = true;
 	}
 }
