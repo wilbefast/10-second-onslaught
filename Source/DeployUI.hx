@@ -12,6 +12,8 @@ class DeployUI extends Sprite
 	private static var initialised : Bool = false;
 
 	private static var background_data : BitmapData;
+	
+	private static var session_attribut : Session;
 
 	private static function init() : Void
 	{
@@ -31,9 +33,10 @@ class DeployUI extends Sprite
 
 	private var background : Bitmap;
 
-	public function new()
+	public function new(session : Session)
 	{
 		super();
+		session_attribut = session;
 
 		if(!initialised)
 			init();
@@ -41,10 +44,10 @@ class DeployUI extends Sprite
 		background = new Bitmap(background_data);
 		addChild(background);
 
-		replaysCounter = new ReplaysCounterUI();
+		replaysCounter = new ReplaysCounterUI(session_attribut);
 		addChild(replaysCounter);
 
-		resourcesCounter = new ResourcesCounterUI();
+		resourcesCounter = new ResourcesCounterUI(session_attribut);
 		addChild(resourcesCounter);
 
 		buyMarine = new BuyUI("assets/GUI_ic_marine_01.png"); // TODO - parameters

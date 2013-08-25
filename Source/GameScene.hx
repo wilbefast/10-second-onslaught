@@ -86,7 +86,7 @@ class GameScene extends Scene
 
   	map = new MapUI();
 		timeline = new TimelineUI();
-		deploy = new DeployUI();
+		deploy = new DeployUI(session);
 
 		// replay = new Sprite();
 		// money = new Sprite();
