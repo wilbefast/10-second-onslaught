@@ -56,8 +56,8 @@ class Nuke extends Unit
 	{
 		// ---------------------------------------------------------------------------
 		// ASSETS
-		sheet = BitmapImporter.create(Assets.getBitmapData("assets/bomb.png"), 1, 1, 48, 67);
-		sheet.addBehavior(new BehaviorData("idle", [0], true, 10));
+		sheet = BitmapImporter.create(Assets.getBitmapData("assets/nuke.png"), 7, 1, 48, 48);
+		sheet.addBehavior(new BehaviorData("idle", [0, 1, 2, 3, 4, 5, 6], true, 10));
 
 		initialised = true;
 	}
@@ -104,6 +104,8 @@ class Nuke extends Unit
 	public override function update(dt : Float) : Void
 	{
 		super.update(dt);
+
+		animated.update(Math.floor(1000 * dt));
 
 		timer -= dt;
 		if(timer < 0 && !purge)

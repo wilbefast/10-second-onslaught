@@ -162,6 +162,26 @@ class GameScene extends Scene
 	// LAYOUTS
 	// ---------------------------------------------------------------------------
 
+	public function transitionLayout()
+	{
+		switch(phase)
+		{
+			case PHASE_DEPLOY:
+				// show deploy layout
+				Actuate.tween(timeline, 1, { y : stage.stageHeight-deploy.height-timeline.height }, true)
+							.ease (Quad.easeOut);
+				Actuate.tween(deploy, 1, { y : stage.stageHeight-deploy.height }, true)
+							.ease (Quad.easeOut);
+
+			case PHASE_ATTACK:
+				// hide deploy layout
+				Actuate.tween(timeline, 1, { y : stage.stageHeight-timeline.height }, true)
+							.ease (Quad.easeOut);
+				Actuate.tween(deploy, 1, { y : stage.stageHeight }, true)
+							.ease (Quad.easeOut);
+		}
+	}
+
 	public function recalculateLayout()
 	{
 		// map
@@ -181,23 +201,6 @@ class GameScene extends Scene
 		deploy.height = stage.stageHeight*0.2;
 		deploy.y = stage.stageHeight*0.8;
 		deploy.recalculateLayout();
-
-		switch(phase)
-		{
-			case PHASE_DEPLOY:
-				// show deploy layout
-				Actuate.tween(timeline, 1, { y : stage.stageHeight-deploy.height-timeline.height }, true)
-							.ease (Quad.easeOut);
-				Actuate.tween(deploy, 1, { y : stage.stageHeight-deploy.height }, true)
-							.ease (Quad.easeOut);
-
-			case PHASE_ATTACK:
-				// hide deploy layout
-				Actuate.tween(timeline, 1, { y : stage.stageHeight-timeline.height }, true)
-							.ease (Quad.easeOut);
-				Actuate.tween(deploy, 1, { y : stage.stageHeight }, true)
-							.ease (Quad.easeOut);
-		}
 	}
 
 	// ---------------------------------------------------------------------------
@@ -213,8 +216,8 @@ class GameScene extends Scene
 		// phase is now attack phase
 		phase = PHASE_DEPLOY;
 
-		// recalculate layout
-		recalculateLayout();
+		// show deploy layout
+		transitionLayout();
 
 		// clear all dudes
 		GameObjectManager.purgeAll();
@@ -233,8 +236,8 @@ class GameScene extends Scene
 		// phase is now attack phase
 		phase = PHASE_ATTACK;
 
-		// recalculate layout
-		recalculateLayout();
+		// hide deploy layout
+		transitionLayout();
 
 		// create units
 		spawnUnits();
