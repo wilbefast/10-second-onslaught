@@ -36,18 +36,32 @@ class RadialMenu extends Sprite
 
 	private var icons : Array<Bitmap>;
 
-	public function new()
+	private var onSelectOption : Int->Void;
+
+	public function new(_onSelectOption : Int->Void)
 	{
 		super();
 
 		if(!initialised)
 			init();
 
+		onSelectOption = _onSelectOption;
+
 		icons = new Array<Bitmap>();
 		for (i in 0 ... N_OPTIONS)
 		{
-			icons[i] = new Bitmap(data[i]);
-			addChild(icons[i]);
+			var icon = new Bitmap(data[i]);
+
+			icon.addEventListener(MouseEvent.CLICK, function(event) {
+				if(open)
+				{
+					onSelectOption(i);
+					toggle();
+				}
+		 	});
+
+			icons[i] = icon;
+			addChild(icon);
 		}
 
 		alpha = 0;

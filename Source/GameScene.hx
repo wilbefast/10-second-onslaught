@@ -45,7 +45,7 @@ class GameScene extends Scene
 		// Initialise attributes
 		session = new Session(_timer);
 		timer = session.getTimer() * 100;
-		radialMenu = new RadialMenu();
+		radialMenu = new RadialMenu(clickOnRadialMenu);
 
 		map = new MapUI(this);
 		timeline = new TimelineUI(this);
@@ -58,7 +58,7 @@ class GameScene extends Scene
 	}
 	
 	// ---------------------------------------------------------------------------
-	// CALLBACKS
+	// CALLBACKS -- SCENE
 	// ---------------------------------------------------------------------------
 	
 	public override function onResize(event : Event) : Void
@@ -110,15 +110,9 @@ class GameScene extends Scene
 		deploy.update();
 	}
 
-	public override function onMouseOver(event : MouseEvent) : Void
-	{
-		if(radialMenu.isOpen())
-		{
-			trace(Useful.distance(event.stageX, event.stageY, radialMenu.x, radialMenu.y));
-			//if(Useful.distance(event.stageX, event.stageY, radialMenu.x, radialMenu.y) > RadialMenu.RADIUS)
-				//radialMenu.toggle();
-		}
-	}
+	// ---------------------------------------------------------------------------
+	// CALLBACKS -- CUSTOM
+	// ---------------------------------------------------------------------------
 
 	public function clickOnMap(event : MouseEvent) : Void
 	{
@@ -133,7 +127,10 @@ class GameScene extends Scene
 				}
 				radialMenu.toggle();
 		}
+	}
 
+	public function clickOnRadialMenu(option : Int) : Void
+	{
 
 	}
 
