@@ -59,8 +59,5 @@ class GameObject extends Sprite
 	// ON DESTRUCTION
 	// ---------------------------------------------------------------------------
 
-	public function onPurge() : Void
-	{
-		// override me !
-	}
+	public var onPurge : Void->Void;
 }

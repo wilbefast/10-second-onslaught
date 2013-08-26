@@ -111,7 +111,9 @@ class Nuke extends Unit
 		addChild(animated);
 
 		// teleport in like a sir !
-		new SpecialEffect(x, y, sheetTeleport, "in", 0, -300);
+		visible = false;
+		new SpecialEffect(x, y, sheetTeleport, "in", 0, -320).onPurge = function()
+			visible = true;
 	}
 
 	// ---------------------------------------------------------------------------
@@ -147,21 +149,5 @@ class Nuke extends Unit
 	public override function onCollisionWith(other : GameObject) : Void
 	{
 		super.onCollisionWith(other);
-	}
-
-	// ---------------------------------------------------------------------------
-	// ON DESTRUCTION
-	// ---------------------------------------------------------------------------
-
-	public override function onPurge() : Void
-	{
-		if(exploded)
-		{
-			// TODO
-		}	
-		else
-		{
-			// TODO
-		}
 	}
 }

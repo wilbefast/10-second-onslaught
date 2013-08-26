@@ -116,11 +116,14 @@ class Marine extends Unit
 		animated.showBehavior("S_idle");
 		animated.x = -animated.width/2;
 		animated.y = -animated.height*0.7;
-
 		addChild(animated);
 
+		onPurge = this.__onPurge;
+
 		// teleport in like a sir !
-		new SpecialEffect(x, y, sheetTeleport, "in", 0, -300);
+		visible = false;
+		new SpecialEffect(x, y, sheetTeleport, "in", 0, -310).onPurge = function()
+			visible = true;
 	}
 
 	// ---------------------------------------------------------------------------
@@ -185,7 +188,7 @@ class Marine extends Unit
 	// ON DESTRUCTION
 	// ---------------------------------------------------------------------------
 
-	public override function onPurge() : Void
+	public function __onPurge() : Void
 	{
 		// create gibs
 		new SpecialEffect(x, y, sheet, "die");

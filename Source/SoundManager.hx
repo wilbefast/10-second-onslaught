@@ -35,9 +35,9 @@ class SoundManager
 		get().__loadSound(name, _max_instances);
 	}
 
-	public static function playSound(name : String) : Void
+	public static function playSound(name : String) : Bool
 	{
-		//return get().__playSound(name);
+		return get().__playSound(name);
 	}
 
 	// ---------------------------------------------------------------------------

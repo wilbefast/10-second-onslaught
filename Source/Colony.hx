@@ -42,12 +42,4 @@ class Colony extends Unit
 		bitmap.y = -bitmap.height*0.75;
 		addChild(bitmap);
 	}
-
-	// ---------------------------------------------------------------------------
-	// ON DESTRUCTION
-	// ---------------------------------------------------------------------------
-
-	public override function onPurge() : Void
-	{
-	}
 }
