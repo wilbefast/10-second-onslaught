@@ -51,9 +51,8 @@ class StartButtonUI extends Sprite
 		addChild(bitmap);
 	}
 	
-	private function onMouseClick(event : MouseEvent) : Void
-    {
-		trace("cliked on start button");
+	public function changeButton()
+	{
 		if (phase == PHASE_DEPLOY)
 		{
 			phase = PHASE_ATTACK ;
@@ -68,6 +67,11 @@ class StartButtonUI extends Sprite
 			bitmap = new Bitmap(start_bm) ;
 			addChild(bitmap);
 		}
-        gameScene.switchPhase();
+	}
+	
+	private function onMouseClick(event : MouseEvent) : Void
+    {
+		trace("cliked on start button");
+		gameScene.switchPhase();
     }
 }
