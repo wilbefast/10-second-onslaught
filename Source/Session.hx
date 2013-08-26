@@ -48,7 +48,8 @@ class Session extends Sprite
 	public function instantiateUnits(slot : Int = -1) : Void
 	{
 		if (slot >= 0) // all units
-			__instantiateUnits(unitsToDeploy[slot]);
+			for (i in 0 ... slot+1)
+				__instantiateUnits(unitsToDeploy[i]);
 		else // units in specific time slot
 			for (timeSlot in unitsToDeploy)
 				__instantiateUnits(timeSlot);

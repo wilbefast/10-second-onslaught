@@ -82,7 +82,7 @@ class Nuke extends Unit
 		if(!initialised)
 			init();
 
-		team = Unit.TEAM_MARINES;
+		team = Unit.TEAM_INVULNERABLE;
 
 		shadow = new Bitmap(Unit.shadow_data);
 		shadow.x = -shadow.width/2;
