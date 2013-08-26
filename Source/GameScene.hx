@@ -33,6 +33,7 @@ class GameScene extends Scene
 	
 	private var timeline : TimelineUI;
 	private var map : MapUI;
+	private var deploy : DeployUI;
 	
 	public function new (_time : Int) // NB - Int is NOT an object (reference) in Haxe !
 	{
@@ -47,6 +48,7 @@ class GameScene extends Scene
 
 		map = new MapUI(this);
 		timeline = new TimelineUI(this);
+		deploy = new DeployUI(this);
 	}
 
 	public function getSession()
@@ -80,6 +82,9 @@ class GameScene extends Scene
 
 		// radial menu
 		addChild(radialMenu);
+		
+		// deploy
+		addChild(deploy);
 
 		// start !
 		// ---------------------------------------------------------------------------
@@ -103,6 +108,7 @@ class GameScene extends Scene
 
 		map.update();
 		timeline.update();
+		deploy.update();
 	}
 	
 	public override function onMouseClick(event : MouseEvent) : Void

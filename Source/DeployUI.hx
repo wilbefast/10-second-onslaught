@@ -26,13 +26,9 @@ class DeployUI extends Sprite
 	// CONSTRUCTOR
 	// ---------------------------------------------------------------------------
 
-	private var replaysCounter : ReplaysCounterUI;
+	//private var replaysCounter : ReplaysCounterUI;
 	private var resourcesCounter : ResourcesCounterUI;
-	private var buyMarine : BuyUI;
-	private var buyNuke : BuyUI;
 	private var startButton : StartButtonUI;
-
-	private var background : Bitmap;
 
 	public function new(pgameScene : GameScene)
 	{
@@ -42,20 +38,11 @@ class DeployUI extends Sprite
 		if(!initialised)
 			init();
 
-		background = new Bitmap(background_data);
-		addChild(background);
-
-		replaysCounter = new ReplaysCounterUI(session_attribut);
-		addChild(replaysCounter);
+		//replaysCounter = new ReplaysCounterUI(session_attribut);
+		//addChild(replaysCounter);
 
 		resourcesCounter = new ResourcesCounterUI(session_attribut);
 		addChild(resourcesCounter);
-
-		buyMarine = new BuyUI(UnitType.marine, session_attribut); // TODO - parameters
-		addChild(buyMarine);
-
-		buyNuke = new BuyUI(UnitType.nuke, session_attribut); // TODO - parameters
-		addChild(buyNuke);
 
 		startButton = new StartButtonUI(pgameScene);
 		addChild(startButton);
@@ -65,7 +52,7 @@ class DeployUI extends Sprite
 
 	public function update()
 	{
-		replaysCounter.update();
+		//replaysCounter.update();
 		resourcesCounter.update();
 	}
 	
@@ -76,27 +63,12 @@ class DeployUI extends Sprite
 		{
 			var available_height = (stage.stageHeight - y);
 
-			background.width = stage.stageWidth;
-			background.height = available_height;
-			
-			buyMarine.width = buyNuke.width = stage.stageWidth*0.5;
-			buyMarine.height = buyNuke.height = available_height/2;
-
-			resourcesCounter.width = replaysCounter.width = stage.stageWidth*0.3;
+			//resourcesCounter.width = replaysCounter.width = stage.stageWidth*0.3;
 			resourcesCounter.height = available_height*0.67;
 
-			replaysCounter.height = available_height*0.33;
-
-			var rightmost = Math.max(buyMarine.x + buyMarine.width, buyNuke.x + buyNuke.width);
-			var available_width = (stage.stageWidth - rightmost);
-			startButton.width = startButton.height = Math.min(available_width, available_height);
-			startButton.x = rightmost + (stage.stageWidth - rightmost - startButton.width)/2;
+			//replaysCounter.height = available_height*0.33;
 		}
 
 		// position
-		resourcesCounter.y = replaysCounter.height;
-		buyMarine.x = replaysCounter.width;
-		buyNuke.x = resourcesCounter.width;
-		buyNuke.y = buyMarine.y + buyMarine.height;
 	}
 }
