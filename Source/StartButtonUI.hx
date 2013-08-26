@@ -18,7 +18,7 @@ class StartButtonUI extends Sprite
 
 	private static function init() : Void
 	{
-		background_data = Assets.getBitmapData("assets/ButtonGo_01.png");
+		background_data = Assets.getBitmapData("assets/GUI2_button_start.png");
 
 		initialised = true;
 	}

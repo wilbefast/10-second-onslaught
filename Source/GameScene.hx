@@ -35,7 +35,7 @@ class GameScene extends Scene
 	private var map : MapUI;
 	private var deploy : DeployUI;
 	
-	public function new (_time : Int) // NB - Int is NOT an object (reference) in Haxe !
+	public function new (_time : Int, _money : Int ) // NB - Int is NOT an object (reference) in Haxe !
 	{
 		super ();
 
@@ -43,7 +43,7 @@ class GameScene extends Scene
 			init();
 		
 		// Initialise attributes
-		session = new Session(_time);
+		session = new Session(_time, _money);
 		radialMenu = new RadialMenu(clickOnRadialMenu);
 
 		map = new MapUI(this);
@@ -210,6 +210,7 @@ class GameScene extends Scene
 		timeline.recalculateLayout();
 		timeline.y = map.height - timeline.height;
 
+		deploy.recalculateLayout();
 	}
 
 	// ---------------------------------------------------------------------------
@@ -218,6 +219,7 @@ class GameScene extends Scene
 
 	private function playDeployPhase()
 	{
+		session.resetMoney();
 		// increment # replays if previous phase was attack
 		if(phase == PHASE_ATTACK)
 			session.incrementNbReplay();

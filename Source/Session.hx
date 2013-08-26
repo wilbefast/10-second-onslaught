@@ -3,15 +3,17 @@ import flash.display.Sprite;
 class Session extends Sprite
 {
 	private var money : Int;
+	private var startingMoney : Int ;
 	private var nbReplay : Int;
 	private var duration : Int ; //delay between two waves in seconds
 	private var timelineSelection : Int = 0 ;
 
 	
-	public function new(pduration : Int) 
+	public function new(pduration : Int, pmoney : Int) 
 	{
 		super();
-		money = 1500 ;
+		money = pmoney ;
+		startingMoney = pmoney ;
 		nbReplay = 0 ;
 		duration = pduration ;
 
@@ -77,6 +79,11 @@ class Session extends Sprite
 	public function getMoney()
 	{
 		return money ;
+	}
+	
+	public function resetMoney()
+	{
+		money = startingMoney ;
 	}
 	
 	public function withdrawMoney(cost : Int)

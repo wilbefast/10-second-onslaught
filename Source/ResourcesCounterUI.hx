@@ -26,7 +26,7 @@ class ResourcesCounterUI extends Sprite
 	
 	private static function init() : Void
 	{
-		bitmapData = Assets.getBitmapData("assets/GUI_fond_bank_01.png");
+		bitmapData = Assets.getBitmapData("assets/GUI2_bloc_money.png");
 		initialised = true;
 	}
 
@@ -46,13 +46,14 @@ class ResourcesCounterUI extends Sprite
 		
 		session_attribut = session;
 		money = session_attribut.getMoney();
-		textField = new DefaultTextField("Money : " + money);
+		textField = new DefaultTextField("" + money);
+		textField.defaultTextFormat = DefaultFont.formatWhite ;
 		addChild(textField);
 	}
 	
 	public function update()
 	{
 		money = session_attribut.getMoney();
-		textField.text = "Money : " + money ;
+		textField.text = "" + money ;
 	}
 }
