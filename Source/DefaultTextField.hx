@@ -9,7 +9,7 @@ class DefaultTextField extends TextField
 	{
 		super();
 
-		defaultTextFormat = DefaultFont.format;
+		defaultTextFormat = DefaultFont.formatRed;
 
 		embedFonts = true;
 		selectable = false;

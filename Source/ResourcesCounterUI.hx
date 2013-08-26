@@ -47,6 +47,7 @@ class ResourcesCounterUI extends Sprite
 		session_attribut = session;
 		money = session_attribut.getMoney();
 		textField = new DefaultTextField("" + money);
+		textField.defaultTextFormat = DefaultFont.formatWhite ;
 		addChild(textField);
 	}
 	
