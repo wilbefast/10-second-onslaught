@@ -29,15 +29,15 @@ class Session extends Sprite
 
 	public function placeUnit(_x : Float, _y : Float, t : UnitType) : Void
 	{
-		var placement = new UnitPlacement(t, _x, _y);
-		addChild(placement);
+		var world_position = GameObjectManager.getWorldPosition(_x, _y);
+		
+		var placement = new UnitPlacement(t, world_position.x, world_position.y);
 		unitsToDeploy[timelineSelection].add(placement);
 	}
 
 	// ---------------------------------------------------------------------------
 	// ACCESSORS
 	// ---------------------------------------------------------------------------
-	
 	
 	public function getTimer()
 	{
