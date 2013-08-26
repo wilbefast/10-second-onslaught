@@ -44,7 +44,7 @@ class GameScene extends Scene
 		
 		// Initialise attributes
 		session = new Session(_timer);
-		timer = session.getTimer() * 100;
+		timer = session.getDuration() * 100;
 		radialMenu = new RadialMenu(clickOnRadialMenu);
 
 		map = new MapUI(this);
@@ -64,6 +64,7 @@ class GameScene extends Scene
 	public override function onResize(event : Event) : Void
 	{
 		recalculateLayout();
+		transitionLayout();
 	}
 
 	public override function onEnter(previous : Scene) : Void 
@@ -105,6 +106,7 @@ class GameScene extends Scene
 
 			case PHASE_DEPLOY:
 		}
+
 		map.update();
 		timeline.update();
 		deploy.update();
@@ -161,7 +163,7 @@ class GameScene extends Scene
 
 	public function switchPhase()
 	{
-		timer = session.getTimer() ;
+		timer = session.getDuration() ;
 
 		switch(phase)
 		{

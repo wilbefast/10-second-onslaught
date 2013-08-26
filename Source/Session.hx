@@ -4,16 +4,16 @@ class Session extends Sprite
 {
 	private var money : Int;
 	private var nbReplay : Int;
-	private var timer : Int ; //delay between two waves in seconds
+	private var duration : Int ; //delay between two waves in seconds
 	private var timelineSelection : Int = 0 ;
 
 	
-	public function new(ptimer : Int) 
+	public function new(pduration : Int) 
 	{
 		super();
 		money = 1500 ;
 		nbReplay = 0 ;
-		timer = ptimer ;
+		duration = pduration ;
 
 		//init array for storing units to deploy
 		unitsToDeploy = new Array<List<UnitPlacement>>();
@@ -34,29 +34,33 @@ class Session extends Sprite
 		var placement = new UnitPlacement(t, world_position.x, world_position.y);
 		unitsToDeploy[timelineSelection].add(placement);
 	}
-	
-	public function instantiateUnits() : Void
+
+	private function __instantiateUnits(placements : List<UnitPlacement>) : Void
 	{
-		for (timeSlot in unitsToDeploy)
-		{
-			for (unitToDeploy in timeSlot)
+			for (place in placements)
 			{
-				unitToDeploy.instantiate();
-				unitToDeploy.purge = true;
+				place.instantiate();
+				place.purge = true;
 			}
-			
-			// empty time slot
-			timeSlot.clear();
-		}
+			placements.clear();
+	}
+	
+	public function instantiateUnits(slot : Int = -1) : Void
+	{
+		if (slot >= 0) // all units
+			__instantiateUnits(unitsToDeploy[slot]);
+		else // units in specific time slot
+			for (timeSlot in unitsToDeploy)
+				__instantiateUnits(timeSlot);
 	}
 
 	// ---------------------------------------------------------------------------
 	// ACCESSORS
 	// ---------------------------------------------------------------------------
 	
-	public function getTimer()
+	public function getDuration()
 	{
-		return timer;
+		return duration;
 	}
 	
 	public function getNbReplay()
