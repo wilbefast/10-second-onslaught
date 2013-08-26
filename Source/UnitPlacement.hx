@@ -12,7 +12,10 @@ class UnitPlacement extends GameObject
 		
 		trace("hello UNITPLACEMENT");
 
-		graphics.beginFill(0x00FF00);
+		if(unitType == UnitType.marine)
+			graphics.beginFill(0x00FF00);
+		else
+			graphics.beginFill(0x0000FF);
 		graphics.drawCircle(0, 0, 32);
 	}
 	
