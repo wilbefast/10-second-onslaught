@@ -111,6 +111,7 @@ class Unit extends GameObject
 	public static inline var TEAM_CIVILLIANS : Int = 0;
 	public static inline var TEAM_MARINES : Int = 1;
 	public static inline var TEAM_ALIENS : Int = 2;
+	public static inline var TEAM_INVULNERABLE : Int = 3;
 	public var team : Int;
 
 	public function isEnemy(other : Unit) : Bool
