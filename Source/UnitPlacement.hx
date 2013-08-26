@@ -1,4 +1,5 @@
 import flash.display.Sprite;
+import flash.display.Bitmap;
 
 class UnitPlacement extends GameObject
 {
@@ -13,12 +14,10 @@ class UnitPlacement extends GameObject
 		super(px, py);
 
 		unitType = punitType ;
-		
-		if(unitType == UnitType.marine)
-			graphics.beginFill(0x00FF00);
-		else
-			graphics.beginFill(0x0000FF);
-		graphics.drawCircle(0, 0, 32);
+		var placeholder_bitmap = new Bitmap(unitType.getPlaceholder());
+		placeholder_bitmap.x = -placeholder_bitmap.width/2;
+		placeholder_bitmap.y = -placeholder_bitmap.height/2;
+		addChild(placeholder_bitmap);
 	}
 	
 	// ---------------------------------------------------------------------------
