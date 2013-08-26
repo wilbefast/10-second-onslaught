@@ -33,7 +33,6 @@ class GameScene extends Scene
 	
 	private var timeline : TimelineUI;
 	private var map : MapUI;
-	private var deploy : DeployUI;
 	
 	public function new (_time : Int) // NB - Int is NOT an object (reference) in Haxe !
 	{
@@ -48,7 +47,6 @@ class GameScene extends Scene
 
 		map = new MapUI(this);
 		timeline = new TimelineUI(this);
-		deploy = new DeployUI(this);
 	}
 
 	public function getSession()
@@ -63,7 +61,6 @@ class GameScene extends Scene
 	public override function onResize(event : Event) : Void
 	{
 		recalculateLayout();
-		transitionLayout();
 	}
 
 	public override function onEnter(previous : Scene) : Void 
@@ -80,9 +77,6 @@ class GameScene extends Scene
 
 		// timeline
 		addChild(timeline);
-
-		// special deploy layout
-		addChild(deploy);
 
 		// radial menu
 		addChild(radialMenu);
@@ -109,7 +103,6 @@ class GameScene extends Scene
 
 		map.update();
 		timeline.update();
-		deploy.update();
 	}
 	
 	public override function onMouseClick(event : MouseEvent) : Void
@@ -153,7 +146,6 @@ class GameScene extends Scene
 					buyNuke();
 				}
 		}
-		trace("money : " + session.getMoney());
 		radialMenu.close();
 	}
 	
@@ -195,26 +187,6 @@ class GameScene extends Scene
 	// LAYOUTS
 	// ---------------------------------------------------------------------------
 
-	public function transitionLayout()
-	{
-		switch(phase)
-		{
-			case PHASE_DEPLOY:
-				// show deploy layout
-				Actuate.tween(timeline, 1, { y : stage.stageHeight-deploy.height-timeline.height }, true)
-							.ease (Quad.easeOut);
-				Actuate.tween(deploy, 1, { y : stage.stageHeight-deploy.height }, true)
-							.ease (Quad.easeOut);
-
-			case PHASE_ATTACK:
-				// hide deploy layout
-				Actuate.tween(timeline, 1, { y : stage.stageHeight-timeline.height }, true)
-							.ease (Quad.easeOut);
-				Actuate.tween(deploy, 1, { y : stage.stageHeight }, true)
-							.ease (Quad.easeOut);
-		}
-	}
-
 	public function recalculateLayout()
 	{
 		// map
@@ -228,12 +200,8 @@ class GameScene extends Scene
 		// timeline
 		timeline.width = stage.stageWidth;
 		timeline.x = 0;
-		timeline.y = stage.stageHeight*0.8 - timeline.height;
+		timeline.y = map.height - timeline.height;
 
-		// special deploy layout
-		deploy.height = stage.stageHeight*0.2;
-		deploy.y = stage.stageHeight*0.8;
-		deploy.recalculateLayout();
 	}
 
 	// ---------------------------------------------------------------------------
@@ -248,9 +216,6 @@ class GameScene extends Scene
 
 		// phase is now attack phase
 		phase = PHASE_DEPLOY;
-
-		// show deploy layout
-		transitionLayout();
 
 		// clear all dudes
 		GameObjectManager.purgeAll();
@@ -269,8 +234,6 @@ class GameScene extends Scene
 		// phase is now attack phase
 		phase = PHASE_ATTACK;
 
-		// hide deploy layout
-		transitionLayout();
 		radialMenu.close();
 
 		// create units
