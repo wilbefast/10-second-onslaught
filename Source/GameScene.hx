@@ -104,11 +104,12 @@ class GameScene extends Scene
 				if (time > session.getDuration()) 
 					switchPhase();
 
+				timeline.update(time);
+
 			case PHASE_DEPLOY:
 		}
 
 		map.update();
-		timeline.update();
 		deploy.update();
 	}
 	
