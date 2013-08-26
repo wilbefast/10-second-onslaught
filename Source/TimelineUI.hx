@@ -48,12 +48,9 @@ class TimelineUI extends Sprite
 	}
 	
 	private function onMouseClick(event : MouseEvent) : Void
-    {
-		slotWidth = width / 10 ;
-		session.setTimelineSelection( Math.round(event.localX / slotWidth) );
-		trace(session.getTimelineSelection());
-		selection.x = session.getTimelineSelection()* slotWidth; // session.getTimelineSelection() * width / 10 ;
-		trace(width);
-		trace(selection.x);
-    }
+  {
+		slotWidth = (width-32) * 0.1;
+		session.setTimelineSelection(Math.round(event.localX / slotWidth));
+		selection.x = session.getTimelineSelection() * slotWidth;
+  }
 }

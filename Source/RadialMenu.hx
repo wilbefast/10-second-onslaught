@@ -61,8 +61,11 @@ class RadialMenu extends Sprite
 				if(opened)
 				{
 					onSelectOption(i);
-					toggle();
+					close();
+					event.stopPropagation();
 				}
+				else
+					open();
 		 	});
 
 			icons[i] = icon;

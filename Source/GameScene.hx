@@ -28,14 +28,14 @@ class GameScene extends Scene
 	
 	// Attributes
 	private var session : Session;
-	private var timer : Float ;
+	private var time : Float = 0;
 	private var radialMenu : RadialMenu;
 	
 	private var timeline : TimelineUI;
 	private var map : MapUI;
 	private var deploy : DeployUI;
 	
-	public function new (_timer : Int) // NB - Int is NOT an object (reference) in Haxe !
+	public function new (_time : Int) // NB - Int is NOT an object (reference) in Haxe !
 	{
 		super ();
 
@@ -43,8 +43,7 @@ class GameScene extends Scene
 			init();
 		
 		// Initialise attributes
-		session = new Session(_timer);
-		timer = session.getDuration() * 100;
+		session = new Session(_time);
 		radialMenu = new RadialMenu(clickOnRadialMenu);
 
 		map = new MapUI(this);
@@ -100,8 +99,9 @@ class GameScene extends Scene
 		switch(phase)
 		{
 			case PHASE_ATTACK:
-				timer -= Time.getDelta();
-				if (timer < 0) 
+				
+				time += Time.getDelta();
+				if (time > session.getDuration()) 
 					switchPhase();
 
 			case PHASE_DEPLOY:
@@ -114,8 +114,6 @@ class GameScene extends Scene
 	
 	public override function onMouseClick(event : MouseEvent) : Void
 	{
-		if(phase == PHASE_DEPLOY)
-			radialMenu.toggle();
 	}
 
 	// ---------------------------------------------------------------------------
@@ -134,8 +132,6 @@ class GameScene extends Scene
 					radialMenu.y = event.stageY;
 				}
 				radialMenu.toggle();
-				
-				event.stopPropagation();
 		}
 	}
 
@@ -163,7 +159,7 @@ class GameScene extends Scene
 
 	public function switchPhase()
 	{
-		timer = session.getDuration() ;
+		time = 0;
 
 		switch(phase)
 		{
