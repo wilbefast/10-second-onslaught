@@ -25,7 +25,7 @@ class DeployUI extends Sprite
 
 	//private var replaysCounter : ReplaysCounterUI;
 	private var resourcesCounter : ResourcesCounterUI;
-	private var startButton : StartButtonUI;
+	public var startButton : StartButtonUI;
 
 	public function new(pgameScene : GameScene)
 	{

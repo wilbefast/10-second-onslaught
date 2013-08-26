@@ -33,7 +33,7 @@ class GameScene extends Scene
 	
 	private var timeline : TimelineUI;
 	private var map : MapUI;
-	private var deploy : DeployUI;
+	private var top : DeployUI;
 	
 	public function new (_time : Int, _money : Int ) // NB - Int is NOT an object (reference) in Haxe !
 	{
@@ -48,7 +48,7 @@ class GameScene extends Scene
 
 		map = new MapUI(this);
 		timeline = new TimelineUI(this);
-		deploy = new DeployUI(this);
+		top = new DeployUI(this);
 	}
 
 	public function getSession()
@@ -83,8 +83,8 @@ class GameScene extends Scene
 		// radial menu
 		addChild(radialMenu);
 		
-		// deploy
-		addChild(deploy);
+		// top
+		addChild(top);
 
 		// start !
 		// ---------------------------------------------------------------------------
@@ -111,7 +111,7 @@ class GameScene extends Scene
 		}
 
 		map.update();
-		deploy.update();
+		top.update();
 	}
 	
 	public override function onMouseClick(event : MouseEvent) : Void
@@ -189,7 +189,7 @@ class GameScene extends Scene
 			case PHASE_ATTACK:
 				playDeployPhase();
 		}
-
+		top.startButton.changeButton();
 	}
 
 	// ---------------------------------------------------------------------------
@@ -210,7 +210,7 @@ class GameScene extends Scene
 		timeline.recalculateLayout();
 		timeline.y = map.height - timeline.height;
 
-		deploy.recalculateLayout();
+		top.recalculateLayout();
 	}
 
 	// ---------------------------------------------------------------------------
