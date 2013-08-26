@@ -139,15 +139,34 @@ class GameScene extends Scene
 	{
 		switch(option)
 		{
-			case 0:
-				session.placeUnit(radialMenu.x, radialMenu.y, UnitType.nuke);
-
+			case 0: 
+				if (session.getMoney() > UnitType.marine.getPrice())
+				{
+					session.placeUnit(radialMenu.x, radialMenu.y, UnitType.nuke);
+					buyMarine();
+				}
+				
 			case 1:
-				session.placeUnit(radialMenu.x, radialMenu.y, UnitType.marine);
+				if (session.getMoney() > UnitType.nuke.getPrice())
+				{
+					session.placeUnit(radialMenu.x, radialMenu.y, UnitType.marine);
+					buyNuke();
+				}
 		}
+		trace("money : " + session.getMoney());
 		radialMenu.close();
 	}
+	
+	public function buyMarine()
+	{
+		session.withdrawMoney(UnitType.marine.getPrice());
+	}
 
+	public function buyNuke()
+	{
+		session.withdrawMoney(UnitType.nuke.getPrice());
+	}
+	
 	// ---------------------------------------------------------------------------
 	// PHASE MANAGEMENT
 	// ---------------------------------------------------------------------------

@@ -51,14 +51,14 @@ private var session_attribut : Session;
 
 		if(!initialised)
 			init();
-		unitCost = unitType.price;
+		unitCost = unitType.getPrice();
 		session_attribut = session;
 
 		// Build hierarchy
 		addChild(new Bitmap(background_data));
 
 		icon = new Sprite();
-		icon.addChild(new Bitmap(unitType.icon));
+		icon.addChild(new Bitmap(unitType.getIcon()));
 		addChild(icon);
 		icon.width = width/4;
 
