@@ -93,6 +93,8 @@ class Zergling extends Unit
 		animated.x = -animated.width/2;
 		animated.y = -animated.height*0.7;
 		addChild(animated);
+
+		onPurge = this.__onPurge;
 	}
 
 	// ---------------------------------------------------------------------------
@@ -181,7 +183,7 @@ class Zergling extends Unit
 	// ON DESTRUCTION
 	// ---------------------------------------------------------------------------
 
-	public override function onPurge() : Void
+	private function __onPurge() : Void
 	{
 		// create gibs
 		new SpecialEffect(x, y-1, sheet, "death");

@@ -207,8 +207,7 @@ class GameScene extends Scene
 		GameObjectManager.setCameraPosition(map.x + map.width/2, map.y + map.height/2);
 
 		// timeline
-		timeline.width = stage.stageWidth;
-		timeline.x = 0;
+		timeline.recalculateLayout();
 		timeline.y = map.height - timeline.height;
 
 		top.recalculateLayout();

@@ -16,10 +16,12 @@ class UnitType
 		marine = new UnitType(
 			100, 
 			Assets.getBitmapData("assets/GUI_ic_marine_01.png"), 
+			Assets.getBitmapData("assets/marine_ghost.png"), 
 			function(_x, _y) return new Marine(_x, _y));
 		nuke = new UnitType(
 			200, 
 			Assets.getBitmapData("assets/GUI_ic_bombe_01.png"), 
+			Assets.getBitmapData("assets/bombe_ghost.png"), 
 			function(_x, _y) return new Nuke(_x, _y));
 	}
 
@@ -29,12 +31,18 @@ class UnitType
 
 	private var price : Int;
 	private var icon : BitmapData;
+	private var placeholder : BitmapData;
 	public var factory : Float->Float->Unit;
 
-	public function new (_price : Int, _icon : BitmapData, _factory : Float->Float->Unit) : Void
+	public function new (
+		_price : Int, 
+		_icon : BitmapData, 
+		_placeholder : BitmapData, 
+		_factory : Float->Float->Unit)
 	{
 		price = _price;
 		icon = _icon;
+		placeholder = _placeholder;
 		factory = _factory;
 	}
 	
@@ -52,6 +60,11 @@ class UnitType
 	public function getIcon()
 	{
 		return icon ;
+	}
+
+	public function getPlaceholder()
+	{
+		return placeholder ;
 	}
 	
 	// ---------------------------------------------------------------------------

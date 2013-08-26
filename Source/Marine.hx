@@ -28,11 +28,14 @@ class Marine extends Unit
 	private static var initialised : Bool = false;
 
 	private static var sheet : Spritesheet;
+	private static var sheetTeleport : Spritesheet;
 
 	private static function init() : Void
 	{
 		// ---------------------------------------------------------------------------
 		// ASSETS
+
+		// MAIN SPRITESHEET
 
 		sheet = BitmapImporter.create(Assets.getBitmapData("assets/marine.png"), 10, 6, 48, 48);
 
@@ -68,6 +71,17 @@ class Marine extends Unit
 
 		//! flipped die is not used
 
+
+		// TELEPORT SPRITES
+
+		sheetTeleport = BitmapImporter.create(
+			Assets.getBitmapData("assets/marine_spawn.png"), 5, 1, 100, 700);
+		sheetTeleport.addBehavior(new BehaviorData("in", [0, 1, 2, 3, 4], false, 10));
+		sheetTeleport.addBehavior(new BehaviorData("out", [4, 3, 2, 1, 0], false, 10));
+
+
+		// SOUND
+
 		SoundManager.loadSound("marine_die");
 		SoundManager.loadSound("marine_shoot");
 
@@ -102,8 +116,14 @@ class Marine extends Unit
 		animated.showBehavior("S_idle");
 		animated.x = -animated.width/2;
 		animated.y = -animated.height*0.7;
-
 		addChild(animated);
+
+		onPurge = this.__onPurge;
+
+		// teleport in like a sir !
+		visible = false;
+		new SpecialEffect(x, y, sheetTeleport, "in", 0, -310).onPurge = function()
+			visible = true;
 	}
 
 	// ---------------------------------------------------------------------------
@@ -168,7 +188,7 @@ class Marine extends Unit
 	// ON DESTRUCTION
 	// ---------------------------------------------------------------------------
 
-	public override function onPurge() : Void
+	public function __onPurge() : Void
 	{
 		// create gibs
 		new SpecialEffect(x, y, sheet, "die");

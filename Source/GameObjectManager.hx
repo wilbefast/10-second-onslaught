@@ -162,8 +162,11 @@ class GameObjectManager extends Sprite
 			// purge objects
 			if(a.purge)
 			{
-				a.onPurge();
+				if(a.onPurge != null)
+					a.onPurge();
+
 				__purge(a);
+				
 				break;
 			}
 
