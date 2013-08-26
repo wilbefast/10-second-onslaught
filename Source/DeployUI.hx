@@ -58,7 +58,6 @@ class DeployUI extends Sprite
 		// size
 		if(stage != null)
 		{
-			trace("stage ok");
 			startButton.width = stage.stageWidth * 0.1 ;
 			startButton.height = startButton.width / 3 ;
 			startButton.x = stage.stageWidth - startButton.width;

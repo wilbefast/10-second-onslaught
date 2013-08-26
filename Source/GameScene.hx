@@ -199,16 +199,14 @@ class GameScene extends Scene
 	public function recalculateLayout()
 	{
 		// map
-		map.width = stage.stageWidth;
-		map.height = stage.stageHeight;
-		map.x = map.y = 0;
+		map.recalculateLayout();
 
 		// game objects
 		GameObjectManager.setCameraPosition(map.x + map.width/2, map.y + map.height/2);
 
 		// timeline
 		timeline.recalculateLayout();
-		timeline.y = map.height - timeline.height;
+		timeline.y = stage.stageHeight - timeline.height;
 
 		top.recalculateLayout();
 	}
