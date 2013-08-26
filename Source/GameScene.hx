@@ -112,7 +112,8 @@ class GameScene extends Scene
 	
 	public override function onMouseClick(event : MouseEvent) : Void
 	{
-		radialMenu.close();
+		if(phase == PHASE_DEPLOY)
+			radialMenu.toggle();
 	}
 
 	// ---------------------------------------------------------------------------
@@ -146,6 +147,7 @@ class GameScene extends Scene
 			case 1:
 				session.placeUnit(radialMenu.x, radialMenu.y, UnitType.marine);
 		}
+		radialMenu.close();
 	}
 
 	// ---------------------------------------------------------------------------
@@ -252,6 +254,7 @@ class GameScene extends Scene
 
 		// hide deploy layout
 		transitionLayout();
+		radialMenu.close();
 
 		// create units
 		spawnUnits();

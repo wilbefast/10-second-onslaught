@@ -120,11 +120,9 @@ class RadialMenu extends Sprite
 	
 	public function toggle()
 	{
-		trace("trying to toggle, opened = ", opened);
 		if(opened)
 			close();
 		else
 			open();
-		trace("toggled, opened = ", opened);
 	}
 }
