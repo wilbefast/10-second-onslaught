@@ -63,9 +63,14 @@ class GameObjectManager extends Sprite
 		return get().__getMaximum(evaluation, condition);
 	}
 
-	public static function setCameraPosition(_x : Float, _y : Float)
+	public static function setCameraPosition(_x : Float, _y : Float) : Void
 	{
-		return get().__setCameraPosition(_x, _y);
+		get().__setCameraPosition(_x, _y);
+	}
+	
+	public static function getWorldPosition(_x : Float, _y : Float) : { x : Float, y : Float }
+	{
+		return get().__getWorldPosition(_x, _y);
 	}
 
 	// ---------------------------------------------------------------------------
@@ -190,9 +195,14 @@ class GameObjectManager extends Sprite
 	// DRAW LIST
 	// ---------------------------------------------------------------------------
 
-	private function __setCameraPosition(_x : Float, _y : Float)
+	private function __setCameraPosition(_x : Float, _y : Float) : Void
 	{
 		x = _x;
 		y = _y;
+	}
+	
+	private function __getWorldPosition(_x : Float, _y : Float) : { x : Float, y : Float }
+	{
+		return { x : (_x - x), y : (_y - y) };
 	}
 }

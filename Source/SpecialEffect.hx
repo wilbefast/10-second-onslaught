@@ -14,14 +14,15 @@ class SpecialEffect extends GameObject
 
 	private var timer : Float;
 
-	public function new(_x : Float, _y : Float, sheet : Spritesheet, behaviourName : String) : Void
+	public function new(_x : Float, _y : Float, sheet : Spritesheet, behaviourName : String,
+											 offx : Float = 0, offy : Float = 0) : Void
 	{
 		super(_x, _y);
 
 		animated = new AnimatedSprite(sheet, true);
 		animated.showBehavior(behaviourName);
-		animated.x = -animated.width/2;
-		animated.y = -animated.height/2;
+		animated.x = -animated.width/2 + offx;
+		animated.y = -animated.height/2 + offy;
 		addChild(animated);
 
 		timer = (cast(animated.currentBehavior.frames.length, Float) / sheet.behaviors[behaviourName].frameRate);
