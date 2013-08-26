@@ -78,6 +78,11 @@ class Session extends Sprite
 		return money ;
 	}
 	
+	public function withdrawMoney(cost : Int)
+	{
+		money -= cost ;
+	} 
+	
 	public function getTimelineSelection()
 	{
 		return timelineSelection ;

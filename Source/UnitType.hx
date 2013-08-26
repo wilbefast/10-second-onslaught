@@ -27,8 +27,8 @@ class UnitType
 	// CONSTRUCTOR
 	// ---------------------------------------------------------------------------
 
-	public var price : Int;
-	public var icon : BitmapData;
+	private var price : Int;
+	private var icon : BitmapData;
 	public var factory : Float->Float->Unit;
 
 	public function new (_price : Int, _icon : BitmapData, _factory : Float->Float->Unit) : Void
@@ -42,6 +42,16 @@ class UnitType
 	{
 			// override me !
 			return -1;
+	}
+	
+	public function getPrice()
+	{
+		return price ;
+	}
+	
+	public function getIcon()
+	{
+		return icon ;
 	}
 	
 	// ---------------------------------------------------------------------------

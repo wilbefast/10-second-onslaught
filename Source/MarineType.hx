@@ -17,7 +17,7 @@ public class MarineType extends UnitType
 	
 	public override function getCount() : Int
 	{
-		return marineCountt;
+		return marineCount;
 	}
 	
 	public function increment() : Void
