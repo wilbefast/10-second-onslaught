@@ -49,16 +49,31 @@ class Nuke extends Unit
 
 	private static var sheet : Spritesheet;
 	private static var sheetExplode : Spritesheet;
+	private static var sheetTeleport : Spritesheet;
 
 	private static function init() : Void
 	{
 		// ---------------------------------------------------------------------------
 		// ASSETS
+
+		// MAIN SPRITESHEET
+
 		sheet = BitmapImporter.create(Assets.getBitmapData("assets/nuke.png"), 7, 1, 48, 48);
 		sheet.addBehavior(new BehaviorData("idle", [0, 1, 2, 3, 4, 5, 6], true, 10));
 
 		sheetExplode = BitmapImporter.create(Assets.getBitmapData("assets/nukeExplosion.png"), 7, 1, 270, 700);
 		sheetExplode.addBehavior(new BehaviorData("explode", [0, 1, 2, 3, 4, 5, 6], true, 12));
+
+
+		// TELEPORT SPRITES
+
+		sheetTeleport = BitmapImporter.create(
+			Assets.getBitmapData("assets/nuke_spawn.png"), 5, 1, 100, 700);
+		sheetTeleport.addBehavior(new BehaviorData("in", [0, 1, 2, 3, 4], false, 10));
+		sheetTeleport.addBehavior(new BehaviorData("out", [4, 3, 2, 1, 0], false, 10));
+
+
+		// SOUND
 
 		SoundManager.loadSound("nuke");
 
@@ -94,6 +109,9 @@ class Nuke extends Unit
 		animated.y = -animated.height*0.7;
 
 		addChild(animated);
+
+		// teleport in like a sir !
+		new SpecialEffect(x, y, sheetTeleport, "in", 0, -300);
 	}
 
 	// ---------------------------------------------------------------------------

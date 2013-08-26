@@ -19,6 +19,8 @@ class TimelineUI extends Sprite
 	private var bar_bitmap : Bitmap;
 	private var background_bitmap : Bitmap;
 
+	private var text : DefaultTextField;
+
 	public function new(scene : GameScene)
 	{
 		super();
@@ -56,22 +58,36 @@ class TimelineUI extends Sprite
 		selection = new Sprite();
 		selection.addChild(selection_bitmap);
 		addChild(selection);
+
+		// .. text
+		text = new DefaultTextField("test", width/2, -32);
+		addChild(text);
+	}
+
+	private var slotWidth : Float = 0;
+
+	public function recalculateLayout()
+	{
+		background_bitmap.width = stage.stageWidth;
+		bar_bitmap.x = (background_bd.width / stage.stageWidth)*3;
 	}
 	
 	public function update(time : Float)
 	{
-		var slotWidth = (stage.stageWidth-selection.width) * 0.1;
+		var slotWidth = background_bitmap.width * 0.1;
 		bar_bitmap.width = selection.x = time * slotWidth;
 	}
 	
 	private function onMouseClick(event : MouseEvent) : Void
   {
-		var slotWidth = (stage.stageWidth-selection.width) * 0.1;
+		var slotWidth = (background_bitmap.width-bar_bitmap.x*2) * 0.1;
 		session.setTimelineSelection(Math.round(event.stageX / slotWidth));
 
-		var select_x = selection.width/2 + (session.getTimelineSelection() * slotWidth);
+		var select_x = session.getTimelineSelection() * slotWidth;
 
 		Actuate.tween(selection, 0.3, { x : select_x }, true).ease (Quad.easeOut);
 		Actuate.tween(bar_bitmap, 0.3, { width : select_x }, true).ease (Quad.easeOut);
+
+		text.text = "selecting : " + session.getTimelineSelection();
   }
 }

@@ -30,14 +30,14 @@ class SoundManager
 
 	// shortcut static functions
 
-	public static function loadSound(name : String, _max_instances : Int = 3)
+	public static function loadSound(name : String, _max_instances : Int = 3) : Void
 	{
 		get().__loadSound(name, _max_instances);
 	}
 
-	public static function playSound(name : String)
+	public static function playSound(name : String) : Void
 	{
-		return get().__playSound(name);
+		//return get().__playSound(name);
 	}
 
 	// ---------------------------------------------------------------------------
