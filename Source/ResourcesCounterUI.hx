@@ -41,13 +41,16 @@ class ResourcesCounterUI extends Sprite
 			init();
 
 		super();
-
-		addChild(new Bitmap(bitmapData));
+		
+		var bitmap = new Bitmap(bitmapData) ;
+		addChild(bitmap);
 		
 		session_attribut = session;
 		money = session_attribut.getMoney();
 		textField = new DefaultTextField("" + money);
 		textField.defaultTextFormat = DefaultFont.formatWhite ;
+		textField.x = bitmap.width / 2.5 ;
+		textField.y = bitmap.height / 6 ;
 		addChild(textField);
 	}
 	
