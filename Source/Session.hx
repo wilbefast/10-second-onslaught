@@ -33,7 +33,7 @@ class Session extends Sprite
 	{
 		var world_position = GameObjectManager.getWorldPosition(_x, _y);
 		
-		var placement = new UnitPlacement(t, world_position.x, world_position.y);
+		var placement = new UnitPlacement(t, world_position.x, world_position.y, timelineSelection);
 		unitsToDeploy[timelineSelection].add(placement);
 	}
 

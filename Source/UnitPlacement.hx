@@ -8,16 +8,20 @@ class UnitPlacement extends GameObject
 	// ---------------------------------------------------------------------------
 	
 	public var unitType : UnitType ;
+	public var timeToAppear : Int ;
 	
-	public function new(punitType : UnitType, px : Float, py : Float) 
+	public function new(punitType : UnitType, px : Float, py : Float, ptime : Int) 
 	{
 		super(px, py);
 
 		unitType = punitType ;
+		timeToAppear = ptime ;
 		var placeholder_bitmap = new Bitmap(unitType.getPlaceholder());
 		placeholder_bitmap.x = -placeholder_bitmap.width/2;
-		placeholder_bitmap.y = -placeholder_bitmap.height/2;
+		placeholder_bitmap.y = -placeholder_bitmap.height / 2;
+		var textTimeToAppear = new DefaultTextField("" + timeToAppear);
 		addChild(placeholder_bitmap);
+		addChild(textTimeToAppear);
 	}
 	
 	// ---------------------------------------------------------------------------
