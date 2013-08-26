@@ -34,6 +34,21 @@ class Session extends Sprite
 		var placement = new UnitPlacement(t, world_position.x, world_position.y);
 		unitsToDeploy[timelineSelection].add(placement);
 	}
+	
+	public function instantiateUnits() : Void
+	{
+		for (timeSlot in unitsToDeploy)
+		{
+			for (unitToDeploy in timeSlot)
+			{
+				unitToDeploy.instantiate();
+				unitToDeploy.purge = true;
+			}
+			
+			// empty time slot
+			timeSlot.clear();
+		}
+	}
 
 	// ---------------------------------------------------------------------------
 	// ACCESSORS
@@ -41,7 +56,7 @@ class Session extends Sprite
 	
 	public function getTimer()
 	{
-		return timer ;
+		return timer;
 	}
 	
 	public function getNbReplay()

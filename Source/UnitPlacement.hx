@@ -2,6 +2,10 @@ import flash.display.Sprite;
 
 class UnitPlacement extends GameObject
 {
+	// ---------------------------------------------------------------------------
+	// CONSTRUCTOR
+	// ---------------------------------------------------------------------------
+	
 	public var unitType : UnitType ;
 	
 	public function new(punitType : UnitType, px : Float, py : Float) 
@@ -10,8 +14,6 @@ class UnitPlacement extends GameObject
 
 		unitType = punitType ;
 		
-		trace("hello UNITPLACEMENT");
-
 		if(unitType == UnitType.marine)
 			graphics.beginFill(0x00FF00);
 		else
@@ -19,4 +21,12 @@ class UnitPlacement extends GameObject
 		graphics.drawCircle(0, 0, 32);
 	}
 	
+	// ---------------------------------------------------------------------------
+	// INSTANTIATE
+	// ---------------------------------------------------------------------------
+		
+	public function instantiate() : Unit
+	{
+		return (unitType.instantiate(x, y));
+	}
 }
