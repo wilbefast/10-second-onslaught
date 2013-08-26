@@ -109,6 +109,11 @@ class GameScene extends Scene
 		timeline.update();
 		deploy.update();
 	}
+	
+	public override function onMouseClick(event : MouseEvent) : Void
+	{
+		radialMenu.close();
+	}
 
 	// ---------------------------------------------------------------------------
 	// CALLBACKS -- CUSTOM
@@ -120,12 +125,14 @@ class GameScene extends Scene
 		switch(phase)
 		{
 			case PHASE_DEPLOY:
-				if(!radialMenu.isOpen())
+				if(!radialMenu.isOpened())
 				{
 					radialMenu.x = event.stageX;
 					radialMenu.y = event.stageY;
 				}
 				radialMenu.toggle();
+				
+				event.stopPropagation();
 		}
 	}
 

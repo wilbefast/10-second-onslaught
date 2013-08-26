@@ -15,7 +15,7 @@ class RadialMenu extends Sprite
 	// ASSET LOADING
 	// ---------------------------------------------------------------------------
 
-	private static inline var N_OPTIONS = 3;
+	private static inline var N_OPTIONS = 2;
 
 	private static var data : Array<BitmapData>; 
 
@@ -51,10 +51,14 @@ class RadialMenu extends Sprite
 		for (i in 0 ... N_OPTIONS)
 		{
 			var icon = new Sprite();
-			icon.addChild(new Bitmap(data[i]));
+			var icon_bitmap = new Bitmap(data[i]);
+			icon_bitmap.scaleX = icon_bitmap.scaleY = 1.5;
+			icon_bitmap.x = -icon_bitmap.width / 2;
+			icon_bitmap.y = -icon_bitmap.height / 2;
+			icon.addChild(icon_bitmap);
 
 			icon.addEventListener(MouseEvent.CLICK, function(event) {
-				if(open)
+				if(opened)
 				{
 					onSelectOption(i);
 					toggle();
@@ -68,38 +72,59 @@ class RadialMenu extends Sprite
 		alpha = 0;
 	}
 
-	private var open : Bool = false;
+	public static inline var RADIUS : Float = 48;
 
-	public function isOpen() : Bool return open;
+	// ---------------------------------------------------------------------------
+	// OPEN AND CLOSE
+	// ---------------------------------------------------------------------------
+	
+	private var opened : Bool = false;
 
-	public static inline var RADIUS : Float = 64;
+	public function isOpened() : Bool return opened;
+	
+	public function open() : Void 
+	{
+		if (opened)
+			return;
+		
+		Actuate.tween(this, 0.3, { alpha : 1.0 }, true)
+					.ease (Quad.easeOut);
 
+		var radians_per_options = Math.PI*2/N_OPTIONS;
+		for (i in 0 ... N_OPTIONS)
+		{
+			var radians = radians_per_options*(i /*+ 0.5*/);
+			var ox = Math.cos(radians)*RADIUS;
+			var oy = Math.sin(radians)*RADIUS;
+			Actuate.tween(icons[i], 0.3, { x : ox, y : oy }, true)
+					.ease (Quad.easeOut);	
+		}
+		
+		opened = true;
+	}
+	
+	public function close() : Void
+	{
+		if (!opened)
+			return;
+		
+		Actuate.tween(this, 0.3, { alpha : 0.0 }, true)
+					.ease (Quad.easeOut);
+
+		for (i in 0 ... N_OPTIONS)
+			Actuate.tween(icons[i], 0.3, { x : 0, y : 0 }, true)
+					.ease (Quad.easeOut);
+					
+		opened = false;
+	}
+	
 	public function toggle()
 	{
-		if(open)
-		{
-			Actuate.tween(this, 0.3, { alpha : 0.0 }, true)
-						.ease (Quad.easeOut);
-
-			for (i in 0 ... N_OPTIONS)
-				Actuate.tween(icons[i], 0.3, { x : 0, y : 0 }, true)
-						.ease (Quad.easeOut);
-		}
+		trace("trying to toggle, opened = ", opened);
+		if(opened)
+			close();
 		else
-		{		
-			Actuate.tween(this, 0.3, { alpha : 1.0 }, true)
-						.ease (Quad.easeOut);
-
-			var radians_per_options = Math.PI*2/N_OPTIONS;
-			for (i in 0 ... N_OPTIONS)
-			{
-				var radians = radians_per_options*(i + 0.5);
-				var ox = Math.cos(radians)*RADIUS;
-				var oy = Math.sin(radians)*RADIUS;
-				Actuate.tween(icons[i], 0.3, { x : ox, y : oy }, true)
-						.ease (Quad.easeOut);	
-			}
-		}
-		open = !open;
+			open();
+		trace("toggled, opened = ", opened);
 	}
 }
