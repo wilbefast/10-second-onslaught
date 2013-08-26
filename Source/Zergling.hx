@@ -103,7 +103,7 @@ class Zergling extends Unit
 	private static inline var BITE = 1;
 
 	private var state : Int = WALK;
-
+	
 	public override function update(dt : Float) : Void
 	{
 		super.update(dt);
@@ -112,11 +112,17 @@ class Zergling extends Unit
 		animated.update(cast(dt*1000, Int));
 
 		// get new target
-		if(target == null || target.purge)
+		if (target == null || target.purge)
+		{
 			refreshTarget();
+			
+			// no targets left
+			if (target != null)
+				animated.showBehavior("walk_" + prev_facing);
+		}
 
 		// has target
-		if(target != null)
+		else
 		{
 			var toTarget = new V2(target.x - x, target.y - y);
 			var toTargetNormalised = toTarget.normalised();
@@ -144,7 +150,7 @@ class Zergling extends Unit
 
 				SoundManager.playSound("zergling_attack");
 			}
-		}
+		}		
 	}
 
 	// ---------------------------------------------------------------------------
