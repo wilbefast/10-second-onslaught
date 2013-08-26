@@ -99,6 +99,12 @@ class Zergling extends Unit
 	// UPDATE
 	// ---------------------------------------------------------------------------
 
+	private function setAnimation(name : String)
+	{
+		animated.showBehavior(name);
+		animated.currentFrameIndex = Math.floor(Math.random()*animated.currentBehavior.frames.length);
+	}
+
 	private static inline var WALK = 0;
 	private static inline var BITE = 1;
 
@@ -118,7 +124,7 @@ class Zergling extends Unit
 			
 			// no targets left
 			if (target != null)
-				animated.showBehavior("walk_" + prev_facing);
+				setAnimation("walk_" + prev_facing);
 		}
 
 		// has target
@@ -137,7 +143,7 @@ class Zergling extends Unit
 				y += toTargetNormalised.y * Time.getDelta() * SPEED;
 
 				if (prev_facing != facing)
-					animated.showBehavior("walk_" + facing);
+					setAnimation("walk_" + facing);
 				prev_facing = facing;
 			}
 
