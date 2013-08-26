@@ -106,6 +106,8 @@ class GameScene extends Scene
 
 				timeline.update(time);
 
+				session.instantiateUnits(Math.floor(time));
+
 			case PHASE_DEPLOY:
 		}
 
@@ -303,8 +305,5 @@ class GameScene extends Scene
 			new Zergling(Math.cos(spawn_angle)*spawn_width, 
 										Math.sin(spawn_angle)*spawn_height);
 		}
-		
-		// instantiate units placed in deploy more
-		session.instantiateUnits();
 	}
 }
