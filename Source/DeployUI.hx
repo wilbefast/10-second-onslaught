@@ -44,7 +44,7 @@ class DeployUI extends Sprite
 		startButton = new StartButtonUI(pgameScene);
 		addChild(startButton);
 
-		recalculateLayout();
+		//recalculateLayout();
 	}
 
 	public function update()
@@ -58,12 +58,18 @@ class DeployUI extends Sprite
 		// size
 		if(stage != null)
 		{
-			var available_height = (stage.stageHeight - y);
-
-			//resourcesCounter.width = replaysCounter.width = stage.stageWidth*0.3;
-			resourcesCounter.height = available_height*0.67;
-
+			trace("stage ok");
+			startButton.width = stage.stageWidth * 0.1 ;
+			startButton.height = startButton.width / 3 ;
+			startButton.x = stage.stageWidth - startButton.width;
+			startButton.y = 0 ;
+			
 			//replaysCounter.height = available_height*0.33;
+			
+			resourcesCounter.width = stage.stageWidth * 0.17 ;
+			resourcesCounter.height = resourcesCounter.width / 2;
+			resourcesCounter.x = 0 ;
+			resourcesCounter.y = 0 ;
 		}
 
 		// position

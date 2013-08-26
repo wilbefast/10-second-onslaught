@@ -14,6 +14,7 @@ import openfl.Assets;
 class Main extends Sprite
 {
 	private static inline var TIMER : Int = 10 ;
+	private static inline var MONEY : Int = 1500 ;
 
 	private var snd_music : Sound;
 	private var channel : SoundChannel;
@@ -31,7 +32,7 @@ class Main extends Sprite
 		UnitType.init();
 
 		SceneManager.add("Title", new TitleScene());
-		SceneManager.add("Game", new GameScene(TIMER));
+		SceneManager.add("Game", new GameScene(TIMER, MONEY));
 
 		snd_music = Assets.getSound("assets/music.mp3"); // flash doesn't like OOG :'(
 
