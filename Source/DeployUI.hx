@@ -12,13 +12,10 @@ class DeployUI extends Sprite
 
 	private static var initialised : Bool = false;
 
-	private static var background_data : BitmapData;
-	
 	private static var session_attribut : Session;
 
 	private static function init() : Void
 	{
-		background_data = Assets.getBitmapData("assets/GabariGUI_01.png");
 		initialised = true;
 	}
 
