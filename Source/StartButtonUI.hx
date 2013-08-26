@@ -12,13 +12,21 @@ class StartButtonUI extends Sprite
 
 	private static var initialised : Bool = false;
 
-	private static var background_data : BitmapData;
+	private static var start_bm : BitmapData;
+	private static var stop_bm : BitmapData;
+	
+	private var bitmap : Bitmap;
 	
 	private var gameScene : GameScene ;
+	
+	private static inline var PHASE_DEPLOY : Int = 0;
+	private static inline var PHASE_ATTACK : Int = 1;
+	private var phase : Int = PHASE_DEPLOY;
 
 	private static function init() : Void
 	{
-		background_data = Assets.getBitmapData("assets/GUI2_button_start.png");
+		start_bm = Assets.getBitmapData("assets/GUI2_button_start.png");
+		stop_bm = Assets.getBitmapData("assets/GUI2_button_stop.png");
 
 		initialised = true;
 	}
@@ -39,13 +47,27 @@ class StartButtonUI extends Sprite
 
 		// register callbacks
         this.addEventListener(MouseEvent.CLICK, onMouseClick);	
-			
-		addChild(new Bitmap(background_data));
+		bitmap = new Bitmap(start_bm) ;
+		addChild(bitmap);
 	}
 	
 	private function onMouseClick(event : MouseEvent) : Void
     {
 		trace("cliked on start button");
+		if (phase == PHASE_DEPLOY)
+		{
+			phase = PHASE_ATTACK ;
+			removeChild(bitmap);
+			bitmap = new Bitmap(stop_bm) ;
+			addChild(bitmap);
+		}
+		else 
+		{
+			phase = PHASE_DEPLOY;
+			removeChild(bitmap);
+			bitmap = new Bitmap(start_bm) ;
+			addChild(bitmap);
+		}
         gameScene.switchPhase();
     }
 }
