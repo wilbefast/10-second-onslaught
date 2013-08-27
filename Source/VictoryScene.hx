@@ -11,6 +11,6 @@ class VictoryScene extends Scene
 	
 	public override function onMouseClick(event : MouseEvent) : Void
 	{
-		SceneManager.setScene("Game");
+		SceneManager.setScene("Title");
 	}
 }
