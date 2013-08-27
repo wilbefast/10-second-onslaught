@@ -2,6 +2,11 @@ import openfl.Assets;
 import flash.display.Bitmap;
 import flash.display.BitmapData;
 
+import spritesheet.AnimatedSprite;
+import spritesheet.data.BehaviorData;
+import spritesheet.importers.BitmapImporter;
+import spritesheet.Spritesheet;
+
 class Colony extends Unit 
 {
 	// ---------------------------------------------------------------------------
@@ -10,11 +15,12 @@ class Colony extends Unit
 
 	private static var initialised : Bool = false;
 
-	private static var bitmapData : BitmapData;
+	private static var sheet : Spritesheet;
 
 	private static function init() : Void
 	{
-		bitmapData = Assets.getBitmapData("assets/colony.png");
+		sheet = BitmapImporter.create(Assets.getBitmapData("assets/building.png"), 4, 2, 80, 120);
+		sheet.addBehavior(new BehaviorData("sparkle", [0, 1, 2, 3, 4, 5, 6], true, 1));
 		initialised = true;
 	}
 
@@ -22,7 +28,7 @@ class Colony extends Unit
 	// CONSTRUCTOR
 	// ---------------------------------------------------------------------------
 
-	private var bitmap : Bitmap;
+	private var animated : AnimatedSprite;
 
 	private static inline var HITPOINTS : Int = 200;
 	private static inline var RADIUS : Int = 32;
@@ -37,9 +43,18 @@ class Colony extends Unit
 		team = Unit.TEAM_CIVILLIANS;
 		immobile = true;
 
-		bitmap = new Bitmap(bitmapData);
-		bitmap.x = -bitmap.width/2;
-		bitmap.y = -bitmap.height*0.75;
-		addChild(bitmap);
+		animated = new AnimatedSprite(sheet, true);
+		animated.showBehavior("sparkle");
+		animated.x = -animated.width/2;
+		animated.y = -animated.height*0.7;
+		animated.currentFrameIndex = Math.floor(Math.random()*6);
+		addChild(animated);
+	}
+
+	public override function update(dt : Float)
+	{
+		super.update(dt);
+
+		animated.update(cast(dt*1000, Int));
 	}
 }
