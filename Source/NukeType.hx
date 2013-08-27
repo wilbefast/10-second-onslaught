@@ -10,7 +10,7 @@ class NukeType extends UnitType
 	{
 		super();
 		byName.set("nuke", this);
-		this.price = 50;
+		//this.price = 50;
 		this.icon = Assets.getBitmapData("assets/GUI_ic_bombe_01.png");
 		this.mouseOverText = "Bombs rock !";
 	}

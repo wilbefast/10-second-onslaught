@@ -100,8 +100,17 @@ class GameScene extends Scene
 			case PHASE_ATTACK:
 				
 				time += Time.getDelta();
-				if (time > session.getDuration()) 
+				if (time > session.getDuration())
+				{
+					 var nbBaseSurvived = 0 ;
+					 for (it in GameObjectManager.getMatching(function (o : GameObject) return Std.is(o, Colony)))
+					 {
+						 nbBaseSurvived ++ ;
+					 }
+					trace("bases : " + nbBaseSurvived);
+					session.baseSaved(nbBaseSurvived);
 					switchPhase();
+				}
 
 				timeline.update(time);
 
