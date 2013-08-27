@@ -39,6 +39,7 @@ class Main extends Sprite
 
 		Lib.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyboard);
 
+		SoundManager.loadSound("teleport_in");
 		// start music
 		//channel = snd_music.play();
 		//channel.addEventListener(Event.SOUND_COMPLETE, onMusicEnd);

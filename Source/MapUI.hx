@@ -28,6 +28,12 @@ class MapUI extends Sprite
 		// register callbacks
         this.addEventListener(MouseEvent.CLICK, onMouseClick);
 	}
+
+	public function recalculateLayout()
+	{
+		width = Math.max(stage.stageWidth, bitmapData.width);
+		height = Math.max(stage.stageHeight, bitmapData.height);
+	}
 	
 	public function update()
 	{

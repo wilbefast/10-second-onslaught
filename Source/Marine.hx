@@ -124,6 +124,7 @@ class Marine extends Unit
 		visible = false;
 		new SpecialEffect(x, y, sheetTeleport, "in", 0, -310).onPurge = function()
 			visible = true;
+		SoundManager.playSound("teleport_in");
 	}
 
 	// ---------------------------------------------------------------------------

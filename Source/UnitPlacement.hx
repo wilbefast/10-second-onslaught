@@ -22,6 +22,8 @@ class UnitPlacement extends GameObject
 		var textTimeToAppear = new DefaultTextField("" + timeToAppear);
 		addChild(placeholder_bitmap);
 		addChild(textTimeToAppear);
+
+
 	}
 	
 	// ---------------------------------------------------------------------------

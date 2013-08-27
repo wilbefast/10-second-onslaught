@@ -23,7 +23,12 @@ class TitleScene extends Scene
 		graphics.beginFill(0xFF0000);
 		graphics.drawRect(100, 50, 200, 200);
 		
-		addChild (new DefaultTextField("I am a title: Click to start game", 200, 200));
+		var text = new StarWarsTextField("She strutted into my office wearing a"
+			+ " dress that clung to her like Saran Wrap to a sloppily butchered pork knuckle,"
+			+ " bone and sinew jutting and lurching asymmetrically beneath its folds, the tightness"
+			+ " exaggerating the granularity of the suet and causing what little palatable meat there"
+			+ " was to sweat, its transparency the thief of imagination.");
+
 	}
 
 	// ---------------------------------------------------------------------------
