@@ -8,13 +8,16 @@ import flash.text.TextFormat;
 	private static inline var TEXT_SIZE = 32;
 	private static inline var TEXT_SIZE2 = 16;
 
-	public static var formatRed;
-	public static var formatWhite;
+	public static var formatRed : TextFormat;
+	public static var formatWhite : TextFormat;
+	public static var formatBigWhite : TextFormat;
 
 	public static function load()
 	{
 		Font.registerFont (DefaultFont);
 		formatRed = new TextFormat("Arial", TEXT_SIZE, TEXT_COLOUR);
 		formatWhite = new TextFormat("Arial", TEXT_SIZE2, TEXT_COLOUR2);
+
+		formatBigWhite = new TextFormat("Arial", TEXT_SIZE, TEXT_COLOUR2);
 	}
 }
