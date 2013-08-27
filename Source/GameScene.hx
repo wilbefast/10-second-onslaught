@@ -190,6 +190,7 @@ class GameScene extends Scene
 	public function switchPhase()
 	{
 		time = 0;
+		session.setTimelineSelection(0);
 
 		switch(phase)
 		{

@@ -89,7 +89,7 @@ class Session extends Sprite
 	
 	public function baseSaved(nbBase : Int )
 	{
-		baseEarned = nbBase * 500 ;
+		baseEarned = nbBase * 1000 ;
 	}
 	
 	public function withdrawMoney(cost : Int)

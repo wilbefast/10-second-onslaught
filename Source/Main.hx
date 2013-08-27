@@ -14,7 +14,7 @@ import openfl.Assets;
 class Main extends Sprite
 {
 	private static inline var TIMER : Int = 10 ;
-	private static inline var MONEY : Int = 15000 ;
+	private static inline var MONEY : Int = 3000 ;
 
 	private var snd_music : Sound;
 	private var channel : SoundChannel;
