@@ -7,7 +7,7 @@ import spritesheet.data.BehaviorData;
 import spritesheet.importers.BitmapImporter;
 import spritesheet.Spritesheet;
 
-class Colony extends Unit 
+class ColonyBroken extends Unit 
 {
 	// ---------------------------------------------------------------------------
 	// LOAD ASSETS
@@ -19,8 +19,8 @@ class Colony extends Unit
 
 	private static function init() : Void
 	{
-		sheet = BitmapImporter.create(Assets.getBitmapData("assets/building.png"), 4, 2, 80, 120);
-		sheet.addBehavior(new BehaviorData("sparkle", [0, 1, 2, 3, 4, 5, 6], true, 1));
+		sheet = BitmapImporter.create(Assets.getBitmapData("assets/building_broken.png"), 4, 1, 80, 120);
+		sheet.addBehavior(new BehaviorData("smoke", [0, 1, 2, 3], true, 10));
 		initialised = true;
 	}
 
@@ -30,8 +30,8 @@ class Colony extends Unit
 
 	private var animated : AnimatedSprite;
 
-	private static inline var HITPOINTS : Int = 200;
-	private static inline var RADIUS : Int = 32;
+	private static inline var HITPOINTS : Int = 300;
+	private static inline var RADIUS : Int = 0;
 
 	public function new(_x : Float, _y : Float) : Void
 	{
@@ -40,17 +40,15 @@ class Colony extends Unit
 		if(!initialised)
 			init();
 
-		team = Unit.TEAM_CIVILLIANS;
+		team = Unit.TEAM_INVULNERABLE;
 		immobile = true;
 
 		animated = new AnimatedSprite(sheet, true);
-		animated.showBehavior("sparkle");
+		animated.showBehavior("smoke");
 		animated.x = -animated.width/2;
 		animated.y = -animated.height*0.7;
 		animated.currentFrameIndex = Math.floor(Math.random()*6); // DOES NOTHING :'(
 		addChild(animated);
-
-		onPurge = function() new ColonyBroken(x, y);
 	}
 
 	public override function update(dt : Float)
