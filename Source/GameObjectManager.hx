@@ -68,6 +68,11 @@ class GameObjectManager extends Sprite
 		get().__setCameraPosition(_x, _y);
 	}
 	
+	public static function setCameraZoom(_x : Float, _y : Float) : Void
+	{
+		get().__setCameraZoom(_x, _y);
+	}
+	
 	public static function getWorldPosition(_x : Float, _y : Float) : { x : Float, y : Float }
 	{
 		return get().__getWorldPosition(_x, _y);
@@ -200,8 +205,14 @@ class GameObjectManager extends Sprite
 
 	private function __setCameraPosition(_x : Float, _y : Float) : Void
 	{
-		x = _x;
-		y = _y;
+		x = _x/scaleX;
+		y = _y/scaleY;
+	}
+	
+	private function __setCameraZoom(_x : Float, _y : Float) : Void
+	{
+		scaleX = _x;
+		scaleY = _y;
 	}
 	
 	private function __getWorldPosition(_x : Float, _y : Float) : { x : Float, y : Float }

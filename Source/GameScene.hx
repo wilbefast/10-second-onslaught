@@ -75,7 +75,7 @@ class GameScene extends Scene
 		map.addEventListener(MouseEvent.CLICK, clickOnMap);
 
 		// game objects
-		addChild(GameObjectManager.get());
+		map.addChild(GameObjectManager.get());
 
 		// timeline
 		addChild(timeline);
@@ -107,7 +107,7 @@ class GameScene extends Scene
 					 {
 						 nbBaseSurvived ++ ;
 					 }
-					trace("bases : " + nbBaseSurvived);
+
 					if (nbBaseSurvived == 5) SceneManager.setScene("Victory");
 					session.baseSaved(nbBaseSurvived);
 					switchPhase();
@@ -134,7 +134,6 @@ class GameScene extends Scene
 
 	public function clickOnMap(event : MouseEvent) : Void
 	{
-
 		switch(phase)
 		{
 			case PHASE_DEPLOY:
@@ -211,10 +210,7 @@ class GameScene extends Scene
 	{
 		// map
 		map.recalculateLayout();
-
-		// game objects
-		GameObjectManager.setCameraPosition(map.x + map.width/2, map.y + map.height/2);
-
+		
 		// timeline
 		timeline.recalculateLayout();
 		timeline.y = stage.stageHeight - timeline.height;

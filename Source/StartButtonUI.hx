@@ -71,7 +71,6 @@ class StartButtonUI extends Sprite
 	
 	private function onMouseClick(event : MouseEvent) : Void
     {
-		trace("cliked on start button");
 		gameScene.switchPhase();
     }
 }

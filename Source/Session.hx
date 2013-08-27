@@ -29,9 +29,9 @@ class Session extends Sprite
 
 	private var unitsToDeploy : Array<List<UnitPlacement>>;
 
-	public function placeUnit(_x : Float, _y : Float, t : UnitType) : Void
+	public function placeUnit(_viewX : Float, _viewY : Float, t : UnitType) : Void
 	{
-		var world_position = GameObjectManager.getWorldPosition(_x, _y);
+		var world_position = GameObjectManager.getWorldPosition(_viewX, _viewY);
 		
 		var placement = new UnitPlacement(t, world_position.x, world_position.y, timelineSelection);
 		unitsToDeploy[timelineSelection].add(placement);

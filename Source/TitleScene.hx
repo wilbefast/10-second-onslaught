@@ -63,11 +63,7 @@ class TitleScene extends Scene
 		addChild(text);
 	}
 
-	// ---------------------------------------------------------------------------
-	// SCENE CALLBACKS
-	// ---------------------------------------------------------------------------
-
-	public override function onEnter(previous : Scene) : Void 
+	public function recalculateLayout() : Void
 	{
 		// title
 		background.width = stage.stageWidth;
@@ -78,11 +74,16 @@ class TitleScene extends Scene
 		text.width = stage.stageWidth*0.6;
 		text.x = (stage.stageWidth - text.width)/2;
 		text.y = stage.stageHeight;
-		Actuate.tween(text, 140, { y : -text.height }, true);
 	}
-
-	public override function onExit(next : Scene) : Void 
+	
+	// ---------------------------------------------------------------------------
+	// SCENE CALLBACKS
+	// ---------------------------------------------------------------------------
+	
+	public override function onEnter(previous : Scene) : Void 
 	{
+		recalculateLayout();
+		Actuate.tween(text, 140, { y : -text.height }, true);
 	}
 
 	// ---------------------------------------------------------------------------
@@ -91,10 +92,7 @@ class TitleScene extends Scene
 
 	public override function onResize(event : Event) : Void
 	{
-	}
-
-	public override function onFrameEnter(event : Event) : Void
-	{
+		recalculateLayout();
 	}
 	
 	public override function onMouseClick(event : MouseEvent) : Void

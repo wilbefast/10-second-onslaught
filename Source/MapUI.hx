@@ -11,6 +11,7 @@ class MapUI extends Sprite
 	private static var initialised = false;
 	
 	private var session : Session ;
+	private var bitmap : Bitmap;
 
 	public function new(scene : GameScene)
 	{
@@ -22,7 +23,7 @@ class MapUI extends Sprite
 			initialised = true;
 		}
 		
-		addChild(new Bitmap(bitmapData));
+		addChild(bitmap = new Bitmap(bitmapData));
 		
 		session = scene.getSession();
 		// register callbacks
@@ -31,8 +32,13 @@ class MapUI extends Sprite
 
 	public function recalculateLayout()
 	{
-		width = Math.max(stage.stageWidth, bitmapData.width);
-		height = Math.max(stage.stageHeight, bitmapData.height);
+		bitmap.width = stage.stageWidth;
+		bitmap.height = stage.stageHeight;
+		
+		// game objects
+		GameObjectManager.setCameraPosition(width/2, height/2);
+		//GameObjectManager.setCameraZoom(stage.stageWidth / bitmapData.width, stage.stageHeight / bitmapData.height);
+		
 	}
 	
 	public function update()
