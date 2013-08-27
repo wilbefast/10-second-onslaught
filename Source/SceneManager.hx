@@ -99,8 +99,8 @@ class SceneManager extends Sprite
 		byName.set(newSceneName, newScene);
 		if(current == null)
 		{
-			newScene.onEnter(current);
 			addChild(newScene);
+			newScene.onEnter(current);
 			current = newScene;
 		}
 	}
