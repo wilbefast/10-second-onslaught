@@ -114,6 +114,7 @@ class Nuke extends Unit
 		visible = false;
 		new SpecialEffect(x, y, sheetTeleport, "in", 0, -320).onPurge = function()
 			visible = true;
+		SoundManager.playSound("teleport_in");
 	}
 
 	// ---------------------------------------------------------------------------
