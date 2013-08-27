@@ -108,6 +108,7 @@ class GameScene extends Scene
 						 nbBaseSurvived ++ ;
 					 }
 					trace("bases : " + nbBaseSurvived);
+					if (nbBaseSurvived == 5) SceneManager.setScene("Victory");
 					session.baseSaved(nbBaseSurvived);
 					switchPhase();
 				}

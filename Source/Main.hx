@@ -33,6 +33,7 @@ class Main extends Sprite
 
 		SceneManager.add("Title", new TitleScene());
 		SceneManager.add("Game", new GameScene(TIMER, MONEY));
+		SceneManager.add("Victory", new VictoryScene());
 
 		snd_music = Assets.getSound("assets/music.mp3"); // flash doesn't like OOG :'(
 
