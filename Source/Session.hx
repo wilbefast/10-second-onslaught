@@ -7,7 +7,7 @@ class Session extends Sprite
 	private var nbReplay : Int;
 	private var duration : Int ; //delay between two waves in seconds
 	private var timelineSelection : Int = 0 ;
-
+	private var baseEarned : Int = 0 ;
 	
 	public function new(pduration : Int, pmoney : Int) 
 	{
@@ -84,6 +84,12 @@ class Session extends Sprite
 	public function resetMoney()
 	{
 		money = startingMoney ;
+		money += baseEarned ;
+	}
+	
+	public function baseSaved(nbBase : Int )
+	{
+		baseEarned = nbBase * 500 ;
 	}
 	
 	public function withdrawMoney(cost : Int)
