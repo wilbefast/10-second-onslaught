@@ -264,11 +264,11 @@ class GameScene extends Scene
 
 	private function spawnColonies()
 	{
-			new Colony(0, 0);
-			new Colony(-200, -250);
-			new Colony(450, 10);
+			new Colony(0, -100);
+			new Colony(-200, -220);
+			new Colony(450, 50);
 			new Colony(-350, 100);
-			new Colony(50, -150);
+			new Colony(70, 250);
 	}
 
 	private function spawnUnits()

@@ -46,7 +46,10 @@ class GameObject extends Sprite
 
 	public function isCollidingWith(other : GameObject) : Bool
 	{
-		return 
+		if(other.radius <= 0 || this.radius <= 0)
+			return false;
+		else
+			return 
 			(Useful.distance2(x, y, other.x, other.y) < Useful.sqr(radius + other.radius));
 	}
 
