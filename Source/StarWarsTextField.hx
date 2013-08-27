@@ -9,7 +9,7 @@ class StarWarsTextField extends TextField
 	{
 		super();
 
-		defaultTextFormat = DefaultFont.formatRed;
+		defaultTextFormat = DefaultFont.formatBigWhite;
 
 		embedFonts = true;
 		selectable = false;

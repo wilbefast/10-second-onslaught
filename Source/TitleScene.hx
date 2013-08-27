@@ -14,15 +14,28 @@ import motion.Actuate;
 
 class TitleScene extends Scene 
 {
+	private static var initialised : Bool = false;
+	private static var background_bd : BitmapData;
+
 	// ---------------------------------------------------------------------------
 	// CONSTRUCTOR
 	// ---------------------------------------------------------------------------
 
 	private var text : TextField;
+	private var background : Bitmap;
 
 	public function new () 
 	{
 		super ();
+
+		if(!initialised)
+		{
+			background_bd = Assets.getBitmapData("assets/start_screen.jpg");
+			initialised = true;
+		}
+
+		background = new Bitmap(background_bd);
+		addChild(background);
 
 		text = new StarWarsTextField(
 
@@ -30,15 +43,19 @@ class TitleScene extends Scene
 
 			+ "20 years ago an alien attack wiped out "
 
-			+ "all life on our home planet in under 10 seconds.\n\n"
+			+ "all life on our home planet IN UNDER 10 SECONDS.\n\n"
 
 			+ "Now at last we have invented a machine to take us back to "
 
 			+ "this most fateful moment.\n\n"
 
-			+ "At last it is time to change the past: send your soldiers and ordanance back in time "
+			+ "At last it is time to CHANGE THE PAST: send your SOLDIERS and ORDANANCE back in time "
 
-			+ "to defend the Motherplanet.\n\n"
+			+ "to DEFEND THE MOTHERPLANET.\n\n"
+
+			+ "PROTECT OUR MONUMENTS to inspire the people of the future to greater acts of heroism.\n\n"
+
+			+ "The more monuments you save the MORE RESOURCES you will have next time!\n\n"
 
 			+ "Good luck comrade.\n\n\nWe will be watching..."
 			);
@@ -52,12 +69,16 @@ class TitleScene extends Scene
 
 	public override function onEnter(previous : Scene) : Void 
 	{
-		text.height = stage.stageHeight*0.8;
+		// title
+		background.width = stage.stageWidth;
+		background.height = stage.stageHeight;
+
+		// text 
+		text.height = stage.stageHeight*1.2;
 		text.width = stage.stageWidth*0.6;
 		text.x = (stage.stageWidth - text.width)/2;
 		text.y = stage.stageHeight;
-
-		Actuate.tween(text, 100, { y : -text.height }, true);
+		Actuate.tween(text, 140, { y : -text.height }, true);
 	}
 
 	public override function onExit(next : Scene) : Void 
