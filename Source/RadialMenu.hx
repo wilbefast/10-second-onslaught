@@ -16,6 +16,7 @@ class RadialMenu extends Sprite
 	// ---------------------------------------------------------------------------
 
 	private static inline var N_OPTIONS = 2;
+	public static inline var RADIUS : Float = 48;
 
 	private static var data : Array<BitmapData>; 
 
@@ -59,10 +60,11 @@ class RadialMenu extends Sprite
 
 			icon.addEventListener(MouseEvent.CLICK, function(event) 
 			{
-				if(opened && clickable)
+				if(opened)
 				{
 					onSelectOption(i);
 					close();
+					trace("event stolen by radil menu");
 					event.stopPropagation();
 				}
 				else
@@ -76,17 +78,27 @@ class RadialMenu extends Sprite
 		alpha = 0;
 	}
 
-	public static inline var RADIUS : Float = 48;
+
+	// ---------------------------------------------------------------------------
+	// ICONS
+	// ---------------------------------------------------------------------------
+
+	private function setIconsMouseEnabled(value : Bool) : Void
+	{
+		for (icon in icons)
+			icon.mouseEnabled = value;
+			
+	}
+
 
 	// ---------------------------------------------------------------------------
 	// OPEN AND CLOSE
 	// ---------------------------------------------------------------------------
 	
 	private var opened : Bool = false;
-	private var clickable : Bool = false;
 
 	public function isOpened() : Bool return opened;
-	
+
 	public function open() : Void 
 	{
 		if (opened)
@@ -102,7 +114,7 @@ class RadialMenu extends Sprite
 			var ox = Math.cos(radians)*RADIUS;
 			var oy = Math.sin(radians)*RADIUS;
 			Actuate.tween(icons[i], 0.3, { x : ox, y : oy }, true)
-					.ease (Quad.easeOut).onComplete(function() clickable = true);	
+					.ease (Quad.easeOut).onComplete(function() setIconsMouseEnabled(true) );	
 		}
 		
 		opened = true;
@@ -120,8 +132,8 @@ class RadialMenu extends Sprite
 			Actuate.tween(icons[i], 0.3, { x : 0, y : 0 }, true)
 					.ease (Quad.easeOut);
 				
-		clickable = false;	
 		opened = false;
+		setIconsMouseEnabled(false);
 	}
 	
 	public function toggle()

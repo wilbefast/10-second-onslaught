@@ -92,10 +92,9 @@ class GameScene extends Scene
 		GameObjectManager.get().addEventListener(MouseEvent.CLICK, 
 			function(e : Event) 
 			{
-				// trace("BINK"); 
 				e.stopPropagation();
 			}
-				);
+		);
 
 		// start !
 		// ---------------------------------------------------------------------------
