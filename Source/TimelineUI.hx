@@ -37,9 +37,6 @@ class TimelineUI extends Sprite
 		// initialise variables
 		session = scene.getSession();
 		
-		// register callbacks
-    this.addEventListener(MouseEvent.CLICK, onMouseClick);
-		
 		// build draw list
 
 		// ... background
@@ -77,7 +74,7 @@ class TimelineUI extends Sprite
 		bar.width = selection.x = time * slotWidth;
 	}
 	
-	private function onMouseClick(event : MouseEvent) : Void
+	public function onMouseClick(event : MouseEvent) : Void
   {
 		var slotWidth = (background.width-bar.x*2) * 0.1;
 		session.setTimelineSelection(Math.round(event.stageX / slotWidth));

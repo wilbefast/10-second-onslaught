@@ -79,6 +79,7 @@ class GameScene extends Scene
 
 		// timeline
 		addChild(timeline);
+    timeline.addEventListener(MouseEvent.CLICK, clickOnTimeline);
 
 		// radial menu
 		addChild(radialMenu);
@@ -144,6 +145,12 @@ class GameScene extends Scene
 				}
 				radialMenu.toggle();
 		}
+	}
+
+	public function clickOnTimeline(event : MouseEvent) : Void
+	{
+		radialMenu.close();
+		timeline.onMouseClick(event);
 	}
 
 	public function clickOnRadialMenu(option : Int) : Void
