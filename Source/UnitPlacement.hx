@@ -17,13 +17,20 @@ class UnitPlacement extends GameObject
 		unitType = punitType ;
 		timeToAppear = ptime ;
 		
+		// bitmap image
 		var placeholder_bitmap = new Bitmap(unitType.getPlaceholder());
 		placeholder_bitmap.x = -placeholder_bitmap.width / 2;
 		placeholder_bitmap.y = -placeholder_bitmap.height / 2;
 		addChild(placeholder_bitmap);
 		
+		// timestamp text
 		var textTimeToAppear = new DefaultTextField("" + timeToAppear);
+		textTimeToAppear.mouseEnabled = false;
 		addChild(textTimeToAppear);	
+
+		// hitbox
+		graphics.beginFill(0xFFFFFF, 0);
+		graphics.drawCircle(0, 0, 32);
 	}
 	
 	// ---------------------------------------------------------------------------

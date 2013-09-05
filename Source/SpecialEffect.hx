@@ -25,7 +25,10 @@ class SpecialEffect extends GameObject
 		animated.y = -animated.height/2 + offy;
 		addChild(animated);
 
-		timer = (cast(animated.currentBehavior.frames.length, Float) / sheet.behaviors[behaviourName].frameRate);
+		timer = (cast(animated.currentBehavior.frames.length, Float) 
+								/ sheet.behaviors[behaviourName].frameRate);
+
+		this.mouseEnabled = false;
 	}
 
 	// ---------------------------------------------------------------------------

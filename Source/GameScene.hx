@@ -87,6 +87,16 @@ class GameScene extends Scene
 		// top
 		addChild(top);
 
+		// register click events on units
+		// ---------------------------------------------------------------------------
+		GameObjectManager.get().addEventListener(MouseEvent.CLICK, 
+			function(e : Event) 
+			{
+				// trace("BINK"); 
+				e.stopPropagation();
+			}
+				);
+
 		// start !
 		// ---------------------------------------------------------------------------
 		recalculateLayout();

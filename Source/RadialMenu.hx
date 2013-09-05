@@ -57,8 +57,9 @@ class RadialMenu extends Sprite
 			icon_bitmap.y = -icon_bitmap.height / 2;
 			icon.addChild(icon_bitmap);
 
-			icon.addEventListener(MouseEvent.CLICK, function(event) {
-				if(opened)
+			icon.addEventListener(MouseEvent.CLICK, function(event) 
+			{
+				if(opened && clickable)
 				{
 					onSelectOption(i);
 					close();
@@ -82,6 +83,7 @@ class RadialMenu extends Sprite
 	// ---------------------------------------------------------------------------
 	
 	private var opened : Bool = false;
+	private var clickable : Bool = false;
 
 	public function isOpened() : Bool return opened;
 	
@@ -100,7 +102,7 @@ class RadialMenu extends Sprite
 			var ox = Math.cos(radians)*RADIUS;
 			var oy = Math.sin(radians)*RADIUS;
 			Actuate.tween(icons[i], 0.3, { x : ox, y : oy }, true)
-					.ease (Quad.easeOut);	
+					.ease (Quad.easeOut).onComplete(function() clickable = true);	
 		}
 		
 		opened = true;
@@ -117,7 +119,8 @@ class RadialMenu extends Sprite
 		for (i in 0 ... N_OPTIONS)
 			Actuate.tween(icons[i], 0.3, { x : 0, y : 0 }, true)
 					.ease (Quad.easeOut);
-					
+				
+		clickable = false;	
 		opened = false;
 	}
 	
