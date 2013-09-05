@@ -40,6 +40,22 @@ class SoundManager
 		return get().__playSound(name);
 	}
 
+	public static function setMuted(newValue : Bool = true) : Void
+	{
+		return get().__setMuted(newValue);
+	}
+
+	// ---------------------------------------------------------------------------
+	// MUTE
+	// ---------------------------------------------------------------------------
+
+	private var muted : Bool = false;
+
+	private function __setMuted(newValue : Bool) : Void
+	{
+		muted = newValue;
+	}
+
 	// ---------------------------------------------------------------------------
 	// SOUNDS
 	// ---------------------------------------------------------------------------
@@ -48,7 +64,7 @@ class SoundManager
 
 	private var channel : SoundChannel;
 
-	private function __loadSound(name : String, _max_instances : Int = 3) : Void
+	private function __loadSound(name : String, _max_instances : Int) : Void
 	{
 		sounds.set(name, { 
 			sound : Assets.getSound ("assets/" + name + ".wav"), 
@@ -59,6 +75,9 @@ class SoundManager
 
 	private function __playSound(name : String) : Bool
 	{
+		if(muted)
+			return false;
+
 		var value = sounds.get(name);
 
 		if(value.instances <= value.max_instances)
