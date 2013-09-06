@@ -26,7 +26,7 @@ class GameObject extends Sprite
 	// POSITION
 	// ---------------------------------------------------------------------------
 
-	public function setPosition(newPosition : { x : Float, y : Float}) : Void
+	public function setPosition(newPosition : { x : Float, y : Float} ) : Void
 	{
 		x = newPosition.x;
 		y = newPosition.y;

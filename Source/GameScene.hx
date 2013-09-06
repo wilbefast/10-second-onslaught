@@ -22,7 +22,7 @@ class GameScene extends Scene
 	private function init()
 	{
 		radialmenu_data = new Array<BitmapData>();
-		for (i in 0 ... 3)
+		for (i in 0 ... 2)
 			radialmenu_data[i] = Assets.getBitmapData("assets/radial_menu_" + i + ".png");
 
 		initialised = true;
@@ -55,6 +55,8 @@ class GameScene extends Scene
 		map = new MapUI(this);
 		timeline = new TimelineUI(this);
 		top = new DeployUI(this);
+
+		pickedUnitOffset = { x : 0, y : 0};
 	}
 
 	public function getSession()
@@ -158,7 +160,9 @@ class GameScene extends Scene
 	private function moveOverMap(event : MouseEvent) : Void
 	{
 		if(pickedUnit != null)
-			pickedUnit.setPosition(GameObjectManager.getWorldPosition(event.stageX, event.stageY));
+			pickedUnit.setPosition(GameObjectManager.getWorldPosition(
+				event.stageX + pickedUnitOffset.x, 
+				event.stageY + pickedUnitOffset.y));
 	}
 
 	private function releaseOnMap(event : MouseEvent) : Void
@@ -210,16 +214,16 @@ class GameScene extends Scene
 	// ---------------------------------------------------------------------------
 
 	private var pickedUnit : UnitPlacement;
+	private var pickedUnitOffset : { x : Float, y : Float};
 
 	private function mouseDownOnPlacement(event : MouseEvent) : Void
 	{
 		pickedUnit = cast(event.target, UnitPlacement);
+
+		var viewPos = GameObjectManager.getViewPosition(pickedUnit.x, pickedUnit.y);
+		pickedUnitOffset = { x : viewPos.x - event.stageX, y : viewPos.y -event.stageY };
+
 		event.stopPropagation();
-	}
-
-	private function mouseUpOnPlacement(event : MouseEvent) : Void
-	{
-
 	}
 	
 	// ---------------------------------------------------------------------------

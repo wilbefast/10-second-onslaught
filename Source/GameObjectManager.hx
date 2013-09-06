@@ -78,6 +78,11 @@ class GameObjectManager extends Sprite
 		return get().__getWorldPosition(_x, _y);
 	}
 
+	public static function getViewPosition(_x : Float, _y : Float) : { x : Float, y : Float }
+	{
+		return get().__getViewPosition(_x, _y);
+	}
+
 	// ---------------------------------------------------------------------------
 	// OBJECT LIST
 	// ---------------------------------------------------------------------------
@@ -218,5 +223,10 @@ class GameObjectManager extends Sprite
 	private function __getWorldPosition(_x : Float, _y : Float) : { x : Float, y : Float }
 	{
 		return { x : (_x - x), y : (_y - y) };
+	}
+
+	private function __getViewPosition(_x : Float, _y : Float) : { x : Float, y : Float }
+	{
+		return { x : (_x + x), y : (_y + y) };
 	}
 }
