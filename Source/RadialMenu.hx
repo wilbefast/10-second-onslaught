@@ -12,24 +12,11 @@ import motion.easing.Quad;
 class RadialMenu extends Sprite
 {
 	// ---------------------------------------------------------------------------
-	// ASSET LOADING
+	// CONSTANTS
 	// ---------------------------------------------------------------------------
 
 	private static inline var N_OPTIONS = 2;
 	public static inline var RADIUS : Float = 48;
-
-	private static var data : Array<BitmapData>; 
-
-	private static var initialised : Bool = false;
-
-	private function init()
-	{
-		data = new Array<BitmapData>();
-		for (i in 0 ... N_OPTIONS)
-			data[i] = Assets.getBitmapData("assets/radial_menu_" + i + ".png");
-
-		initialised = true;
-	}
 
 	// ---------------------------------------------------------------------------
 	// CONSTRUCTOR
@@ -39,20 +26,17 @@ class RadialMenu extends Sprite
 
 	private var onSelectOption : Int->Void;
 
-	public function new(_onSelectOption : Int->Void)
+	public function new(_onSelectOption : Int->Void, _bitmapdata : Array<BitmapData>)
 	{
 		super();
-
-		if(!initialised)
-			init();
-
+		
 		onSelectOption = _onSelectOption;
 
 		icons = new Array<Sprite>();
 		for (i in 0 ... N_OPTIONS)
 		{
 			var icon = new Sprite();
-			var icon_bitmap = new Bitmap(data[i]);
+			var icon_bitmap = new Bitmap(_bitmapdata[i]);
 			icon_bitmap.scaleX = icon_bitmap.scaleY = 1.5;
 			icon_bitmap.x = -icon_bitmap.width / 2;
 			icon_bitmap.y = -icon_bitmap.height / 2;
@@ -64,7 +48,6 @@ class RadialMenu extends Sprite
 				{
 					onSelectOption(i);
 					close();
-					trace("event stolen by radil menu");
 					event.stopPropagation();
 				}
 				else

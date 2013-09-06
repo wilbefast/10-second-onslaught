@@ -29,12 +29,26 @@ class Session extends Sprite
 
 	private var unitsToDeploy : Array<List<UnitPlacement>>;
 
-	public function placeUnit(_viewX : Float, _viewY : Float, t : UnitType) : Void
+	public function tryPlaceUnit(_viewX : Float, _viewY : Float, t : UnitType) : UnitPlacement
 	{
+		if(money >= t.getPrice())
+			return __placeUnit(_viewX, _viewY, t);
+		else
+			return null;
+	}
+
+	private function __placeUnit(_viewX : Float, _viewY : Float, t : UnitType) : UnitPlacement
+	{
+		// withdraw cost
+		withdrawMoney(t.getPrice());
+
+		// place unit
 		var world_position = GameObjectManager.getWorldPosition(_viewX, _viewY);
-		
 		var placement = new UnitPlacement(t, world_position.x, world_position.y, timelineSelection);
 		unitsToDeploy[timelineSelection].add(placement);
+
+		// return unit
+		return placement;
 	}
 
 	private function __instantiateUnits(placements : List<UnitPlacement>) : Void

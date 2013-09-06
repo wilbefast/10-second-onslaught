@@ -17,9 +17,15 @@ class GameScene extends Scene
 
 	private static var initialised : Bool = false ;
 
-	private static function init()
+	private static var radialmenu_data : Array<BitmapData>; 
+
+	private function init()
 	{
-		initialised = true ;
+		radialmenu_data = new Array<BitmapData>();
+		for (i in 0 ... 3)
+			radialmenu_data[i] = Assets.getBitmapData("assets/radial_menu_" + i + ".png");
+
+		initialised = true;
 	}
 
 	// ---------------------------------------------------------------------------
@@ -44,7 +50,7 @@ class GameScene extends Scene
 		
 		// Initialise attributes
 		session = new Session(_time, _money);
-		radialMenu = new RadialMenu(clickOnRadialMenu);
+		radialMenu = new RadialMenu(clickOnRadialMenu, radialmenu_data);
 
 		map = new MapUI(this);
 		timeline = new TimelineUI(this);
@@ -73,6 +79,7 @@ class GameScene extends Scene
 		// map
 		addChild(map);
 		map.addEventListener(MouseEvent.CLICK, clickOnMap);
+		map.addEventListener(MouseEvent.MOUSE_UP, releaseOnMap);
 
 		// game objects
 		map.addChild(GameObjectManager.get());
@@ -86,15 +93,6 @@ class GameScene extends Scene
 		
 		// top
 		addChild(top);
-
-		// register click events on units
-		// ---------------------------------------------------------------------------
-		GameObjectManager.get().addEventListener(MouseEvent.CLICK, 
-			function(e : Event) 
-			{
-				e.stopPropagation();
-			}
-		);
 
 		// start !
 		// ---------------------------------------------------------------------------
@@ -139,10 +137,10 @@ class GameScene extends Scene
 	}
 
 	// ---------------------------------------------------------------------------
-	// CALLBACKS -- CUSTOM
+	// CALLBACKS -- INTERFACE
 	// ---------------------------------------------------------------------------
 
-	public function clickOnMap(event : MouseEvent) : Void
+	private function clickOnMap(event : MouseEvent) : Void
 	{
 		switch(phase)
 		{
@@ -156,41 +154,66 @@ class GameScene extends Scene
 		}
 	}
 
-	public function clickOnTimeline(event : MouseEvent) : Void
+	private function releaseOnMap(event : MouseEvent) : Void
+	{
+		if(pickedUnit != null)
+		{		
+			var worldPos = GameObjectManager.getWorldPosition(event.stageX, event.stageY);
+			pickedUnit.x = worldPos.x;
+			pickedUnit.y = worldPos.y;
+			pickedUnit = null;
+		}
+	}
+
+	private function clickOnTimeline(event : MouseEvent) : Void
 	{
 		radialMenu.close();
 		timeline.onMouseClick(event);
 	}
 
-	public function clickOnRadialMenu(option : Int) : Void
+	private function clickOnRadialMenu(option : Int) : Void
 	{
+		// parse unit type
+		var type : UnitType = null;
 		switch(option)
 		{
-			case 0: 
-				if (session.getMoney() > UnitType.marine.getPrice())
-				{
-					session.placeUnit(radialMenu.x, radialMenu.y, UnitType.nuke);
-					buyMarine();
-				}
-				
-			case 1:
-				if (session.getMoney() > UnitType.nuke.getPrice())
-				{
-					session.placeUnit(radialMenu.x, radialMenu.y, UnitType.marine);
-					buyNuke();
-				}
+			case 0: type = UnitType.nuke;
+			case 1: type = UnitType.marine;
 		}
+
+		// attempt to buy the unit
+		var placement : UnitPlacement = session.tryPlaceUnit(radialMenu.x, radialMenu.y, type);
+
+		// success ? 
+		if(placement != null)
+		{
+			placement.addEventListener(MouseEvent.MOUSE_DOWN, mouseDownOnPlacement);
+		}
+		// not enough minerals !
+		else
+		{
+
+		}
+
+		// in any case close the menu
 		radialMenu.close();
 	}
-	
-	public function buyMarine()
+
+	// ---------------------------------------------------------------------------
+	// CALLBACKS -- UNIT PLACEMENTS
+	// ---------------------------------------------------------------------------
+
+	private var pickedUnit : UnitPlacement;
+
+	private function mouseDownOnPlacement(event : MouseEvent) : Void
 	{
-		session.withdrawMoney(UnitType.marine.getPrice());
+		pickedUnit = cast(event.target, UnitPlacement);
+		event.stopPropagation();
 	}
 
-	public function buyNuke()
+	private function mouseUpOnPlacement(event : MouseEvent) : Void
 	{
-		session.withdrawMoney(UnitType.nuke.getPrice());
+
 	}
 	
 	// ---------------------------------------------------------------------------
