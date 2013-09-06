@@ -78,7 +78,8 @@ class GameScene extends Scene
 
 		// map
 		addChild(map);
-		map.addEventListener(MouseEvent.CLICK, clickOnMap);
+		map.addEventListener(MouseEvent.MOUSE_DOWN, pressOnMap);
+		map.addEventListener(MouseEvent.MOUSE_MOVE, moveOverMap);
 		map.addEventListener(MouseEvent.MOUSE_UP, releaseOnMap);
 
 		// game objects
@@ -137,10 +138,10 @@ class GameScene extends Scene
 	}
 
 	// ---------------------------------------------------------------------------
-	// CALLBACKS -- INTERFACE
+	// CALLBACKS -- MAP AREA
 	// ---------------------------------------------------------------------------
 
-	private function clickOnMap(event : MouseEvent) : Void
+	private function pressOnMap(event : MouseEvent) : Void
 	{
 		switch(phase)
 		{
@@ -154,16 +155,21 @@ class GameScene extends Scene
 		}
 	}
 
+	private function moveOverMap(event : MouseEvent) : Void
+	{
+		if(pickedUnit != null)
+			pickedUnit.setPosition(GameObjectManager.getWorldPosition(event.stageX, event.stageY));
+	}
+
 	private function releaseOnMap(event : MouseEvent) : Void
 	{
 		if(pickedUnit != null)
-		{		
-			var worldPos = GameObjectManager.getWorldPosition(event.stageX, event.stageY);
-			pickedUnit.x = worldPos.x;
-			pickedUnit.y = worldPos.y;
 			pickedUnit = null;
-		}
 	}
+
+	// ---------------------------------------------------------------------------
+	// CALLBACKS -- INTERFACE
+	// ---------------------------------------------------------------------------
 
 	private function clickOnTimeline(event : MouseEvent) : Void
 	{
