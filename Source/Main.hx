@@ -11,6 +11,10 @@ import flash.media.SoundChannel;
 
 import units.UnitType;
 
+import scenes.TitleScene;
+import scenes.GameScene;
+import scenes.VictoryScene;
+
 import hacksaw.Scene;
 import hacksaw.SceneManager;
 import hacksaw.SoundManager;

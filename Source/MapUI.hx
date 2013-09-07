@@ -7,6 +7,8 @@ import flash.events.MouseEvent;
 
 import hacksaw.GameObjectManager;
 
+import scenes.GameScene;
+
 class MapUI extends Sprite 
 {
 	private static var bitmapData : BitmapData;

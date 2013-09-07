@@ -1,11 +1,14 @@
+import openfl.Assets;
+
 import flash.display.Sprite;
 import flash.display.Bitmap;
 import flash.display.BitmapData;
 import flash.events.MouseEvent;
-import openfl.Assets;
 
 import motion.Actuate;
 import motion.easing.Quad;
+
+import scenes.GameScene;
 
 class TimelineUI extends Sprite 
 {

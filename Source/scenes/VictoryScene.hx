@@ -1,3 +1,5 @@
+package scenes;
+
 import openfl.Assets;
 
 import flash.events.MouseEvent;

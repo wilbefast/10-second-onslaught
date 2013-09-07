@@ -1,8 +1,10 @@
+import openfl.Assets;
+
 import flash.display.Sprite;
 import flash.display.Bitmap;
 import flash.display.BitmapData;
-import openfl.Assets;
-import haxe.ds.StringMap;
+
+import scenes.GameScene;
 
 class DeployUI extends Sprite 
 {
