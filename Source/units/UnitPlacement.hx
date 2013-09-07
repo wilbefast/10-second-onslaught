@@ -63,8 +63,10 @@ class UnitPlacement extends GameObject
 		placeholder_bitmap.y = -placeholder_bitmap.height / 2;
 		addChild(placeholder_bitmap);
 		
-		// timestamp text
-		var textTimeToAppear = new DefaultTextField("" + timeToAppear);
+		// timestamp text/icon
+		graphics.beginFill(0xFFFFFF);
+		graphics.drawCircle(20, 20, 14);
+		var textTimeToAppear = new DefaultTextField("" + timeToAppear, 10, 10);
 		textTimeToAppear.mouseEnabled = false;
 		addChild(textTimeToAppear);	
 		

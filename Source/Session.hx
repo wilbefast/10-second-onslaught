@@ -78,6 +78,9 @@ class Session
 		// withdraw cost
 		money -= type.price;
 
+		// corresponding pop up text
+		new PopText(_x-24, _y-32, '-' + type.price);
+
 		// place unit
 		var placement = new UnitPlacement(type, _x, _y, time);
 		unitsToDeploy[time].add(placement);
