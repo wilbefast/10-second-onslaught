@@ -1,3 +1,5 @@
+package units;
+
 import flash.display.BitmapData;
 import haxe.ds.StringMap;
 import openfl.Assets;

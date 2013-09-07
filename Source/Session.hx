@@ -1,5 +1,8 @@
 import flash.display.Sprite;
 
+import units.UnitType;
+import units.UnitPlacement;
+
 class Session extends Sprite
 {
 	private var money : Int;

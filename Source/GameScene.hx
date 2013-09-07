@@ -9,6 +9,11 @@ import flash.events.Event;
 import motion.Actuate;
 import motion.easing.Quad;
 
+import units.UnitType;
+import units.UnitPlacement;
+import units.Zergling;
+import units.Colony;
+
 class GameScene extends Scene
 {
 	// ---------------------------------------------------------------------------

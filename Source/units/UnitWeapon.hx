@@ -1,3 +1,5 @@
+package units;
+
 class UnitWeapon
 {
 	public var range : Float;
