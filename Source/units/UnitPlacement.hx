@@ -32,6 +32,13 @@ class UnitPlacement extends GameObject
 {
 
 	// ---------------------------------------------------------------------------
+	// CALLBACKS
+	// ---------------------------------------------------------------------------
+
+	public static var onMouseDown : MouseEvent->Void;
+	public static var onMouseUp : MouseEvent->Void;
+
+	// ---------------------------------------------------------------------------
 	// CONSTRUCTOR
 	// ---------------------------------------------------------------------------
 	
@@ -45,6 +52,10 @@ class UnitPlacement extends GameObject
 		// initialise attributes
 		unitType = _unitType;
 		timeToAppear = _timeToAppear;
+
+		// register events
+		addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+		addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 		
 		// bitmap image
 		var placeholder_bitmap = new Bitmap(unitType.placeholder);

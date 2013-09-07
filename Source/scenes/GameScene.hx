@@ -86,6 +86,10 @@ class GameScene extends Scene
 		timeline = new TimelineUI(this);
 		top = new DeployUI(this);
 
+		// set unit placement mouse events to access THIS instance's methods
+		UnitPlacement.onMouseDown = mouseDownOnPlacement;
+		UnitPlacement.onMouseUp = mouseUpOnPlacement;
+
 		// build radial menus ...
 		// ... buy menu
 		buyMenu = new RadialMenu();
@@ -235,21 +239,14 @@ class GameScene extends Scene
 		// success ? 
 		if(placement != null)
 		{
-			// register event from moving or removing previously placed units
-			placement.addEventListener(MouseEvent.MOUSE_DOWN, mouseDownOnPlacement);
-			placement.addEventListener(MouseEvent.MOUSE_UP, mouseUpOnPlacement);
-
-			// keep menu open only if transaction fails
+			// close the menu if the transaction succeeds
 			buyMenu.close();
 		}
 		// not enough minerals !
 		else
 		{
-
+			// keep menu open if transaction fails
 		}
-
-		// in any case close the menu
-		
 	}
 
 	private function clickSellUnit() : Void
@@ -270,7 +267,7 @@ class GameScene extends Scene
 		// grab the unit
 		pickedUnit = cast(event.target, UnitPlacement);
 		var viewPos = GameObjectManager.getViewPosition(pickedUnit.x, pickedUnit.y);
-		pickedUnitOffset = { x : viewPos.x - event.stageX, y : viewPos.y -event.stageY };
+		pickedUnitOffset = {x : 0, y : 0 } //{ x : viewPos.x - event.stageX, y : viewPos.y -event.stageY };
 
 		// close any open menus
 		buyMenu.close();
