@@ -10,6 +10,8 @@ import flash.events.Event;
 import motion.Actuate;
 import motion.easing.Quad;
 
+import hacksaw.GameObject;
+
 class UnitPlacement extends GameObject
 {
 

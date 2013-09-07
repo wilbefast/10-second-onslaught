@@ -1,5 +1,7 @@
 package units;
 
+import hacksaw.Time;
+
 class UnitWeapon
 {
 	public var range : Float;

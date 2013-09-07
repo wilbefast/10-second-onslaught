@@ -14,6 +14,10 @@ import units.UnitPlacement;
 import units.Zergling;
 import units.Colony;
 
+import hacksaw.GameObject;
+import hacksaw.GameObjectManager;
+import hacksaw.Time;
+
 class GameScene extends Scene
 {
 	// ---------------------------------------------------------------------------

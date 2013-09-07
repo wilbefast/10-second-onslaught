@@ -4,6 +4,12 @@ import openfl.Assets;
 import flash.display.Bitmap;
 import flash.display.BitmapData;
 
+import hacksaw.GameObject;
+import hacksaw.GameObjectManager;
+import hacksaw.V2;
+import hacksaw.Time;
+import hacksaw.Useful;
+
 class Unit extends GameObject 
 {
 	// ---------------------------------------------------------------------------

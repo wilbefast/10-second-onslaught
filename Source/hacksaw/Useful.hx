@@ -1,3 +1,5 @@
+package hacksaw;
+
 class Useful
 {
 	public static function sign(x : Float) : Int

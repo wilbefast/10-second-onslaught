@@ -1,16 +1,23 @@
 package units;
 
 import openfl.Assets;
+
 import flash.display.Bitmap;
 import flash.geom.Rectangle;
 import flash.display.BitmapData;
+import flash.media.Sound;
 
 import spritesheet.AnimatedSprite;
 import spritesheet.data.BehaviorData;
 import spritesheet.importers.BitmapImporter;
 import spritesheet.Spritesheet;
 
-import flash.media.Sound;
+import hacksaw.GameObject;
+import hacksaw.Time;
+import hacksaw.Useful;
+import hacksaw.SoundManager;
+import hacksaw.SpecialEffect;
+
 
 class NukeExplosion extends GameObject
 {

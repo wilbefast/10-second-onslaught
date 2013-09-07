@@ -1,3 +1,5 @@
+package hacksaw;
+
 import spritesheet.AnimatedSprite;
 import spritesheet.data.BehaviorData;
 import spritesheet.importers.BitmapImporter;

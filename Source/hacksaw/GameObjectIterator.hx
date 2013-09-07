@@ -1,3 +1,5 @@
+package hacksaw;
+
 class GameObjectIterator
 {
   private var iterator: Iterator<Dynamic>;

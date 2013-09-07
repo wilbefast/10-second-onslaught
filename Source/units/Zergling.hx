@@ -1,15 +1,22 @@
 package units;
 
 import openfl.Assets;
+
 import flash.display.Bitmap;
 import flash.display.BitmapData;
+import flash.media.Sound;
 
 import spritesheet.AnimatedSprite;
 import spritesheet.data.BehaviorData;
 import spritesheet.importers.BitmapImporter;
 import spritesheet.Spritesheet;
 
-import flash.media.Sound;
+import hacksaw.GameObject;
+import hacksaw.SoundManager;
+import hacksaw.SpecialEffect;
+import hacksaw.Time;
+import hacksaw.V2;
+
 
 class ZerglingClaws extends UnitWeapon
 {

@@ -1,3 +1,5 @@
+package hacksaw;
+
 import flash.display.Sprite;
 
 class GameObject extends Sprite 

@@ -3,6 +3,8 @@ import flash.display.Sprite;
 import units.UnitType;
 import units.UnitPlacement;
 
+import hacksaw.GameObjectManager;
+
 class Session extends Sprite
 {
 	private var money : Int;
