@@ -11,20 +11,6 @@ import motion.easing.Quad;
 class UnitPlacement extends GameObject
 {
 	// ---------------------------------------------------------------------------
-	// ASSET LOADING
-	// ---------------------------------------------------------------------------
-
-	private static var cancel_data : BitmapData;
-
-	private static var initialised : Bool = false;
-	private static function init()
-	{
-		cancel_data = Assets.getBitmapData("assets/icon_cancel.png");
-
-		initialised = true;
-	}
-
-	// ---------------------------------------------------------------------------
 	// CONSTRUCTOR
 	// ---------------------------------------------------------------------------
 	
@@ -36,10 +22,6 @@ class UnitPlacement extends GameObject
 	public function new(_unitType : UnitType, px : Float, py : Float, _timeToAppear : Int) 
 	{
 		super(px, py);
-
-		// asset loading
-		if(!initialised)
-			init();
 
 		// initialise attributes
 		unitType = _unitType;
@@ -57,13 +39,11 @@ class UnitPlacement extends GameObject
 		addChild(textTimeToAppear);	
 
 		// cancel button
-		cancel = new Bitmap(cancel_data);
+		cancel = new Bitmap(unitType.icon_cancel);
 		cancel.x = -cancel.width/2;
 		cancel.y = -cancel.height/2;
 		cancel.alpha = 0;
 		addChild(cancel);
-		addEventListener(MouseEvent.CLICK, onMouseClick);
-		addEventListener(MouseEvent.MOUSE_OUT, onMouseLeave);
 		
 		// hitbox
 		graphics.beginFill(0xFFFFFF, 0);
@@ -74,25 +54,25 @@ class UnitPlacement extends GameObject
 	// CANCEL
 	// ---------------------------------------------------------------------------
 
-	private var firstClick : Bool = true;
+	private var previousDestroyRequest : Bool = false;
 
-	private function onMouseClick(event : MouseEvent)
+	public function requestDestroy()
 	{
-		if(firstClick)
-		{		
-			firstClick = false;
-			Actuate.tween(cancel, 0.3, { alpha : 1 }, true)
-						.ease (Quad.easeOut);
-		}
-		else
+		if(previousDestroyRequest)
 			Actuate.tween(this, 0.3, { alpha : 0 }, true)
 					.ease (Quad.easeOut)
 					.onComplete(function() purge = true);
+		else
+		{		
+			previousDestroyRequest = true;
+			Actuate.tween(cancel, 0.3, { alpha : 1 }, true)
+						.ease (Quad.easeOut);
+		}
 	}
 
-	private function onMouseLeave(event : MouseEvent)
+	public function cancelDestroy()
 	{
-		firstClick = true;
+		previousDestroyRequest = false;
 		Actuate.tween(cancel, 0.3, { alpha : 0 }, true)
 					.ease (Quad.easeOut);
 	}

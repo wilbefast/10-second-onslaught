@@ -44,6 +44,7 @@ class Colony extends Unit
 		immobile = true;
 
 		animated = new AnimatedSprite(sheet, true);
+		animated.mouseEnabled = false;
 		animated.showBehavior("sparkle");
 		animated.x = -animated.width/2;
 		animated.y = -animated.height*0.7;

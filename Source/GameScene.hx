@@ -67,7 +67,6 @@ class GameScene extends Scene
 		addChild(map);
 		map.addEventListener(MouseEvent.MOUSE_DOWN, pressOnMap);
 		map.addEventListener(MouseEvent.MOUSE_MOVE, moveOverMap);
-		map.addEventListener(MouseEvent.MOUSE_UP, releaseOnMap);
 
 		// game objects
 		map.addChild(GameObjectManager.get());
@@ -119,10 +118,6 @@ class GameScene extends Scene
 		map.update();
 		top.update();
 	}
-	
-	public override function onMouseClick(event : MouseEvent) : Void
-	{
-	}
 
 	// ---------------------------------------------------------------------------
 	// CALLBACKS -- MAP AREA
@@ -133,27 +128,28 @@ class GameScene extends Scene
 		switch(phase)
 		{
 			case PHASE_DEPLOY:
+
+				// open/close radial menu
 				if(!radialMenu.isOpened())
 				{
 					radialMenu.x = event.stageX;
 					radialMenu.y = event.stageY;
 				}
 				radialMenu.toggle();
+
+				// close cancel of unit placements
 		}
 	}
 
 	private function moveOverMap(event : MouseEvent) : Void
 	{
 		if(pickedUnit != null)
+		{
+			pickedUnitWasMoved = true;
 			pickedUnit.setPosition(GameObjectManager.getWorldPosition(
 				event.stageX + pickedUnitOffset.x, 
 				event.stageY + pickedUnitOffset.y));
-	}
-
-	private function releaseOnMap(event : MouseEvent) : Void
-	{
-		if(pickedUnit != null)
-			pickedUnit = null;
+		}
 	}
 
 	// ---------------------------------------------------------------------------
@@ -177,6 +173,7 @@ class GameScene extends Scene
 		{
 			// register event from moving or removing previously placed units
 			placement.addEventListener(MouseEvent.MOUSE_DOWN, mouseDownOnPlacement);
+			placement.addEventListener(MouseEvent.MOUSE_UP, mouseUpOnPlacement);
 
 			// keep menu open only if transaction fails
 			radialMenu.close();
@@ -197,6 +194,7 @@ class GameScene extends Scene
 
 	private var pickedUnit : UnitPlacement;
 	private var pickedUnitOffset : { x : Float, y : Float};
+	private var pickedUnitWasMoved : Bool = false;
 
 	private function mouseDownOnPlacement(event : MouseEvent) : Void
 	{
@@ -204,6 +202,23 @@ class GameScene extends Scene
 
 		var viewPos = GameObjectManager.getViewPosition(pickedUnit.x, pickedUnit.y);
 		pickedUnitOffset = { x : viewPos.x - event.stageX, y : viewPos.y -event.stageY };
+		pickedUnitWasMoved = false;
+
+		event.stopPropagation();
+	}
+
+	private function mouseUpOnPlacement(event : MouseEvent) : Void
+	{
+		// NB - we might click in some random place, drag to a unit placement and 
+		// release on it !
+		if(pickedUnit != null)
+		{
+			// static click, ie. no drag ?
+			if(!pickedUnitWasMoved)
+				pickedUnit.requestDestroy();
+
+			pickedUnit = null;
+		}
 
 		event.stopPropagation();
 	}
