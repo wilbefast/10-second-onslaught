@@ -47,7 +47,7 @@ class RadialMenu extends Sprite
 	{
 		var icon = new Sprite();
 		var icon_bitmap = new Bitmap(icon_bitmapdata);
-		icon_bitmap.scaleX = icon_bitmap.scaleY = 1.5;
+		//icon_bitmap.scaleX = icon_bitmap.scaleY = 1.5;
 		icon_bitmap.x = -icon_bitmap.width / 2;
 		icon_bitmap.y = -icon_bitmap.height / 2;
 		icon.addChild(icon_bitmap);
