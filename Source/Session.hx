@@ -23,9 +23,7 @@ import hacksaw.GameObject;
 import hacksaw.GameObjectManager;
 import hacksaw.SceneManager;
 
-import haxe.CallStack;
-
-class Session extends Sprite
+class Session
 {
 	// ---------------------------------------------------------------------------
 	// CONSTANTS
@@ -40,15 +38,14 @@ class Session extends Sprite
 	// ---------------------------------------------------------------------------
 
 	private var money : Int;
-	private var nbReplay : Int;
+	private var replayNumber : Int;
 
 	public var timelineSelection : Int = 0 ;
 	
 	public function new() 
 	{
-		super();
 		money = START_MONEY;
-		nbReplay = 0;
+		replayNumber = -1;
 
 		// init array for storing units to deploy
 		unitsToDeploy = new Array<List<UnitPlacement>>();
@@ -65,26 +62,34 @@ class Session extends Sprite
 
 	private var unitsToDeploy : Array<List<UnitPlacement>>;
 
-	public function tryPlaceUnit(_viewX : Float, _viewY : Float, t : UnitType) : UnitPlacement
+	public function tryPlaceUnit(_viewX : Float, _viewY : Float, type : UnitType) : UnitPlacement
 	{
-		if(money >= t.price)
-			return __placeUnit(_viewX, _viewY, t);
+		if(money >= type.price)
+		{
+			var world_position = GameObjectManager.getWorldPosition(_viewX, _viewY);
+			return __placeUnit(world_position.x, world_position.y, type, timelineSelection);
+		}
 		else
 			return null;
 	}
 
-	private function __placeUnit(_viewX : Float, _viewY : Float, t : UnitType) : UnitPlacement
+	private function __placeUnit(_x : Float, _y : Float, type : UnitType, time : Int) : UnitPlacement
 	{
 		// withdraw cost
-		withdrawMoney(t.price);
+		money -= type.price;
 
 		// place unit
-		var world_position = GameObjectManager.getWorldPosition(_viewX, _viewY);
-		var placement = new UnitPlacement(t, world_position.x, world_position.y, timelineSelection);
-		unitsToDeploy[timelineSelection].add(placement);
+		var placement = new UnitPlacement(type, _x, _y, time);
+		unitsToDeploy[time].add(placement);
 
 		// return unit
 		return placement;
+	}
+
+	private function __clearPlacements() : Void
+	{
+		for(slot in unitsToDeploy)
+			slot.clear();
 	}
 
 	// ---------------------------------------------------------------------------
@@ -95,7 +100,7 @@ class Session extends Sprite
 
 	private function __instantiateUnits(placements : List<UnitPlacement>) : Void
 	{
-			for (place in placements)
+			for (place in placements) if (!place.purge)
 			{
 				place.instantiate();
 				instantiatedUnits.push({x : place.x, y : place.y, time : place.timeToAppear, type : place.unitType});
@@ -118,12 +123,10 @@ class Session extends Sprite
 
 	private function __revertInstantiations()
 	{
+		__clearPlacements();
 		for(inst in instantiatedUnits)
-		{
-			money -= inst.type.price;
-	 		unitsToDeploy[inst.time].add(new UnitPlacement(inst.type, inst.x, inst.y, inst.time));
-		}
-		 instantiatedUnits.clear();
+			__placeUnit(inst.x, inst.y, inst.type, inst.time);
+	 	instantiatedUnits.clear();
 	}
 
 	// ---------------------------------------------------------------------------
@@ -153,14 +156,10 @@ class Session extends Sprite
 	// PHASES
 	// ---------------------------------------------------------------------------
 
-	public function newDeployPhase()
+	public function newDeployPhase(nbSavedColonies : Int = 0)
 	{
 		// increment replays 
-		nbReplay++;
-
-		// count number of colonies
-		var nbSavedColonies = 
-			GameObjectManager.countMatching(function (o : GameObject) return Std.is(o, Colony));
+		replayNumber++;
 
 		// victory ?
 		if (nbSavedColonies >= 5) 
@@ -186,6 +185,6 @@ class Session extends Sprite
 
 	public function getNbReplay()
 	{
-		return nbReplay;
+		return replayNumber;
 	}
 }

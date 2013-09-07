@@ -146,7 +146,8 @@ class GameScene extends Scene
 		playDeployPhase();
 	}
 
-	// la fin du décompte pour la phase d'attaque. Pour la phase de deploy c'est dans le bouton ButtonDeployEnd
+	// La fin du décompte pour la phase d'attaque. 
+	// Pour la phase de deploy c'est dans le bouton ButtonDeployEnd
 	public override function onFrameEnter(event : Event) : Void
 	{
 		switch(phase)
@@ -155,7 +156,6 @@ class GameScene extends Scene
 				
 				// tick ticking away ...
 				time += Time.getDelta();
-				timeline.update(time);
 
 				// ... will eventually run out !
 				if (time > Session.DURATION)
@@ -166,6 +166,9 @@ class GameScene extends Scene
 				// only if not try to instantiate the next batch of units
 				else
 					session.instantiateUnits(Math.floor(time));
+
+				// in any case update the timeline
+				timeline.update(time);
 
 			case PHASE_DEPLOY:
 		}
@@ -351,11 +354,15 @@ class GameScene extends Scene
 		// phase is now attack phase
 		phase = PHASE_DEPLOY;
 
+		// count the number of colonies saved
+		var nbSavedColonies = 
+			GameObjectManager.countMatching(function (o : GameObject) return Std.is(o, Colony));
+
 		// clear all dudes
 		GameObjectManager.purgeAll();
 
 		// inform the session (generation original dude placements)
-		session.newDeployPhase();
+		session.newDeployPhase(nbSavedColonies);
 
 		// create colonies
 		spawnColonies();
@@ -392,8 +399,8 @@ class GameScene extends Scene
 
 	private function spawnUnits()
 	{
-		var spawn_width = 800; // TODO - get from stage.stageWidth
-		var spawn_height = 600; // TODO - get from stage.stageWidth
+		var spawn_width = 800;
+		var spawn_height = 600;
 
 		// create zerglings
 		for(i in 0 ... 30)

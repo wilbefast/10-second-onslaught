@@ -57,8 +57,8 @@ class MapUI extends Sprite
 		
 		// game objects
 		GameObjectManager.setCameraPosition(stage.stageWidth/2, stage.stageHeight/2);
-		GameObjectManager.setCameraZoom(stage.stageWidth / 1280, 
-																		stage.stageHeight / 800);
+		GameObjectManager.setCameraZoom(stage.stageWidth / 1600, 
+																		stage.stageHeight / 920);
 		
 	}
 	
