@@ -1,3 +1,5 @@
+package hacksaw;
+
 import flash.display.BitmapData;
 import flash.display.Bitmap;
 import openfl.Assets;
@@ -12,22 +14,18 @@ import motion.easing.Quad;
 class RadialMenu extends Sprite
 {
 	// ---------------------------------------------------------------------------
-	// CONSTANTS
-	// ---------------------------------------------------------------------------
-
-	public static inline var RADIUS : Float = 48;
-
-	// ---------------------------------------------------------------------------
 	// CONSTRUCTOR
 	// ---------------------------------------------------------------------------
 
 	private var icons : Array<Sprite>;
+	private var radius : Float;
 
-	public function new()
+	public function new(_radius : Float = 48)
 	{
 		super();
 		
 		icons = new Array<Sprite>();
+		radius = _radius;
 
 		alpha = 0;
 	}
@@ -89,8 +87,8 @@ class RadialMenu extends Sprite
 		for (i in 0 ... icons.length)
 		{
 			var radians = radians_per_options*(i /*+ 0.5*/);
-			var ox = Math.cos(radians)*RADIUS;
-			var oy = Math.sin(radians)*RADIUS;
+			var ox = Math.cos(radians)*radius;
+			var oy = Math.sin(radians)*radius;
 			Actuate.tween(icons[i], 0.3, { x : ox, y : oy }, true)
 					.ease (Quad.easeOut).onComplete(function() setIconsMouseEnabled(true) );	
 		}
