@@ -15,7 +15,6 @@ class RadialMenu extends Sprite
 	// CONSTANTS
 	// ---------------------------------------------------------------------------
 
-	private static inline var N_OPTIONS = 2;
 	public static inline var RADIUS : Float = 48;
 
 	// ---------------------------------------------------------------------------
@@ -24,53 +23,49 @@ class RadialMenu extends Sprite
 
 	private var icons : Array<Sprite>;
 
-	private var onSelectOption : Int->Void;
-
-	public function new(_onSelectOption : Int->Void, _bitmapdata : Array<BitmapData>)
+	public function new()
 	{
 		super();
 		
-		onSelectOption = _onSelectOption;
-
 		icons = new Array<Sprite>();
-		for (i in 0 ... N_OPTIONS)
-		{
-			var icon = new Sprite();
-			var icon_bitmap = new Bitmap(_bitmapdata[i]);
-			icon_bitmap.scaleX = icon_bitmap.scaleY = 1.5;
-			icon_bitmap.x = -icon_bitmap.width / 2;
-			icon_bitmap.y = -icon_bitmap.height / 2;
-			icon.addChild(icon_bitmap);
-
-			icon.addEventListener(MouseEvent.CLICK, function(event) 
-			{
-				if(opened)
-				{
-					onSelectOption(i);
-					close();
-					event.stopPropagation();
-				}
-				else
-					open();
-		 	});
-
-			icons[i] = icon;
-			addChild(icon);
-		}
 
 		alpha = 0;
 	}
 
 
 	// ---------------------------------------------------------------------------
-	// ICONS
+	// OPTIONS
 	// ---------------------------------------------------------------------------
 
 	private function setIconsMouseEnabled(value : Bool) : Void
 	{
 		for (icon in icons)
 			icon.mouseEnabled = value;
-			
+	}
+
+	public function addOption(onSelected : Void->Void, icon_bitmapdata : BitmapData)
+	{
+		var icon = new Sprite();
+		var icon_bitmap = new Bitmap(icon_bitmapdata);
+		icon_bitmap.scaleX = icon_bitmap.scaleY = 1.5;
+		icon_bitmap.x = -icon_bitmap.width / 2;
+		icon_bitmap.y = -icon_bitmap.height / 2;
+		icon.addChild(icon_bitmap);
+
+		icon.addEventListener(MouseEvent.CLICK, function(event) 
+		{
+			if(opened)
+			{
+				onSelected();
+				close();
+				event.stopPropagation();
+			}
+			else
+				open();
+	 	});
+
+		icons.push(icon);
+		addChild(icon);
 	}
 
 
@@ -90,8 +85,8 @@ class RadialMenu extends Sprite
 		Actuate.tween(this, 0.3, { alpha : 1.0 }, true)
 					.ease (Quad.easeOut);
 
-		var radians_per_options = Math.PI*2/N_OPTIONS;
-		for (i in 0 ... N_OPTIONS)
+		var radians_per_options = Math.PI*2/icons.length;
+		for (i in 0 ... icons.length)
 		{
 			var radians = radians_per_options*(i /*+ 0.5*/);
 			var ox = Math.cos(radians)*RADIUS;
@@ -111,7 +106,7 @@ class RadialMenu extends Sprite
 		Actuate.tween(this, 0.3, { alpha : 0.0 }, true)
 					.ease (Quad.easeOut);
 
-		for (i in 0 ... N_OPTIONS)
+		for (i in 0 ... icons.length)
 			Actuate.tween(icons[i], 0.3, { x : 0, y : 0 }, true)
 					.ease (Quad.easeOut);
 				

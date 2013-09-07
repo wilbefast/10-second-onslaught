@@ -31,7 +31,7 @@ class Session extends Sprite
 
 	public function tryPlaceUnit(_viewX : Float, _viewY : Float, t : UnitType) : UnitPlacement
 	{
-		if(money >= t.getPrice())
+		if(money >= t.price)
 			return __placeUnit(_viewX, _viewY, t);
 		else
 			return null;
@@ -40,7 +40,7 @@ class Session extends Sprite
 	private function __placeUnit(_viewX : Float, _viewY : Float, t : UnitType) : UnitPlacement
 	{
 		// withdraw cost
-		withdrawMoney(t.getPrice());
+		withdrawMoney(t.price);
 
 		// place unit
 		var world_position = GameObjectManager.getWorldPosition(_viewX, _viewY);

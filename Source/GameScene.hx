@@ -12,23 +12,6 @@ import motion.easing.Quad;
 class GameScene extends Scene
 {
 	// ---------------------------------------------------------------------------
-	// ASSET LOADING
-	// ---------------------------------------------------------------------------
-
-	private static var initialised : Bool = false ;
-
-	private static var radialmenu_data : Array<BitmapData>; 
-
-	private function init()
-	{
-		radialmenu_data = new Array<BitmapData>();
-		for (i in 0 ... 2)
-			radialmenu_data[i] = Assets.getBitmapData("assets/radial_menu_" + i + ".png");
-
-		initialised = true;
-	}
-
-	// ---------------------------------------------------------------------------
 	// CONSTRUCTOR
 	// ---------------------------------------------------------------------------
 	
@@ -44,19 +27,21 @@ class GameScene extends Scene
 	public function new (_time : Int, _money : Int ) // NB - Int is NOT an object (reference) in Haxe !
 	{
 		super ();
-
-		if (!initialised) 
-			init();
 		
 		// Initialise attributes
 		session = new Session(_time, _money);
-		radialMenu = new RadialMenu(clickOnRadialMenu, radialmenu_data);
+		pickedUnitOffset = { x : 0, y : 0};
 
+		// build interface
 		map = new MapUI(this);
 		timeline = new TimelineUI(this);
 		top = new DeployUI(this);
 
-		pickedUnitOffset = { x : 0, y : 0};
+		// build radial menu
+		radialMenu = new RadialMenu();
+		radialMenu.addOption(function() clickBuyUnit(UnitType.marine), UnitType.marine.icon);
+		radialMenu.addOption(function() clickBuyUnit(UnitType.nuke), UnitType.nuke.icon);
+
 	}
 
 	public function getSession()
@@ -181,23 +166,20 @@ class GameScene extends Scene
 		timeline.onMouseClick(event);
 	}
 
-	private function clickOnRadialMenu(option : Int) : Void
+	private function clickBuyUnit(unitType : UnitType) : Void
 	{
-		// parse unit type
-		var type : UnitType = null;
-		switch(option)
-		{
-			case 0: type = UnitType.nuke;
-			case 1: type = UnitType.marine;
-		}
-
 		// attempt to buy the unit
-		var placement : UnitPlacement = session.tryPlaceUnit(radialMenu.x, radialMenu.y, type);
+		var placement : UnitPlacement 
+			= session.tryPlaceUnit(radialMenu.x, radialMenu.y, unitType);
 
 		// success ? 
 		if(placement != null)
 		{
+			// register event from moving or removing previously placed units
 			placement.addEventListener(MouseEvent.MOUSE_DOWN, mouseDownOnPlacement);
+
+			// keep menu open only if transaction fails
+			radialMenu.close();
 		}
 		// not enough minerals !
 		else
@@ -206,7 +188,7 @@ class GameScene extends Scene
 		}
 
 		// in any case close the menu
-		radialMenu.close();
+		
 	}
 
 	// ---------------------------------------------------------------------------

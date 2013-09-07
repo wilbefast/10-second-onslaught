@@ -18,7 +18,7 @@ class UnitPlacement extends GameObject
 		timeToAppear = ptime ;
 		
 		// bitmap image
-		var placeholder_bitmap = new Bitmap(unitType.getPlaceholder());
+		var placeholder_bitmap = new Bitmap(unitType.placeholder);
 		placeholder_bitmap.x = -placeholder_bitmap.width / 2;
 		placeholder_bitmap.y = -placeholder_bitmap.height / 2;
 		addChild(placeholder_bitmap);
