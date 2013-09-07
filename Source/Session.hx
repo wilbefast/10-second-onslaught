@@ -106,10 +106,19 @@ class Session extends Sprite
 		baseEarned = nbBase * 1000 ;
 	}
 	
-	public function withdrawMoney(cost : Int)
+	public function withdrawMoney(withdrawal : Int) : Int
 	{
-		money -= cost ;
+		withdrawal = Math.floor(Math.min(withdrawal, money));
+		money -= withdrawal;
+		return withdrawal;
 	} 
+
+	public function depositMoney(deposit : Int) : Int
+	{
+		deposit = Math.floor(Math.min(deposit, startingMoney-money));
+		money += deposit;
+		return deposit;
+	}
 	
 	public function getTimelineSelection()
 	{

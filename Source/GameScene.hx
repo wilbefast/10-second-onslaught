@@ -174,12 +174,15 @@ class GameScene extends Scene
 
 	private function moveOverMap(event : MouseEvent) : Void
 	{
+		// move picked unit
 		if(pickedUnit != null)
 		{
-			pickedUnitWasMoved = true;
 			pickedUnit.setPosition(GameObjectManager.getWorldPosition(
 				event.stageX + pickedUnitOffset.x, 
 				event.stageY + pickedUnitOffset.y));
+
+			// clear sell unit if moving the unit
+			sellUnit = null;
 		}
 	}
 
@@ -225,7 +228,8 @@ class GameScene extends Scene
 
 	private function clickSellUnit() : Void
 	{
-		sellPlacement.purge = true;
+		session.depositMoney(sellUnit.unitType.price);
+		sellUnit.purge = true;
 	}
 
 	// ---------------------------------------------------------------------------
@@ -234,7 +238,6 @@ class GameScene extends Scene
 
 	private var pickedUnit : UnitPlacement;
 	private var pickedUnitOffset : { x : Float, y : Float};
-	private var pickedUnitWasMoved : Bool = false;
 
 	private function mouseDownOnPlacement(event : MouseEvent) : Void
 	{
@@ -242,37 +245,35 @@ class GameScene extends Scene
 		pickedUnit = cast(event.target, UnitPlacement);
 		var viewPos = GameObjectManager.getViewPosition(pickedUnit.x, pickedUnit.y);
 		pickedUnitOffset = { x : viewPos.x - event.stageX, y : viewPos.y -event.stageY };
-		pickedUnitWasMoved = false;
 
 		// close any open menus
 		buyMenu.close();
-		sellMenu.close();
+		if(sellUnit != pickedUnit)
+			sellMenu.close();
+
+		// set unit to sell
+		sellUnit = pickedUnit;
 
 		// stop event from reaching underneath
 		event.stopPropagation();
 	}
 
-	private var sellPlacement : UnitPlacement = null;
+	private var sellUnit : UnitPlacement = null;
 
 	private function mouseUpOnPlacement(event : MouseEvent) : Void
 	{
-		// NB - we might click in some random place, drag to a unit placement and 
-		// release on it !
-		if(pickedUnit != null)
-		{
-			// static click, ie. no drag ?
-			if(!pickedUnitWasMoved)
-			{
-				if(!sellMenu.isOpened())
-				{
-					sellMenu.x = event.stageX;
-					sellMenu.y = event.stageY;
-					sellPlacement = pickedUnit;
-				}
-				sellMenu.toggle();
-			}
+		// clear picked unit on mouse-up
+		pickedUnit = null;
 
-			pickedUnit = null;
+		// was this a click (mouse, no move, up) ?
+		if(sellUnit != null)
+		{
+			if(!sellMenu.isOpened())
+			{
+				sellMenu.x = event.stageX;
+				sellMenu.y = event.stageY;
+			}
+			sellMenu.toggle();
 		}
 
 		// stop event from reaching underneath
