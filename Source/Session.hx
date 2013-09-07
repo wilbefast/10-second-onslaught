@@ -119,7 +119,10 @@ class Session extends Sprite
 	private function __revertInstantiations()
 	{
 		for(inst in instantiatedUnits)
-			 unitsToDeploy[inst.time].add(new UnitPlacement(inst.type, inst.x, inst.y, inst.time));
+		{
+			money -= inst.type.price;
+	 		unitsToDeploy[inst.time].add(new UnitPlacement(inst.type, inst.x, inst.y, inst.time));
+		}
 		 instantiatedUnits.clear();
 	}
 
