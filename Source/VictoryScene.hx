@@ -1,7 +1,11 @@
+import openfl.Assets;
+
 import flash.events.MouseEvent;
 import flash.display.BitmapData;
 import flash.display.Bitmap;
-import openfl.Assets;
+
+import hacksaw.Scene;
+import hacksaw.SceneManager;
 
 class VictoryScene extends Scene
 {

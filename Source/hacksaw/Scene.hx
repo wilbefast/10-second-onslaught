@@ -1,3 +1,5 @@
+package hacksaw;
+
 import flash.Lib;
 import flash.display.Sprite;
 import flash.events.Event;

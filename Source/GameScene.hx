@@ -1,7 +1,8 @@
+import openfl.Assets;
+
 import flash.events.MouseEvent;
 import flash.display.BitmapData;
 import flash.display.Bitmap;
-import openfl.Assets;
 import flash.display.Sprite;
 import flash.display.DisplayObject;
 import flash.events.Event;
@@ -17,6 +18,8 @@ import units.Colony;
 import hacksaw.GameObject;
 import hacksaw.GameObjectManager;
 import hacksaw.Time;
+import hacksaw.Scene;
+import hacksaw.SceneManager;
 
 class GameScene extends Scene
 {

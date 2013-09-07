@@ -11,8 +11,9 @@ import flash.media.SoundChannel;
 
 import units.UnitType;
 
+import hacksaw.Scene;
+import hacksaw.SceneManager;
 import hacksaw.SoundManager;
-
 
 
 class Main extends Sprite
