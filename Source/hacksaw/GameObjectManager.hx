@@ -60,6 +60,11 @@ class GameObjectManager extends Sprite
 		return get().__getMatching(condition);
 	}
 
+	public static function countMatching(condition : GameObject->Bool) : Int
+	{
+		return get().__countMatching(condition);
+	}
+
 	public static function getMaximum(evaluation : GameObject->Float, ?condition : GameObject->Bool) : GameObject
 	{
 		return get().__getMaximum(evaluation, condition);
@@ -136,6 +141,14 @@ class GameObjectManager extends Sprite
 	private function __getMatching(condition : GameObject->Bool) : GameObjectIterator
 	{
 		return new GameObjectIterator(new ChildIterator(this, onlyGameObjects(condition)));
+	}
+
+	private function __countMatching(condition : GameObject->Bool) : Int
+	{
+		var count = 0;
+		for(o in __getMatching(condition))
+			count++;
+		return count;
 	}
 
 	private function __getMaximum(evaluation : GameObject->Float, ?condition : GameObject->Bool) : GameObject

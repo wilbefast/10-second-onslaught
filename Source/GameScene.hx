@@ -131,13 +131,12 @@ class GameScene extends Scene
 				time += Time.getDelta();
 				if (time > session.getDuration())
 				{
-					 var nbBaseSurvived = 0 ;
-					 for (it in GameObjectManager.getMatching(function (o : GameObject) return Std.is(o, Colony)))
-					 {
-						 nbBaseSurvived ++ ;
-					 }
+					var nbBaseSurvived = 
+						GameObjectManager.countMatching(function (o : GameObject) return Std.is(o, Colony));
 
-					if (nbBaseSurvived == 5) SceneManager.setScene("Victory");
+					if (nbBaseSurvived >= 5) 
+						SceneManager.setScene("Victory");
+
 					session.baseSaved(nbBaseSurvived);
 					switchPhase();
 				}
