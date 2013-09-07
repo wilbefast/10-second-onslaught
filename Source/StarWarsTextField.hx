@@ -1,5 +1,8 @@
 import flash.text.TextField;
 
+import hacksaw.DefaultTextField;
+import hacksaw.DefaultFont;
+
 class StarWarsTextField extends TextField
 {
 
@@ -9,7 +12,7 @@ class StarWarsTextField extends TextField
 	{
 		super();
 
-		defaultTextFormat = DefaultFont.formatBigWhite;
+		defaultTextFormat = DefaultFont.bigWhite;
 
 		embedFonts = true;
 		selectable = false;

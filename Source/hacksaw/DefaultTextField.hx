@@ -1,3 +1,5 @@
+package hacksaw;
+
 import flash.text.TextField;
 
 class DefaultTextField extends TextField
@@ -9,7 +11,7 @@ class DefaultTextField extends TextField
 	{
 		super();
 
-		defaultTextFormat = DefaultFont.formatRed;
+		defaultTextFormat = DefaultFont.smallBlack;
 
 		embedFonts = true;
 		selectable = false;

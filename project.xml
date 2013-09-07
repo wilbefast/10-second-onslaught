@@ -5,6 +5,7 @@
 	<app main="Main" path="Export" file="TAW" />
 	
 	<source path="Source" />
+	<source path="Source/hacksaw" />
 	
 	<haxelib name="openfl" />
 	<haxelib name="actuate" />

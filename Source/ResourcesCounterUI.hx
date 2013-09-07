@@ -1,11 +1,14 @@
-import flash.net.drm.DRMManagerSession;
 import openfl.Assets;
+
 import flash.display.Bitmap;
 import flash.display.BitmapData;
 import flash.display.Sprite;
 import flash.text.Font;
 import flash.text.TextField;
 import flash.text.TextFormat;
+
+import hacksaw.DefaultTextField;
+import hacksaw.DefaultFont;
 
 
 class ResourcesCounterUI extends Sprite
@@ -48,7 +51,7 @@ class ResourcesCounterUI extends Sprite
 		session_attribut = session;
 		money = session_attribut.getMoney();
 		textField = new DefaultTextField("Cash : " + money);
-		textField.defaultTextFormat = DefaultFont.formatWhite ;
+		textField.defaultTextFormat = DefaultFont.smallWhite;
 		textField.x = bitmap.width * 0.1 ;
 		textField.y = bitmap.height / 6 ;
 		addChild(textField);

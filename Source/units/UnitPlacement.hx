@@ -11,6 +11,7 @@ import motion.Actuate;
 import motion.easing.Quad;
 
 import hacksaw.GameObject;
+import hacksaw.DefaultTextField;
 
 class UnitPlacement extends GameObject
 {

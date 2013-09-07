@@ -8,6 +8,8 @@ import flash.events.MouseEvent;
 import motion.Actuate;
 import motion.easing.Quad;
 
+import hacksaw.DefaultTextField;
+
 import scenes.GameScene;
 
 class TimelineUI extends Sprite 

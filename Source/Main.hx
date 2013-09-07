@@ -18,6 +18,7 @@ import scenes.VictoryScene;
 import hacksaw.Scene;
 import hacksaw.SceneManager;
 import hacksaw.SoundManager;
+import hacksaw.DefaultFont;
 
 
 class Main extends Sprite
