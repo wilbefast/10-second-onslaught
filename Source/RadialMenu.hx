@@ -81,7 +81,7 @@ class RadialMenu extends Sprite
 	{
 		if (opened)
 			return;
-		
+
 		Actuate.tween(this, 0.3, { alpha : 1.0 }, true)
 					.ease (Quad.easeOut);
 

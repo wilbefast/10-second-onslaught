@@ -12,13 +12,28 @@ import motion.easing.Quad;
 class GameScene extends Scene
 {
 	// ---------------------------------------------------------------------------
+	// LOAD ASSETS
+	// ---------------------------------------------------------------------------
+
+	private static var cancel_data : BitmapData;
+
+	private static var initialised : Bool = false;
+	private static function init() : Void
+	{
+		cancel_data = Assets.getBitmapData("assets/icon_cancel.png");
+
+		initialised = true;
+	}
+
+	// ---------------------------------------------------------------------------
 	// CONSTRUCTOR
 	// ---------------------------------------------------------------------------
 	
 	// Attributes
 	private var session : Session;
 	private var time : Float = 0;
-	private var radialMenu : RadialMenu;
+	private var buyMenu : RadialMenu;
+	private var sellMenu : RadialMenu;
 	
 	private var timeline : TimelineUI;
 	private var map : MapUI;
@@ -27,6 +42,10 @@ class GameScene extends Scene
 	public function new (_time : Int, _money : Int ) // NB - Int is NOT an object (reference) in Haxe !
 	{
 		super ();
+
+		// load assets
+		if(!initialised)
+			init();
 		
 		// Initialise attributes
 		session = new Session(_time, _money);
@@ -37,10 +56,14 @@ class GameScene extends Scene
 		timeline = new TimelineUI(this);
 		top = new DeployUI(this);
 
-		// build radial menu
-		radialMenu = new RadialMenu();
-		radialMenu.addOption(function() clickBuyUnit(UnitType.marine), UnitType.marine.icon);
-		radialMenu.addOption(function() clickBuyUnit(UnitType.nuke), UnitType.nuke.icon);
+		// build radial menus ...
+		// ... buy menu
+		buyMenu = new RadialMenu();
+		buyMenu.addOption(function() clickBuyUnit(UnitType.marine), UnitType.marine.icon);
+		buyMenu.addOption(function() clickBuyUnit(UnitType.nuke), UnitType.nuke.icon);
+		// ... sell menu
+		sellMenu = new RadialMenu();
+		sellMenu.addOption(function() clickSellUnit(), cancel_data);
 
 	}
 
@@ -66,6 +89,7 @@ class GameScene extends Scene
 		// map
 		addChild(map);
 		map.addEventListener(MouseEvent.MOUSE_DOWN, pressOnMap);
+		map.addEventListener(MouseEvent.MOUSE_UP, releaseOnMap);
 		map.addEventListener(MouseEvent.MOUSE_MOVE, moveOverMap);
 
 		// game objects
@@ -75,8 +99,9 @@ class GameScene extends Scene
 		addChild(timeline);
     timeline.addEventListener(MouseEvent.CLICK, clickOnTimeline);
 
-		// radial menu
-		addChild(radialMenu);
+		// radial menus
+		addChild(buyMenu);
+		addChild(sellMenu);
 		
 		// top
 		addChild(top);
@@ -125,20 +150,26 @@ class GameScene extends Scene
 
 	private function pressOnMap(event : MouseEvent) : Void
 	{
-		switch(phase)
+		if(phase != PHASE_DEPLOY)
+			return;
+
+		// open/close buy menu
+		if(!buyMenu.isOpened())
 		{
-			case PHASE_DEPLOY:
-
-				// open/close radial menu
-				if(!radialMenu.isOpened())
-				{
-					radialMenu.x = event.stageX;
-					radialMenu.y = event.stageY;
-				}
-				radialMenu.toggle();
-
-				// close cancel of unit placements
+			buyMenu.x = event.stageX;
+			buyMenu.y = event.stageY;
+			buyMenu.open();
 		}
+		else
+			buyMenu.close();
+
+		// close sell menu
+		sellMenu.close();
+	}
+
+	private function releaseOnMap(event : MouseEvent) : Void
+	{
+
 	}
 
 	private function moveOverMap(event : MouseEvent) : Void
@@ -158,7 +189,11 @@ class GameScene extends Scene
 
 	private function clickOnTimeline(event : MouseEvent) : Void
 	{
-		radialMenu.close();
+		// close any open menus
+		buyMenu.close();
+		sellMenu.close();
+
+		// delegate event
 		timeline.onMouseClick(event);
 	}
 
@@ -166,7 +201,7 @@ class GameScene extends Scene
 	{
 		// attempt to buy the unit
 		var placement : UnitPlacement 
-			= session.tryPlaceUnit(radialMenu.x, radialMenu.y, unitType);
+			= session.tryPlaceUnit(buyMenu.x, buyMenu.y, unitType);
 
 		// success ? 
 		if(placement != null)
@@ -176,7 +211,7 @@ class GameScene extends Scene
 			placement.addEventListener(MouseEvent.MOUSE_UP, mouseUpOnPlacement);
 
 			// keep menu open only if transaction fails
-			radialMenu.close();
+			buyMenu.close();
 		}
 		// not enough minerals !
 		else
@@ -186,6 +221,11 @@ class GameScene extends Scene
 
 		// in any case close the menu
 		
+	}
+
+	private function clickSellUnit() : Void
+	{
+		sellPlacement.purge = true;
 	}
 
 	// ---------------------------------------------------------------------------
@@ -198,14 +238,21 @@ class GameScene extends Scene
 
 	private function mouseDownOnPlacement(event : MouseEvent) : Void
 	{
+		// grab the unit
 		pickedUnit = cast(event.target, UnitPlacement);
-
 		var viewPos = GameObjectManager.getViewPosition(pickedUnit.x, pickedUnit.y);
 		pickedUnitOffset = { x : viewPos.x - event.stageX, y : viewPos.y -event.stageY };
 		pickedUnitWasMoved = false;
 
+		// close any open menus
+		buyMenu.close();
+		sellMenu.close();
+
+		// stop event from reaching underneath
 		event.stopPropagation();
 	}
+
+	private var sellPlacement : UnitPlacement = null;
 
 	private function mouseUpOnPlacement(event : MouseEvent) : Void
 	{
@@ -215,11 +262,20 @@ class GameScene extends Scene
 		{
 			// static click, ie. no drag ?
 			if(!pickedUnitWasMoved)
-				pickedUnit.requestDestroy();
+			{
+				if(!sellMenu.isOpened())
+				{
+					sellMenu.x = event.stageX;
+					sellMenu.y = event.stageY;
+					sellPlacement = pickedUnit;
+				}
+				sellMenu.toggle();
+			}
 
 			pickedUnit = null;
 		}
 
+		// stop event from reaching underneath
 		event.stopPropagation();
 	}
 	
@@ -295,7 +351,7 @@ class GameScene extends Scene
 		// phase is now attack phase
 		phase = PHASE_ATTACK;
 
-		radialMenu.close();
+		buyMenu.close();
 
 		// create units
 		spawnUnits();
