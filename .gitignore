@@ -5,3 +5,4 @@ Source_Images
 *.REMOTE*
 *.LOCAL*
 *.DS_Store
+*.com.apple.timemachine.supported
