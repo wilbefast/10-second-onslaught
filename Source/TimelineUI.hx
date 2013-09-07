@@ -97,9 +97,9 @@ class TimelineUI extends Sprite
 	public function onMouseClick(event : MouseEvent) : Void
   {
 		var slotWidth = (background.width-bar.x*2) * 0.1;
-		session.setTimelineSelection(Math.round(event.stageX / slotWidth));
+		session.timelineSelection = Math.round(event.stageX / slotWidth);
 
-		var select_x = session.getTimelineSelection() * slotWidth;
+		var select_x = session.timelineSelection * slotWidth;
 
 		Actuate.tween(selection, 0.3, { x : select_x }, true).ease (Quad.easeOut);
 		Actuate.tween(bar, 0.3, { width : select_x }, true).ease (Quad.easeOut);

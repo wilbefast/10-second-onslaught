@@ -69,7 +69,7 @@ class GameScene extends Scene
 	private var map : MapUI;
 	private var top : DeployUI;
 	
-	public function new (_time : Int, _money : Int ) // NB - Int is NOT an object (reference) in Haxe !
+	public function new ()
 	{
 		super ();
 
@@ -78,7 +78,7 @@ class GameScene extends Scene
 			init();
 		
 		// Initialise attributes
-		session = new Session(_time, _money);
+		session = new Session();
 		pickedUnitOffset = { x : 0, y : 0};
 
 		// build interface
@@ -149,22 +149,19 @@ class GameScene extends Scene
 		{
 			case PHASE_ATTACK:
 				
+				// tick ticking away ...
 				time += Time.getDelta();
-				if (time > session.getDuration())
-				{
-					var nbBaseSurvived = 
-						GameObjectManager.countMatching(function (o : GameObject) return Std.is(o, Colony));
-
-					if (nbBaseSurvived >= 5) 
-						SceneManager.setScene("Victory");
-
-					session.baseSaved(nbBaseSurvived);
-					switchPhase();
-				}
-
 				timeline.update(time);
 
-				session.instantiateUnits(Math.floor(time));
+				// ... will eventually run out !
+				if (time > Session.DURATION)
+				{
+					time = 0;
+					switchPhase();
+				}
+				// only if not try to instantiate the next batch of units
+				else
+					session.instantiateUnits(Math.floor(time));
 
 			case PHASE_DEPLOY:
 		}
@@ -320,9 +317,6 @@ class GameScene extends Scene
 
 	public function switchPhase()
 	{
-		time = 0;
-		session.setTimelineSelection(0);
-
 		switch(phase)
 		{
 			case PHASE_DEPLOY:
@@ -331,6 +325,7 @@ class GameScene extends Scene
 			case PHASE_ATTACK:
 				playDeployPhase();
 		}
+
 		top.startButton.changeButton();
 	}
 
@@ -356,16 +351,14 @@ class GameScene extends Scene
 
 	private function playDeployPhase()
 	{
-		session.resetMoney();
-		// increment # replays if previous phase was attack
-		if(phase == PHASE_ATTACK)
-			session.incrementNbReplay();
-
 		// phase is now attack phase
 		phase = PHASE_DEPLOY;
 
 		// clear all dudes
 		GameObjectManager.purgeAll();
+
+		// inform the session (generation original dude placements)
+		session.newDeployPhase();
 
 		// create colonies
 		spawnColonies();
@@ -408,7 +401,7 @@ class GameScene extends Scene
 		// create zerglings
 		for(i in 0 ... 30)
 		{
-			var spawn_angle = Math.random()*Math.PI*2;
+			var spawn_angle = i*(Math.PI*2)/40;
 			new Zergling(Math.cos(spawn_angle)*spawn_width, 
 										Math.sin(spawn_angle)*spawn_height);
 		}

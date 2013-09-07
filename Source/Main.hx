@@ -38,9 +38,6 @@ import hacksaw.DefaultFont;
 
 class Main extends Sprite
 {
-	private static inline var TIMER : Int = 10 ;
-	private static inline var MONEY : Int = 3000 ;
-
 	private var snd_music : Sound;
 	private var channel : SoundChannel;
 
@@ -57,7 +54,7 @@ class Main extends Sprite
 		UnitType.init();
 
 		SceneManager.add("Title", new TitleScene());
-		SceneManager.add("Game", new GameScene(TIMER, MONEY));
+		SceneManager.add("Game", new GameScene());
 		SceneManager.add("Victory", new VictoryScene());
 
 		SoundManager.loadSound("teleport_in");

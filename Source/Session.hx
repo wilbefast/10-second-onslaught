@@ -16,31 +16,47 @@ Lesser General Public License for more details.
 import flash.display.Sprite;
 
 import units.UnitType;
+import units.Colony;
 import units.UnitPlacement;
 
+import hacksaw.GameObject;
 import hacksaw.GameObjectManager;
+import hacksaw.SceneManager;
+
+import haxe.CallStack;
 
 class Session extends Sprite
 {
+	// ---------------------------------------------------------------------------
+	// CONSTANTS
+	// ---------------------------------------------------------------------------
+
+	public static inline var START_MONEY = 3000;
+	public static inline var COLONY_BONUS = 1000;
+	public static inline var DURATION = 10;
+
+	// ---------------------------------------------------------------------------
+	// ATTRIBUTES
+	// ---------------------------------------------------------------------------
+
 	private var money : Int;
-	private var startingMoney : Int ;
 	private var nbReplay : Int;
-	private var duration : Int ; //delay between two waves in seconds
-	private var timelineSelection : Int = 0 ;
-	private var baseEarned : Int = 0 ;
+
+	public var timelineSelection : Int = 0 ;
 	
-	public function new(pduration : Int, pmoney : Int) 
+	public function new() 
 	{
 		super();
-		money = pmoney ;
-		startingMoney = pmoney ;
-		nbReplay = 0 ;
-		duration = pduration ;
+		money = START_MONEY;
+		nbReplay = 0;
 
-		//init array for storing units to deploy
+		// init array for storing units to deploy
 		unitsToDeploy = new Array<List<UnitPlacement>>();
 		for(i in 0 ... 10)
 			unitsToDeploy[i] = new List<UnitPlacement>();
+
+		// init array of previously instatiated units, to be regenerated as placements
+		instantiatedUnits = new List<{x : Float, y : Float, time : Int, type : UnitType }>();
 	}
 
 	// ---------------------------------------------------------------------------
@@ -71,11 +87,18 @@ class Session extends Sprite
 		return placement;
 	}
 
+	// ---------------------------------------------------------------------------
+	// UNIT INSTATIATION
+	// ---------------------------------------------------------------------------
+
+	private var instantiatedUnits : List<{x : Float, y : Float, time : Int, type : UnitType }>;
+
 	private function __instantiateUnits(placements : List<UnitPlacement>) : Void
 	{
 			for (place in placements)
 			{
 				place.instantiate();
+				instantiatedUnits.push({x : place.x, y : place.y, time : place.timeToAppear, type : place.unitType});
 				place.purge = true;
 			}
 			placements.clear();
@@ -83,49 +106,32 @@ class Session extends Sprite
 	
 	public function instantiateUnits(slot : Int = -1) : Void
 	{
-		if (slot >= 0) // all units
+		// all units ?
+		if (slot >= 0) 
 			for (i in 0 ... slot+1)
 				__instantiateUnits(unitsToDeploy[i]);
-		else // units in specific time slot
+		// units in specific time slot ?
+		else 
 			for (timeSlot in unitsToDeploy)
 				__instantiateUnits(timeSlot);
 	}
 
+	private function __revertInstantiations()
+	{
+		for(inst in instantiatedUnits)
+			 unitsToDeploy[inst.time].add(new UnitPlacement(inst.type, inst.x, inst.y, inst.time));
+		 instantiatedUnits.clear();
+	}
+
 	// ---------------------------------------------------------------------------
-	// ACCESSORS
+	// MONEY
 	// ---------------------------------------------------------------------------
-	
-	public function getDuration()
-	{
-		return duration;
-	}
-	
-	public function getNbReplay()
-	{
-		return nbReplay;
-	}
-	
-	public function incrementNbReplay()
-	{
-		nbReplay ++ ;
-	}
-	
+
 	public function getMoney()
 	{
 		return money ;
 	}
-	
-	public function resetMoney()
-	{
-		money = startingMoney ;
-		money += baseEarned ;
-	}
-	
-	public function baseSaved(nbBase : Int )
-	{
-		baseEarned = nbBase * 1000 ;
-	}
-	
+
 	public function withdrawMoney(withdrawal : Int) : Int
 	{
 		withdrawal = Math.floor(Math.min(withdrawal, money));
@@ -135,18 +141,48 @@ class Session extends Sprite
 
 	public function depositMoney(deposit : Int) : Int
 	{
-		deposit = Math.floor(Math.min(deposit, startingMoney-money));
+		deposit = Math.floor(Math.min(deposit, START_MONEY-money));
 		money += deposit;
 		return deposit;
 	}
-	
-	public function getTimelineSelection()
+
+	// ---------------------------------------------------------------------------
+	// PHASES
+	// ---------------------------------------------------------------------------
+
+	public function newDeployPhase()
 	{
-		return timelineSelection ;
+		// increment replays 
+		nbReplay++;
+
+		// count number of colonies
+		var nbSavedColonies = 
+			GameObjectManager.countMatching(function (o : GameObject) return Std.is(o, Colony));
+
+		// victory ?
+		if (nbSavedColonies >= 5) 
+			SceneManager.setScene("Victory");
+		// keep trying ?
+		else
+		{
+			// reset timeline selection
+			timelineSelection = 0;
+
+			// reset money
+			money = START_MONEY + COLONY_BONUS*nbSavedColonies;
+
+			// regenerate deployments
+			__revertInstantiations();
+		}
 	}
 	
-	public function setTimelineSelection(newSelection : Int)
+
+	// ---------------------------------------------------------------------------
+	// ACCESSORS
+	// ---------------------------------------------------------------------------
+
+	public function getNbReplay()
 	{
-		timelineSelection = newSelection ;
+		return nbReplay;
 	}
 }
