@@ -35,13 +35,11 @@ class Main extends Sprite
 		SceneManager.add("Game", new GameScene(TIMER, MONEY));
 		SceneManager.add("Victory", new VictoryScene());
 
-		// snd_music = Assets.getSound("assets/music.mp3"); // flash doesn't like OOG :'(
-
-		Lib.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyboard);
-
 		SoundManager.loadSound("teleport_in");
 		SoundManager.setMuted();
+
 		// start music
+		// snd_music = Assets.getSound("assets/music.mp3"); // flash doesn't like OOG :'(
 		//channel = snd_music.play();
 		//channel.addEventListener(Event.SOUND_COMPLETE, onMusicEnd);
 	}
